@@ -1,9 +1,32 @@
-import {ADD_USER, ADD_U_TO_DB, RECEIVE_USERS} from './constants';
+import axios from 'axios';
+import {ADD_USER, RECEIVE_USERS} from './constants';
 
-
-export const receiveUsers = function (users) {
+export const addUser = function (user) {
     return {
-        type: RECEIVE_USERS,
-        users: users
+        type: ADD_USER,
+        user: user
     };
 };
+
+
+//asynch action creator (thunk)
+export function addUToDb(user){
+    return function (dispatch){
+        return axios.post('/api/users/signup', user)
+            .then(response => response.data)
+            .then(function(newUser){
+              dispatch(addUser(newUser))
+            })
+    }
+}
+
+export const receiveUsers = function (allUsers) {
+    return {
+        type: RECEIVE_USERS,
+        allUsers: allUsers
+    };
+};
+
+
+
+

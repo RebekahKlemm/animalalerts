@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import Signup from '../Signup';
-import {addUser, addUToDb} from '../../actions/addUser'
-import store from '../../store';
+import {addUser, addUToDb} from '../../actions/users'
+import {changeView} from '../../actions/view';
 
 class SignupContainer extends Component{
     constructor(props){
@@ -21,7 +21,6 @@ class SignupContainer extends Component{
     }
 
     handleInputChange(e){
-        console.log('handleinputChange name and value', e.target.name, e.target.value)
             this.setState({[e.target.name]:e.target.value});
     }
 
@@ -31,7 +30,6 @@ class SignupContainer extends Component{
 
     signUpUser(e){
         e.preventDefault();
-        console.log('hitting signUpUser in SignupContainer')
         const user = {
             first: e.target.first.value,
             last: e.target.last.value,
@@ -40,6 +38,7 @@ class SignupContainer extends Component{
             password: e.target.password.value
         }
         this.props.addUToDb(user);
+        this.props.changeView('user')
         this.setState({
             first: '',
             last: '',
@@ -53,21 +52,21 @@ class SignupContainer extends Component{
 
 
 const mapStateToProps = (state, ownProps) => {
-    return {};
+    return {
+        currentView: state.currentView
+    };
 }
 
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        //     addUser: function(user) {
-        //         dispatch(addUser(user));
-        //     },
             addUToDb: function(user){
                 dispatch(addUToDb(user));
             },
-
-        // }
+            changeView: function(view){
+                dispatch(changeView(view));
+            }
     }
 }
 
@@ -76,33 +75,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(SignupContainer);
 
 
 
-
-////////////////////
-
-// export default class Signup extends Component{
-//     constructor(props){
-//         console.log(props);
-//         super(props);
-//         this.state = {
-//             first: '',
-//             last: '',
-//             address: '',
-//             phone: '',
-//             password: ''
-//         }
-//     }
-//
-//     handleInputChange(e){
-//         const nextState = Object.assign({}, this.state)
-//         nextState[e.target.name] = e.target.value;
-//         this.setState(nextState);
-//     }
-//
-
-//
-//
-// }
-//
-//
-//
-//

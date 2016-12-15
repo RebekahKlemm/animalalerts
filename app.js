@@ -6,6 +6,7 @@ const db = require('./Database/_db');
 
 const app = express();
 const User = require('./Database/Models/userModel');
+const Message = require('./Database/Models/messageModel');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -23,18 +24,23 @@ app.get('/', function (req, res, next) {
 
 app.use(function (err, req, res, next) {
     console.error(err, err.stack);
-    res.status(500).send(err);
+    res.status(err.status || 500).send(err);
 });
 
 
 
 
-//Synch your database
-db.sync({force: true})  //returns a promise so you can .then off it
-    .then(function(){
-        User.create({
-            firstName: 'Me', lastName: 'Tester', address: 'Somewhere USA', phone: '555-555-5555', password: '12345'})
-    })
+//Synch the database
+db.sync()
+// db.sync({force: true})
+//     .then(function(){
+//         User.create({
+//             firstName: 'Me', lastName: 'Tester', address: 'Somewhere USA', phone: '555-555-5555', password: '12345'})
+//     })
+//     .then(function(){
+//         Message.create({
+//             to: 'someone', from: 'me', body: 'Here is a Test Message'})
+//     })
     .then(function () {
         app.listen(3001, function () {
             console.log('Server is listening on port 3001');

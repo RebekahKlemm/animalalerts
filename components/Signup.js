@@ -1,46 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
 
-//
-// export default class Signup extends Component{
-//     constructor(props){
-//         console.log(props);
-//         super(props);
-//         this.state = {
-//             first: '',
-//             last: '',
-//             address: '',
-//             phone: '',
-//             password: ''
-//         }
-//     }
-//
-//     handleInputChange(e){
-//         const nextState = Object.assign({}, this.state)
-//         nextState[e.target.name] = e.target.value;
-//         this.setState(nextState);
-//     }
-//
-//     signUpUser(e){
-//         e.preventDefault();
-//         const user = {
-//             first: e.target.first.value,
-//             last: e.target.last.value,
-//             address: e.target.address.value,
-//             phone: e.target.phone.value,
-//             password: e.target.password.value
-//     }
-//         this.props.addUToDb(user);
-//         this.setState={
-//             first: '',
-//             last: '',
-//             address: '',
-//             phone: '',
-//             password: ''
-//         }
-//     }
 
-    // render(){
 export default function(props) {
     return (
         <form id="new-signup-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.signUpUser(e)}>
@@ -93,7 +54,4 @@ export default function(props) {
         </form>
     )
 }
-//     }
-// }
-//
-// value={this.state.phone}
+

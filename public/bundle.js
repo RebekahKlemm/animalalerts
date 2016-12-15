@@ -46,6 +46,10 @@
 
 	'use strict';
 	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	// import Signup from './Signup';
+	
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -60,53 +64,49 @@
 	
 	var _SignupContainer2 = _interopRequireDefault(_SignupContainer);
 	
-	var _App = __webpack_require__(301);
+	var _App = __webpack_require__(293);
 	
-	var _Login = __webpack_require__(303);
+	var _Login = __webpack_require__(295);
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	var _UserDisplay = __webpack_require__(304);
+	var _UserDisplay = __webpack_require__(296);
 	
 	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(292);
+	var _store = __webpack_require__(300);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _addUser = __webpack_require__(265);
+	var _users = __webpack_require__(265);
 	
 	var _axios = __webpack_require__(266);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _users = __webpack_require__(307);
+	var _messages = __webpack_require__(312);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var onAppEnter = function onAppEnter() {
-	    _axios2.default.get('/api/users').then(function (response) {
-	        return response.data;
-	    }).then(function (users) {
-	        return _store2.default.dispatch((0, _users.receiveUsers)(users));
+	    // axios.get('/api/users')
+	    //     .then(response => response.data)
+	    //     .then(allUsers => store.dispatch(receiveUsers(allUsers)));
+	
+	    Promise.all([_axios2.default.get('/api/users'), _axios2.default.get('/api/messages')]).then(function (responses) {
+	        return responses.map(function (r) {
+	            return r.data;
+	        });
+	    }).then(function (_ref) {
+	        var _ref2 = _slicedToArray(_ref, 2),
+	            users = _ref2[0],
+	            messages = _ref2[1];
+	
+	        _store2.default.dispatch((0, _users.receiveUsers)(users));
+	        _store2.default.dispatch((0, _messages.receiveMessages)(messages));
 	    });
-	
-	    // Promise.all([
-	    //     axios.get('/api/users')
-	    // ])
-	    //     .then(responses => responses.map(r => r.data))
-	    //     .then(([users]) => {
-	    //         store.dispatch(receiveUsers(users));
-	    //     });
-	};
-	// import Signup from './Signup';
-	
-	
-	var onUserDisplayEnter = function onUserDisplayEnter(nextRouterState) {
-	    console.log("onUserDisplayEnter nextRouterState", nextRouterState);
-	    // store.dispatch(addUtoDb(nextRouterState.selectedUser));
 	};
 	
 	_reactDom2.default.render(_react2.default.createElement(
@@ -120,7 +120,7 @@
 	            { path: '/', component: _App.App, onEnter: onAppEnter },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _SignupContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/user', component: _UserDisplay2.default, onEnter: onUserDisplayEnter })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/user', component: _UserDisplay2.default })
 	        )
 	    )
 	), document.getElementById('app'));
@@ -26461,11 +26461,9 @@
 	
 	var _Signup2 = _interopRequireDefault(_Signup);
 	
-	var _addUser = __webpack_require__(265);
+	var _users = __webpack_require__(265);
 	
-	var _store = __webpack_require__(292);
-	
-	var _store2 = _interopRequireDefault(_store);
+	var _view = __webpack_require__(292);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26501,7 +26499,6 @@
 	    _createClass(SignupContainer, [{
 	        key: 'handleInputChange',
 	        value: function handleInputChange(e) {
-	            console.log('handleinputChange name and value', e.target.name, e.target.value);
 	            this.setState(_defineProperty({}, e.target.name, e.target.value));
 	        }
 	    }, {
@@ -26513,7 +26510,6 @@
 	        key: 'signUpUser',
 	        value: function signUpUser(e) {
 	            e.preventDefault();
-	            console.log('hitting signUpUser in SignupContainer');
 	            var user = {
 	                first: e.target.first.value,
 	                last: e.target.last.value,
@@ -26522,6 +26518,7 @@
 	                password: e.target.password.value
 	            };
 	            this.props.addUToDb(user);
+	            this.props.changeView('user');
 	            this.setState({
 	                first: '',
 	                last: '',
@@ -26536,52 +26533,23 @@
 	}(_react.Component);
 	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    return {};
+	    return {
+	        currentView: state.currentView
+	    };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	    return {
-	        //     addUser: function(user) {
-	        //         dispatch(addUser(user));
-	        //     },
 	        addUToDb: function addUToDb(user) {
-	            dispatch((0, _addUser.addUToDb)(user));
+	            dispatch((0, _users.addUToDb)(user));
+	        },
+	        changeView: function changeView(view) {
+	            dispatch((0, _view.changeView)(view));
 	        }
-	
 	    };
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SignupContainer);
-	
-	////////////////////
-	
-	// export default class Signup extends Component{
-	//     constructor(props){
-	//         console.log(props);
-	//         super(props);
-	//         this.state = {
-	//             first: '',
-	//             last: '',
-	//             address: '',
-	//             phone: '',
-	//             password: ''
-	//         }
-	//     }
-	//
-	//     handleInputChange(e){
-	//         const nextState = Object.assign({}, this.state)
-	//         nextState[e.target.name] = e.target.value;
-	//         this.setState(nextState);
-	//     }
-	//
-	
-	//
-	//
-	// }
-	//
-	//
-	//
-	//
 
 /***/ },
 /* 234 */
@@ -28661,7 +28629,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.addUser = undefined;
+	exports.receiveUsers = exports.addUser = undefined;
 	exports.addUToDb = addUToDb;
 	
 	var _axios = __webpack_require__(266);
@@ -28681,9 +28649,8 @@
 	
 	//asynch action creator (thunk)
 	function addUToDb(user) {
-	    console.log("got to addUToDb");
 	    return function (dispatch) {
-	        return _axios2.default.post('/api/signup', user).then(function (response) {
+	        return _axios2.default.post('/api/users/signup', user).then(function (response) {
 	            return response.data;
 	        }).then(function (newUser) {
 	            dispatch(addUser(newUser));
@@ -28691,12 +28658,12 @@
 	    };
 	}
 	
-	//
-	// addUser(user){
-	//     const nextState = Object.assign({}, this.state)
-	//     nextState.users.push({user})
-	//     this.setState(nextState);
-	// }
+	var receiveUsers = exports.receiveUsers = function receiveUsers(allUsers) {
+	    return {
+	        type: _constants.RECEIVE_USERS,
+	        allUsers: allUsers
+	    };
+	};
 
 /***/ },
 /* 266 */
@@ -30198,9 +30165,12 @@
 	});
 	var ADD_USER = exports.ADD_USER = 'ADD_USER';
 	
-	var ADD_U_TO_DB = exports.ADD_U_TO_DB = 'ADD_U_TO_DB';
+	// export const ADD_U_TO_DB = 'ADD_U_TO_DB';
 	
 	var RECEIVE_USERS = exports.RECEIVE_USERS = 'RECEIVE_USERS';
+	var CHANGE_VIEW = exports.CHANGE_VIEW = 'CHANGE_VIEW';
+	
+	var RECEIVE_MESSAGES = exports.RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
 
 /***/ },
 /* 292 */
@@ -30211,18 +30181,249 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.changeView = undefined;
+	
+	var _constants = __webpack_require__(291);
+	
+	var changeView = exports.changeView = function changeView(view) {
+	    return {
+	        type: _constants.CHANGE_VIEW,
+	        currentView: view
+	    };
+	};
+
+/***/ },
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.App = undefined;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Nav = __webpack_require__(294);
+	
+	var _Nav2 = _interopRequireDefault(_Nav);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var App = exports.App = function App(props) {
+	    return _react2.default.createElement(
+	        'div',
+	        { id: 'main', className: 'container-fluid' },
+	        _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(_Nav2.default, null)
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            null,
+	            props.children && _react2.default.cloneElement(props.children, props)
+	        )
+	    );
+	};
+
+/***/ },
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Nav;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Nav() {
+	    return _react2.default.createElement(
+	        "nav",
+	        { className: "navbar navbar-inverse blue" },
+	        _react2.default.createElement(
+	            "div",
+	            { className: "container-fluid" },
+	            _react2.default.createElement(
+	                "div",
+	                { className: "navbar-header" },
+	                _react2.default.createElement(
+	                    "a",
+	                    { className: "navbar-brand", href: "#" },
+	                    "Brand"
+	                )
+	            ),
+	            _react2.default.createElement(
+	                "div",
+	                { className: "collapse navbar-collapse", id: "bs-example-navbar-collapse-1" },
+	                _react2.default.createElement(
+	                    "ul",
+	                    { className: "nav navbar-nav" },
+	                    _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#" },
+	                            "Signup ",
+	                            _react2.default.createElement(
+	                                "span",
+	                                { className: "sr-only" },
+	                                "(current)"
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#/login" },
+	                            "Login"
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#/user" },
+	                            "User"
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "ul",
+	                    { className: "nav navbar-nav navbar-right" },
+	                    _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#" },
+	                            "Link"
+	                        )
+	                    )
+	                )
+	            )
+	        )
+	    );
+	}
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Login;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Login() {
+	    return _react2.default.createElement(
+	        "form",
+	        { id: "new-login-form", className: "form-group", style: { marginTop: '20px' } },
+	        _react2.default.createElement("input", {
+	            id: "phone-input",
+	            className: "form-control",
+	            placeholder: "Enter phone number",
+	            "data-touched": "false"
+	        }),
+	        _react2.default.createElement("input", {
+	            id: "password",
+	            className: "form-control",
+	            placeholder: "Enter password",
+	            "data-touched": "false"
+	        }),
+	        _react2.default.createElement(
+	            "button",
+	            { id: "signup-submit", disabled: "true", type: "submit", form: "new-signup-form", value: "Submit",
+	                className: "btn btn-primary btn-block" },
+	            _react2.default.createElement("span", { className: "glyphicon glyphicon-plus" }),
+	            " SUBMIT"
+	        ),
+	        _react2.default.createElement(
+	            "div",
+	            { id: "alert-warning", hidden: "true", className: "alert alert-warning" },
+	            "Please enter a valid name"
+	        )
+	    );
+	}
+
+/***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = UserDisplay;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// import Inbox from './Inbox';
+	// import AccountInfo from './AccountInfo';
+	
+	
+	function UserDisplay() {
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        'You are in UserDisplay'
+	    );
+	}
+	
+	// <Inbox/>
+	// <AccountInfo/>
+
+/***/ },
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(293);
+	var _rootReducer = __webpack_require__(301);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(294);
+	var _reduxThunk = __webpack_require__(305);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(295);
+	var _reduxLogger = __webpack_require__(306);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -30237,7 +30438,39 @@
 	exports.default = store;
 
 /***/ },
-/* 293 */
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _redux = __webpack_require__(243);
+	
+	var _userReducer = __webpack_require__(302);
+	
+	var _userReducer2 = _interopRequireDefault(_userReducer);
+	
+	var _messageReducer = __webpack_require__(303);
+	
+	var _messageReducer2 = _interopRequireDefault(_messageReducer);
+	
+	var _currentViewReducer = __webpack_require__(304);
+	
+	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, messages: _messageReducer2.default, currentView: _currentViewReducer2.default });
+
+/***/ },
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30253,10 +30486,10 @@
 	    var newState = Object.assign({}, state);
 	    switch (action.type) {
 	        case _constants.ADD_USER:
-	            newState.users = [].concat(_toConsumableArray(newState.users), [action.user]);
+	            newState.allUsers = [].concat(_toConsumableArray(newState.allUsers), [action.user]);
 	            break;
 	        case _constants.RECEIVE_USERS:
-	            newState.users = [].concat(_toConsumableArray(newState.users), _toConsumableArray(action.users));
+	            newState.allUsers = [].concat(_toConsumableArray(newState.allUsers), _toConsumableArray(action.allUsers));
 	            break;
 	        default:
 	            return state;
@@ -30273,17 +30506,96 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	// import addUser from '../actions/addUser';
-	
 	
 	var initialState = {
-	    users: [],
-	    currentUser: {},
-	    messages: []
+	    allUsers: [],
+	    currentUser: {}
 	};
 
 /***/ },
-/* 294 */
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
+	
+	    var newState = Object.assign({}, state);
+	    switch (action.type) {
+	        // case ADD_USER:
+	        //     newState.users = [...newState.users, action.user];
+	        //     break;
+	        case _constants.RECEIVE_MESSAGES:
+	            newState.allMessages = [].concat(_toConsumableArray(newState.allMessages), _toConsumableArray(action.allMessages));
+	            break;
+	        default:
+	            return state;
+	    }
+	    return newState;
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(291);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	var initialState = {
+	    allMessages: [],
+	    currentMessage: {}
+	};
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
+	
+	    var newState = Object.assign({}, state);
+	    switch (action.type) {
+	        case _constants.CHANGE_VIEW:
+	            newState.currentView = action.currentView;
+	            console.log("newState.currentView inside CHANGE_VIEW reducer", newState.currentView);
+	            window.location.href = 'http://localhost:3001' + '/#/' + newState.currentView;
+	            break;
+	        default:
+	            return state;
+	    }
+	    return newState;
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(291);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {
+	    currentView: ''
+	};
+
+/***/ },
+/* 305 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30311,7 +30623,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 295 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30322,11 +30634,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(296);
+	var _core = __webpack_require__(307);
 	
-	var _helpers = __webpack_require__(297);
+	var _helpers = __webpack_require__(308);
 	
-	var _defaults = __webpack_require__(300);
+	var _defaults = __webpack_require__(311);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -30429,7 +30741,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 296 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30439,9 +30751,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(297);
+	var _helpers = __webpack_require__(308);
 	
-	var _diff = __webpack_require__(298);
+	var _diff = __webpack_require__(309);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -30570,7 +30882,7 @@
 	}
 
 /***/ },
-/* 297 */
+/* 308 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -30594,7 +30906,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 298 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30604,7 +30916,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(299);
+	var _deepDiff = __webpack_require__(310);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -30690,7 +31002,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 299 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -31119,7 +31431,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 300 */
+/* 311 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31170,7 +31482,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 301 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31178,306 +31490,14 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.App = undefined;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	var _Nav = __webpack_require__(302);
-	
-	var _Nav2 = _interopRequireDefault(_Nav);
-	
-	var _SignupContainer = __webpack_require__(233);
-	
-	var _SignupContainer2 = _interopRequireDefault(_SignupContainer);
-	
-	var _addUser = __webpack_require__(265);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var App = exports.App = function App(props) {
-	    return _react2.default.createElement(
-	        'div',
-	        { id: 'main', className: 'container-fluid' },
-	        _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(_Nav2.default, null)
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            null,
-	            props.children && _react2.default.cloneElement(props.children, props)
-	        )
-	    );
-	};
-	
-	//
-	// const mapStateToProps = (state, ownProps) => {
-	//     return {
-	//         users: state.users
-	//     };
-	// }
-	//
-	// const mapDispatchToProps = (dispatch, ownProps) => {
-	//     return {
-	//         addUser: function(user) {
-	//             dispatch(addUser(user));
-	//         },
-	//         addUToDb: function(user){
-	//             dispatch(addUToDb(user));
-	//         }
-	//     }
-	// }
-	//
-	
-	// ////////////////
-	
-	
-	// export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-/***/ },
-/* 302 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = Nav;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Nav() {
-	    return _react2.default.createElement(
-	        "nav",
-	        { className: "navbar navbar-inverse blue" },
-	        _react2.default.createElement(
-	            "div",
-	            { className: "container-fluid" },
-	            _react2.default.createElement(
-	                "div",
-	                { className: "navbar-header" },
-	                _react2.default.createElement(
-	                    "a",
-	                    { className: "navbar-brand", href: "#" },
-	                    "Brand"
-	                )
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { className: "collapse navbar-collapse", id: "bs-example-navbar-collapse-1" },
-	                _react2.default.createElement(
-	                    "ul",
-	                    { className: "nav navbar-nav" },
-	                    _react2.default.createElement(
-	                        "li",
-	                        null,
-	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#" },
-	                            "Signup ",
-	                            _react2.default.createElement(
-	                                "span",
-	                                { className: "sr-only" },
-	                                "(current)"
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        "li",
-	                        null,
-	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#/login" },
-	                            "Login"
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        "li",
-	                        null,
-	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#/user" },
-	                            "User"
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "ul",
-	                    { className: "nav navbar-nav navbar-right" },
-	                    _react2.default.createElement(
-	                        "li",
-	                        null,
-	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#" },
-	                            "Link"
-	                        )
-	                    )
-	                )
-	            )
-	        )
-	    );
-	}
-
-/***/ },
-/* 303 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = Login;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Login() {
-	    return _react2.default.createElement(
-	        "form",
-	        { id: "new-login-form", className: "form-group", style: { marginTop: '20px' } },
-	        _react2.default.createElement("input", {
-	            id: "phone-input",
-	            className: "form-control",
-	            placeholder: "Enter phone number",
-	            "data-touched": "false"
-	        }),
-	        _react2.default.createElement("input", {
-	            id: "password",
-	            className: "form-control",
-	            placeholder: "Enter password",
-	            "data-touched": "false"
-	        }),
-	        _react2.default.createElement(
-	            "button",
-	            { id: "signup-submit", disabled: "true", type: "submit", form: "new-signup-form", value: "Submit",
-	                className: "btn btn-primary btn-block" },
-	            _react2.default.createElement("span", { className: "glyphicon glyphicon-plus" }),
-	            " SUBMIT"
-	        ),
-	        _react2.default.createElement(
-	            "div",
-	            { id: "alert-warning", hidden: "true", className: "alert alert-warning" },
-	            "Please enter a valid name"
-	        )
-	    );
-	}
-
-/***/ },
-/* 304 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = UserDisplay;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _InboxDisplay = __webpack_require__(305);
-	
-	var _InboxDisplay2 = _interopRequireDefault(_InboxDisplay);
-	
-	var _AccountInfo = __webpack_require__(306);
-	
-	var _AccountInfo2 = _interopRequireDefault(_AccountInfo);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function UserDisplay() {
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_InboxDisplay2.default, null),
-	        _react2.default.createElement(_AccountInfo2.default, null)
-	    );
-	}
-
-/***/ },
-/* 305 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = InboxDisplay;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function InboxDisplay() {
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        'This is InboxDisplay'
-	    );
-	}
-
-/***/ },
-/* 306 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = AccountInfo;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function AccountInfo() {
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        'This is AccountInfo'
-	    );
-	}
-
-/***/ },
-/* 307 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.receiveUsers = undefined;
+	exports.receiveMessages = undefined;
 	
 	var _constants = __webpack_require__(291);
 	
-	var receiveUsers = exports.receiveUsers = function receiveUsers(users) {
+	var receiveMessages = exports.receiveMessages = function receiveMessages(allMessages) {
 	    return {
-	        type: _constants.RECEIVE_USERS,
-	        users: users
+	        type: _constants.RECEIVE_MESSAGES,
+	        allMessages: allMessages
 	    };
 	};
 
