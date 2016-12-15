@@ -11,15 +11,12 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const loginSubRouter = require('./routes/login-router');
-// import messagesSubRouter from './routes/messages-router';
+const apiRouter = require('./routes/apiRouter');
 
-app.use('/login', loginSubRouter);
-// app.use('/messages', messagesSubRouter);
+//here are my API routes
+app.use('/api', apiRouter);
 
-
-// app.use('/', express.static(path.resolve(__dirname, '../', 'public')));
-
+//Here is where I serve up the first page
 app.get('/', function (req, res, next) {
     res.sendFile(path.join(__dirname, './components/index.html'));
 });
@@ -28,6 +25,8 @@ app.use(function (err, req, res, next) {
     console.error(err, err.stack);
     res.status(500).send(err);
 });
+
+
 
 
 //Synch your database

@@ -1,7 +1,6 @@
 import React from 'react'
 // import addUser from '../actions/addUser';
-import {ADD_USER} from '../actions/constants';
-
+import {ADD_USER, RECEIVE_USERS} from '../actions/constants';
 
 const initialState = {
     users: [],
@@ -11,12 +10,16 @@ const initialState = {
 
 
 export default function (state = initialState, action) {
+    let newState = Object.assign({}, state)
     switch (action.type) {
-
         case ADD_USER:
-            return Object.assign({}, state, {users: action.user});
+           newState.users = [...newState.users, action.user];
+            break;
+        case RECEIVE_USERS:
+            newState.users = [...newState.users, ...action.users];
             break;
         default:
             return state;
     }
+    return newState;
 }
