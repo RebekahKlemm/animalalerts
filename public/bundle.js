@@ -76,7 +76,7 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(300);
+	var _store = __webpack_require__(299);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -86,7 +86,7 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _messages = __webpack_require__(312);
+	var _messages = __webpack_require__(311);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30377,7 +30377,149 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = UserDisplay;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Inbox = __webpack_require__(297);
+	
+	var _Inbox2 = _interopRequireDefault(_Inbox);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _view = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UserDisplay = function (_Component) {
+	    _inherits(UserDisplay, _Component);
+	
+	    function UserDisplay(props) {
+	        _classCallCheck(this, UserDisplay);
+	
+	        return _possibleConstructorReturn(this, (UserDisplay.__proto__ || Object.getPrototypeOf(UserDisplay)).call(this, props));
+	    }
+	
+	    _createClass(UserDisplay, [{
+	        key: 'render',
+	        value: function render(props) {
+	            // console.log("UserDisplay this.props", this.props)
+	            return _react2.default.createElement(_Inbox2.default, { allMessages: this.props.allMessages });
+	        }
+	    }]);
+	
+	    return UserDisplay;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    console.log("mstp state", state);
+	    return {
+	        allMessages: state.messages.allMessages
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {
+	        changeView: function changeView(view) {
+	            dispatch((0, _view.changeView)(view));
+	        }
+	    };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserDisplay);
+
+/***/ },
+/* 297 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Inbox;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _Message = __webpack_require__(298);
+	
+	var _Message2 = _interopRequireDefault(_Message);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Inbox(props) {
+	    console.log("Inbox props --------------->", props);
+	    var allMessages = props.allMessages;
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_Message2.default, { allMessages: allMessages })
+	    );
+	}
+	
+	//
+	// class Inbox extends Component{
+	//     constructor(props){
+	//         super(props);
+	//     }
+	//
+	//
+	//     render(){
+	//         console.log('Inbox allmessages with this --------->', this.allMessages)
+	//         console.log('Inbox allmessages without this--------->', allMessages)
+	//         return (
+	//             <div>
+	//             <div> You are in Inbox </div>
+	//             <Message allMessages={this.allMessages}/>
+	//             </div>
+	//                 )
+	//
+	//     }
+	//
+	// }
+	//
+	// const mapStateToProps = (state, ownProps) => {
+	//     return {
+	//         allMessages: state.messages.allMessages
+	//     };
+	// }
+	//
+	// const mapDispatchToProps = (dispatch, ownProps) => {
+	//     return {
+	//             changeView: function(view){
+	//                 dispatch(changeView(view));
+	//             }
+	//     }
+	// }
+	//
+	// export default connect(mapStateToProps, mapDispatchToProps)(Inbox);
+	//
+	//
+	//
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Message;
 	
 	var _react = __webpack_require__(1);
 	
@@ -30385,26 +30527,70 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// import Inbox from './Inbox';
-	// import AccountInfo from './AccountInfo';
-	
-	
-	function UserDisplay() {
+	function Message(props) {
+	    console.log("Message props --------------->", props);
+	    var allMessages = props.allMessages;
 	    return _react2.default.createElement(
-	        'div',
+	        "div",
 	        null,
-	        'You are in UserDisplay'
+	        allMessages.map(function (message) {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "message", key: message.id },
+	                _react2.default.createElement(
+	                    "h3",
+	                    null,
+	                    "Message appears below"
+	                ),
+	                _react2.default.createElement(
+	                    "h3",
+	                    null,
+	                    "To: ",
+	                    message.to
+	                ),
+	                _react2.default.createElement(
+	                    "h3",
+	                    null,
+	                    "From: ",
+	                    message.from
+	                ),
+	                _react2.default.createElement(
+	                    "h3",
+	                    null,
+	                    "Body: ",
+	                    message.body
+	                )
+	            );
+	        })
 	    );
 	}
 	
-	// <Inbox/>
-	// <AccountInfo/>
+	//
+	// export default class Message extends Component{
+	//     constructor(props){
+	//         super(props)
+	//     }
+	//
+	//     render(props){
+	//         const allMessages = props.allMessages;
+	//         return(
+	//             <div>
+	//                 { allMessages.map((message) => {
+	//                         return(<div className="message" key=message.id>
+	//                             <h3>Message appears below</h3>
+	//                             <h3>To: {message.to}</h3>
+	//                             <h3>From: {message.from}</h3>
+	//                             <h3>Body: {message.body}</h3>
+	//                         </div>)
+	//                     }
+	//                 )}
+	//             </div>
+	//         )
+	//     }
+	// }
 
 /***/ },
-/* 297 */,
-/* 298 */,
-/* 299 */,
-/* 300 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30415,15 +30601,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(301);
+	var _rootReducer = __webpack_require__(300);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(305);
+	var _reduxThunk = __webpack_require__(304);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(306);
+	var _reduxLogger = __webpack_require__(305);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -30438,7 +30624,7 @@
 	exports.default = store;
 
 /***/ },
-/* 301 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30453,15 +30639,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _userReducer = __webpack_require__(302);
+	var _userReducer = __webpack_require__(301);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _messageReducer = __webpack_require__(303);
+	var _messageReducer = __webpack_require__(302);
 	
 	var _messageReducer2 = _interopRequireDefault(_messageReducer);
 	
-	var _currentViewReducer = __webpack_require__(304);
+	var _currentViewReducer = __webpack_require__(303);
 	
 	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
 	
@@ -30470,7 +30656,7 @@
 	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, messages: _messageReducer2.default, currentView: _currentViewReducer2.default });
 
 /***/ },
-/* 302 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30513,7 +30699,7 @@
 	};
 
 /***/ },
-/* 303 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30556,7 +30742,7 @@
 	};
 
 /***/ },
-/* 304 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30595,7 +30781,7 @@
 	};
 
 /***/ },
-/* 305 */
+/* 304 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30623,7 +30809,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 306 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30634,11 +30820,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(307);
+	var _core = __webpack_require__(306);
 	
-	var _helpers = __webpack_require__(308);
+	var _helpers = __webpack_require__(307);
 	
-	var _defaults = __webpack_require__(311);
+	var _defaults = __webpack_require__(310);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -30741,7 +30927,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 307 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30751,9 +30937,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(308);
+	var _helpers = __webpack_require__(307);
 	
-	var _diff = __webpack_require__(309);
+	var _diff = __webpack_require__(308);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -30882,7 +31068,7 @@
 	}
 
 /***/ },
-/* 308 */
+/* 307 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -30906,7 +31092,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 309 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30916,7 +31102,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(310);
+	var _deepDiff = __webpack_require__(309);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -31002,7 +31188,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 310 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -31431,7 +31617,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 311 */
+/* 310 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31482,7 +31668,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 312 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

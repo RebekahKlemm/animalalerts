@@ -36,8 +36,8 @@ ReactDOM.render(
         <Router history={hashHistory}>
             <Route path='/' component={App} onEnter={onAppEnter}>
                 <IndexRoute component={SignupContainer}/>
-                <Route path ='/login' component = {Login}/>
-                <Route path = '/user' component = {UserDisplay}/>
+                <Route path ='/login' component={Login}/>
+                <Route path='/user' component={UserDisplay}/>
             </Route>
         </Router>
     </Provider>,
