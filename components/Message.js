@@ -8,12 +8,14 @@ export default function Message(props){
         return(
             <div>
                 { allMessages.map((message) => {
-                        return(<div className="message" key={message.id}>
-                            <h3>Message appears below</h3>
-                            <h3>To: {message.to}</h3>
-                            <h3>From: {message.from}</h3>
-                            <h3>Body: {message.body}</h3>
-                        </div>)
+                        return(
+                            <div className="message" key={message.id}>
+                                <p>To: {message.to}</p>
+                                <p>From: {message.from}</p>
+                                <p>Body: {message.body}</p>
+                                <hr/>
+                            </div>
+                        )
                     }
                 )}
             </div>

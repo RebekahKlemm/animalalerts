@@ -1,5 +1,5 @@
 import React from 'react'
-import {ADD_USER, RECEIVE_USERS} from '../actions/constants';
+import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER} from '../actions/constants';
 
 const initialState = {
     allUsers: [],
@@ -15,6 +15,9 @@ export default function (state = initialState, action) {
             break;
         case RECEIVE_USERS:
             newState.allUsers = [...newState.allUsers, ...action.allUsers];
+            break;
+        case UPDATE_CURRENT_USER:
+            newState.currentUser= Object.assign({}, action.user)
             break;
         default:
             return state;

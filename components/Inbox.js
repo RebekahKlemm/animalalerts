@@ -8,7 +8,9 @@ export default function Inbox(props){
     const allMessages = props.allMessages;
     return(
         <div>
-            <Message allMessages={allMessages} />
+
+                <Message allMessages={allMessages} />
+
         </div>
     )
 }

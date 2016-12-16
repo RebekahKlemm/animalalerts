@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ADD_USER, RECEIVE_USERS} from './constants';
+import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER} from './constants';
 
 export const addUser = function (user) {
     return {
@@ -28,5 +28,21 @@ export const receiveUsers = function (allUsers) {
 };
 
 
+export const updateCurrentUser = function (user) {
+    return {
+        type: UPDATE_CURRENT_USER,
+        user: user
+    };
+};
 
 
+//asynch action creator (thunk)
+// export function findUinDb(user){
+//     return function (dispatch){
+//         return axios.get('/api/users')
+//             .then(response => response.data)
+//             .then(function(user){
+//                 dispatch(updateCurrentUser(user))
+//             })
+//     }
+// }

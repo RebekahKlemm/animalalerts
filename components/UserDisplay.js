@@ -10,21 +10,17 @@ class UserDisplay extends Component{
 
     }
 
-    render(props){
-        // console.log("UserDisplay this.props", this.props)
+    render(){
         return (<Inbox allMessages={this.props.allMessages}/>)
     }
 
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log("mstp state", state)
     return {
         allMessages: state.messages.allMessages
     };
 }
-
-
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {

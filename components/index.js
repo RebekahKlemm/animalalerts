@@ -4,7 +4,7 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 // import Signup from './Signup';
 import SignupContainer from './containers/SignupContainer';
 import {App} from './App';
-import Login from './Login';
+import LoginContainer from './containers/LoginContainer';
 import UserDisplay from './UserDisplay';
 import {Provider} from 'react-redux';
 import store from '../store';
@@ -36,7 +36,7 @@ ReactDOM.render(
         <Router history={hashHistory}>
             <Route path='/' component={App} onEnter={onAppEnter}>
                 <IndexRoute component={SignupContainer}/>
-                <Route path ='/login' component={Login}/>
+                <Route path ='/login' component={LoginContainer}/>
                 <Route path='/user' component={UserDisplay}/>
             </Route>
         </Router>

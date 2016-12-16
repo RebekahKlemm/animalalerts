@@ -66,9 +66,9 @@
 	
 	var _App = __webpack_require__(293);
 	
-	var _Login = __webpack_require__(295);
+	var _LoginContainer = __webpack_require__(312);
 	
-	var _Login2 = _interopRequireDefault(_Login);
+	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 	
 	var _UserDisplay = __webpack_require__(296);
 	
@@ -119,7 +119,7 @@
 	            _reactRouter.Route,
 	            { path: '/', component: _App.App, onEnter: onAppEnter },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _SignupContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/user', component: _UserDisplay2.default })
 	        )
 	    )
@@ -28629,7 +28629,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.receiveUsers = exports.addUser = undefined;
+	exports.updateCurrentUser = exports.receiveUsers = exports.addUser = undefined;
 	exports.addUToDb = addUToDb;
 	
 	var _axios = __webpack_require__(266);
@@ -28664,6 +28664,24 @@
 	        allUsers: allUsers
 	    };
 	};
+	
+	var updateCurrentUser = exports.updateCurrentUser = function updateCurrentUser(user) {
+	    return {
+	        type: _constants.UPDATE_CURRENT_USER,
+	        user: user
+	    };
+	};
+	
+	//asynch action creator (thunk)
+	// export function findUinDb(user){
+	//     return function (dispatch){
+	//         return axios.get('/api/users')
+	//             .then(response => response.data)
+	//             .then(function(user){
+	//                 dispatch(updateCurrentUser(user))
+	//             })
+	//     }
+	// }
 
 /***/ },
 /* 266 */
@@ -30164,6 +30182,7 @@
 	  value: true
 	});
 	var ADD_USER = exports.ADD_USER = 'ADD_USER';
+	var UPDATE_CURRENT_USER = exports.UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER';
 	
 	// export const ADD_U_TO_DB = 'ADD_U_TO_DB';
 	
@@ -30329,33 +30348,37 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = Login;
 	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Login() {
+	exports.default = function (props) {
+	    console.log("props in Login --->", props);
 	    return _react2.default.createElement(
 	        "form",
-	        { id: "new-login-form", className: "form-group", style: { marginTop: '20px' } },
+	        { id: "new-login-form", className: "form-group", style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
+	                return props.loginUser(e);
+	            } },
 	        _react2.default.createElement("input", {
 	            id: "phone-input",
+	            name: "phone",
 	            className: "form-control",
 	            placeholder: "Enter phone number",
-	            "data-touched": "false"
+	            onChange: function onChange(e) {
+	                return props.handleInputChange(e);
+	            },
+	            value: props.phone
 	        }),
 	        _react2.default.createElement("input", {
-	            id: "password",
+	            id: "password-input",
+	            name: "password",
 	            className: "form-control",
 	            placeholder: "Enter password",
-	            "data-touched": "false"
+	            onChange: function onChange(e) {
+	                return props.handleInputChange(e);
+	            },
+	            value: props.password
 	        }),
 	        _react2.default.createElement(
 	            "button",
-	            { id: "signup-submit", disabled: "true", type: "submit", form: "new-signup-form", value: "Submit",
+	            { id: "login-submit", type: "submit", form: "new-login-form", value: "Submit",
 	                className: "btn btn-primary btn-block" },
 	            _react2.default.createElement("span", { className: "glyphicon glyphicon-plus" }),
 	            " SUBMIT"
@@ -30366,7 +30389,13 @@
 	            "Please enter a valid name"
 	        )
 	    );
-	}
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
 /* 296 */
@@ -30411,8 +30440,7 @@
 	
 	    _createClass(UserDisplay, [{
 	        key: 'render',
-	        value: function render(props) {
-	            // console.log("UserDisplay this.props", this.props)
+	        value: function render() {
 	            return _react2.default.createElement(_Inbox2.default, { allMessages: this.props.allMessages });
 	        }
 	    }]);
@@ -30421,7 +30449,6 @@
 	}(_react.Component);
 	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    console.log("mstp state", state);
 	    return {
 	        allMessages: state.messages.allMessages
 	    };
@@ -30538,28 +30565,24 @@
 	                "div",
 	                { className: "message", key: message.id },
 	                _react2.default.createElement(
-	                    "h3",
-	                    null,
-	                    "Message appears below"
-	                ),
-	                _react2.default.createElement(
-	                    "h3",
+	                    "p",
 	                    null,
 	                    "To: ",
 	                    message.to
 	                ),
 	                _react2.default.createElement(
-	                    "h3",
+	                    "p",
 	                    null,
 	                    "From: ",
 	                    message.from
 	                ),
 	                _react2.default.createElement(
-	                    "h3",
+	                    "p",
 	                    null,
 	                    "Body: ",
 	                    message.body
-	                )
+	                ),
+	                _react2.default.createElement("hr", null)
 	            );
 	        })
 	    );
@@ -30676,6 +30699,9 @@
 	            break;
 	        case _constants.RECEIVE_USERS:
 	            newState.allUsers = [].concat(_toConsumableArray(newState.allUsers), _toConsumableArray(action.allUsers));
+	            break;
+	        case _constants.UPDATE_CURRENT_USER:
+	            newState.currentUser = Object.assign({}, action.user);
 	            break;
 	        default:
 	            return state;
@@ -31686,6 +31712,120 @@
 	        allMessages: allMessages
 	    };
 	};
+
+/***/ },
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _Login = __webpack_require__(295);
+	
+	var _Login2 = _interopRequireDefault(_Login);
+	
+	var _users = __webpack_require__(265);
+	
+	var _view = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var LoginContainer = function (_Component) {
+	    _inherits(LoginContainer, _Component);
+	
+	    function LoginContainer(props) {
+	        _classCallCheck(this, LoginContainer);
+	
+	        var _this = _possibleConstructorReturn(this, (LoginContainer.__proto__ || Object.getPrototypeOf(LoginContainer)).call(this, props));
+	
+	        _this.state = {
+	            phone: '',
+	            password: ''
+	        };
+	        _this.handleInputChange = _this.handleInputChange.bind(_this);
+	        _this.loginUser = _this.loginUser.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(LoginContainer, [{
+	        key: 'handleInputChange',
+	        value: function handleInputChange(e) {
+	            this.setState(_defineProperty({}, e.target.name, e.target.value));
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(_Login2.default, _extends({ handleInputChange: this.handleInputChange, loginUser: this.loginUser }, this.state));
+	        }
+	    }, {
+	        key: 'loginUser',
+	        value: function loginUser(e) {
+	            var _this2 = this;
+	
+	            console.log("got to loginUser function in LoginContainer, this.props", this.props);
+	            e.preventDefault();
+	            var loginAttempt = {
+	                phone: e.target.phone.value,
+	                password: e.target.password.value
+	            };
+	            this.props.allUsers.map(function (user) {
+	                if (loginAttempt.phone === user.phone && loginAttempt.password === user.password) {
+	                    _this2.setState({
+	                        phone: '',
+	                        password: ''
+	                    });
+	                    _this2.props.changeView('user');
+	                    _this2.props.updateCurrentUser(user);
+	                }
+	            });
+	        }
+	    }]);
+	
+	    return LoginContainer;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    console.log("mstp state", state);
+	    return {
+	        currentView: state.currentView,
+	        currentUser: state.users.currentUser,
+	        allUsers: state.users.allUsers
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {
+	        updateCurrentUser: function updateCurrentUser(user) {
+	            dispatch((0, _users.updateCurrentUser)(user));
+	        },
+	        changeView: function changeView(view) {
+	            dispatch((0, _view.changeView)(view));
+	        }
+	    };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginContainer);
 
 /***/ }
 /******/ ]);

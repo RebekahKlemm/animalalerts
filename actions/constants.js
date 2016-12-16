@@ -1,4 +1,5 @@
 export const ADD_USER = 'ADD_USER';
+export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER';
 
 // export const ADD_U_TO_DB = 'ADD_U_TO_DB';
 
