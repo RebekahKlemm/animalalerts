@@ -6,7 +6,7 @@ const db = require('./Database/_db');
 
 const app = express();
 const User = require('./Database/Models/userModel');
-const Message = require('./Database/Models/messageModel');
+const Alert = require('./Database/Models/alertModel');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -39,7 +39,7 @@ db.sync({force: true})
         ])
     })
     .then(function(){
-        Message.bulkCreate([
+        Alert.bulkCreate([
             {to: '123', from: '789', body: 'Here is an Alert to Joe from Susie'},
             {to: '456', from: '789', body: 'Here is an Alert to Bill from Susie'}
         ])

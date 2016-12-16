@@ -38,7 +38,9 @@ class SignupContainer extends Component{
             password: e.target.password.value
         }
         this.props.addUToDb(user);
-        this.props.changeView('user')
+        // this.props.changeView('user')
+        // console.log('signupcontainer user.phone', user.phone)
+        this.props.router.push('user/'+user.phone);
         this.setState({
             first: '',
             last: '',

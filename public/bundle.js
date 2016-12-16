@@ -86,22 +86,39 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _messages = __webpack_require__(312);
+	var _alerts = __webpack_require__(313);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var onAppEnter = function onAppEnter() {
-	    Promise.all([_axios2.default.get('/api/users'), _axios2.default.get('/api/messages')]).then(function (responses) {
+	    Promise.all([_axios2.default.get('/api/users'), _axios2.default.get('/api/alerts')]).then(function (responses) {
 	        return responses.map(function (r) {
 	            return r.data;
 	        });
 	    }).then(function (_ref) {
 	        var _ref2 = _slicedToArray(_ref, 2),
 	            users = _ref2[0],
-	            messages = _ref2[1];
+	            alerts = _ref2[1];
 	
 	        _store2.default.dispatch((0, _users.receiveUsers)(users));
-	        _store2.default.dispatch((0, _messages.receiveMessages)(messages));
+	        _store2.default.dispatch((0, _alerts.receiveAlerts)(alerts));
+	    });
+	};
+	
+	var onUserDisplayEnter = function onUserDisplayEnter(props) {
+	    Promise.all([_axios2.default.get('/api/users/' + props.params.id), _axios2.default.get('/api/alerts/' + props.params.id)]).then(function (responses) {
+	        return responses.map(function (r) {
+	            return r.data;
+	        });
+	    }).then(function (_ref3) {
+	        var _ref4 = _slicedToArray(_ref3, 2),
+	            user = _ref4[0],
+	            alerts = _ref4[1];
+	
+	        console.log('in index.js, onUserDisplayEnter, user ---->', user);
+	        console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
+	        _store2.default.dispatch((0, _users.updateCurrentUser)(user));
+	        _store2.default.dispatch((0, _alerts.updateCurrentAlerts)(alerts));
 	    });
 	};
 	
@@ -116,10 +133,12 @@
 	            { path: '/', component: _App.App, onEnter: onAppEnter },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _SignupContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/user', component: _UserDisplay2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/user/:id', component: _UserDisplay2.default, onEnter: onUserDisplayEnter })
 	        )
 	    )
 	), document.getElementById('app'));
+	
+	//{/*<Route path='/user' component={UserDisplay}/>*/}
 
 /***/ },
 /* 1 */
@@ -26514,7 +26533,9 @@
 	                password: e.target.password.value
 	            };
 	            this.props.addUToDb(user);
-	            this.props.changeView('user');
+	            // this.props.changeView('user')
+	            // console.log('signupcontainer user.phone', user.phone)
+	            this.props.router.push('user/' + user.phone);
 	            this.setState({
 	                first: '',
 	                last: '',
@@ -30179,13 +30200,12 @@
 	});
 	var ADD_USER = exports.ADD_USER = 'ADD_USER';
 	var UPDATE_CURRENT_USER = exports.UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER';
-	
-	// export const ADD_U_TO_DB = 'ADD_U_TO_DB';
-	
 	var RECEIVE_USERS = exports.RECEIVE_USERS = 'RECEIVE_USERS';
+	
 	var CHANGE_VIEW = exports.CHANGE_VIEW = 'CHANGE_VIEW';
 	
-	var RECEIVE_MESSAGES = exports.RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
+	var RECEIVE_ALERTS = exports.RECEIVE_ALERTS = 'RECEIVE_ALERTS';
+	var UPDATE_CURRENT_ALERTS = exports.UPDATE_CURRENT_ALERTS = 'UPDATE_CURRENT_ALERTS';
 
 /***/ },
 /* 292 */
@@ -30312,8 +30332,26 @@
 	                        null,
 	                        _react2.default.createElement(
 	                            "a",
-	                            { href: "#/user" },
-	                            "User"
+	                            { href: "#/user/123" },
+	                            "User123(Joe)"
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#/user/456" },
+	                            "User456(Bill)"
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "li",
+	                        null,
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#/user/789" },
+	                            "User789(Susie - Admin)"
 	                        )
 	                    )
 	                ),
@@ -30417,9 +30455,7 @@
 	                        phone: '',
 	                        password: ''
 	                    });
-	                    _this2.props.router.push('user');
-	                    // this.props.changeView('user');
-	                    _this2.props.updateCurrentUser(user);
+	                    _this2.props.router.push('user/' + loginAttempt.phone);
 	                }
 	            });
 	        }
@@ -30530,8 +30566,6 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _view = __webpack_require__(292);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30552,7 +30586,7 @@
 	    _createClass(UserDisplay, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_Inbox2.default, { allMessages: this.props.allMessages });
+	            return _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts, currentUser: this.props.currentUser });
 	        }
 	    }]);
 	
@@ -30561,16 +30595,14 @@
 	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
 	    return {
-	        allMessages: state.messages.allMessages
+	        allAlerts: state.alerts.allAlerts,
+	        currentAlerts: state.alerts.currentAlerts,
+	        currentUser: state.users.currentUser
 	    };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {
-	        changeView: function changeView(view) {
-	            dispatch((0, _view.changeView)(view));
-	        }
-	    };
+	    return {};
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserDisplay);
@@ -30592,114 +30624,26 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _Message = __webpack_require__(299);
+	var _Alert = __webpack_require__(314);
 	
-	var _Message2 = _interopRequireDefault(_Message);
+	var _Alert2 = _interopRequireDefault(_Alert);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function Inbox(props) {
 	    console.log("Inbox props --------------->", props);
-	    var allMessages = props.allMessages;
+	    var allAlerts = props.allAlerts;
+	    var currentAlerts = props.currentAlerts;
+	    var currentUser = props.currentUser;
 	    return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_Message2.default, { allMessages: allMessages })
-	    );
-	}
-	
-	//
-	// class Inbox extends Component{
-	//     constructor(props){
-	//         super(props);
-	//     }
-	//
-	//
-	//     render(){
-	//         console.log('Inbox allmessages with this --------->', this.allMessages)
-	//         console.log('Inbox allmessages without this--------->', allMessages)
-	//         return (
-	//             <div>
-	//             <div> You are in Inbox </div>
-	//             <Message allMessages={this.allMessages}/>
-	//             </div>
-	//                 )
-	//
-	//     }
-	//
-	// }
-	//
-	// const mapStateToProps = (state, ownProps) => {
-	//     return {
-	//         allMessages: state.messages.allMessages
-	//     };
-	// }
-	//
-	// const mapDispatchToProps = (dispatch, ownProps) => {
-	//     return {
-	//             changeView: function(view){
-	//                 dispatch(changeView(view));
-	//             }
-	//     }
-	// }
-	//
-	// export default connect(mapStateToProps, mapDispatchToProps)(Inbox);
-	//
-	//
-	//
-
-/***/ },
-/* 299 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = Message;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Message(props) {
-	    console.log("Message props --------------->", props);
-	    var allMessages = props.allMessages;
-	    return _react2.default.createElement(
-	        "div",
-	        null,
-	        allMessages.map(function (message) {
-	            return _react2.default.createElement(
-	                "div",
-	                { className: "message", key: message.id },
-	                _react2.default.createElement(
-	                    "p",
-	                    null,
-	                    "To: ",
-	                    message.to
-	                ),
-	                _react2.default.createElement(
-	                    "p",
-	                    null,
-	                    "From: ",
-	                    message.from
-	                ),
-	                _react2.default.createElement(
-	                    "p",
-	                    null,
-	                    "Body: ",
-	                    message.body
-	                ),
-	                _react2.default.createElement("hr", null)
-	            );
-	        })
+	        _react2.default.createElement(_Alert2.default, { allAlerts: allAlerts, currentAlerts: currentAlerts, currentUser: currentUser })
 	    );
 	}
 
 /***/ },
+/* 299 */,
 /* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30753,9 +30697,9 @@
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _messageReducer = __webpack_require__(303);
+	var _alertReducer = __webpack_require__(315);
 	
-	var _messageReducer2 = _interopRequireDefault(_messageReducer);
+	var _alertReducer2 = _interopRequireDefault(_alertReducer);
 	
 	var _currentViewReducer = __webpack_require__(304);
 	
@@ -30763,7 +30707,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, messages: _messageReducer2.default, currentView: _currentViewReducer2.default });
+	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default });
 
 /***/ },
 /* 302 */
@@ -30812,49 +30756,7 @@
 	};
 
 /***/ },
-/* 303 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	exports.default = function () {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-	    var action = arguments[1];
-	
-	    var newState = Object.assign({}, state);
-	    switch (action.type) {
-	        // case ADD_USER:
-	        //     newState.users = [...newState.users, action.user];
-	        //     break;
-	        case _constants.RECEIVE_MESSAGES:
-	            newState.allMessages = [].concat(_toConsumableArray(newState.allMessages), _toConsumableArray(action.allMessages));
-	            break;
-	        default:
-	            return state;
-	    }
-	    return newState;
-	};
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(291);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	var initialState = {
-	    allMessages: [],
-	    currentMessage: {}
-	};
-
-/***/ },
+/* 303 */,
 /* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31781,7 +31683,8 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 312 */
+/* 312 */,
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31789,15 +31692,123 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.receiveMessages = undefined;
+	exports.updateCurrentAlerts = exports.receiveAlerts = undefined;
 	
 	var _constants = __webpack_require__(291);
 	
-	var receiveMessages = exports.receiveMessages = function receiveMessages(allMessages) {
+	var receiveAlerts = exports.receiveAlerts = function receiveAlerts(allAlerts) {
 	    return {
-	        type: _constants.RECEIVE_MESSAGES,
-	        allMessages: allMessages
+	        type: _constants.RECEIVE_ALERTS,
+	        allAlerts: allAlerts
 	    };
+	};
+	
+	var updateCurrentAlerts = exports.updateCurrentAlerts = function updateCurrentAlerts(alerts) {
+	    return {
+	        type: _constants.UPDATE_CURRENT_ALERTS,
+	        currentAlerts: alerts
+	    };
+	};
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Alert;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Alert(props) {
+	    console.log("Alert props --------------->", props);
+	    var allAlerts = props.allAlerts;
+	    var currentAlerts = props.currentAlerts;
+	    var currentUser = props.currentUser;
+	
+	    if (currentUser.role === 'admin') {
+	        currentAlerts = allAlerts;
+	    }
+	
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        currentAlerts.map(function (alert) {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'alert', key: alert.id },
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'To: ',
+	                    alert.to
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'From: ',
+	                    alert.from
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Body: ',
+	                    alert.body
+	                ),
+	                _react2.default.createElement('hr', null)
+	            );
+	        })
+	    );
+	}
+
+/***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
+	
+	    var newState = Object.assign({}, state);
+	    switch (action.type) {
+	        case _constants.RECEIVE_ALERTS:
+	            newState.allAlerts = [].concat(_toConsumableArray(newState.allAlerts), _toConsumableArray(action.allAlerts));
+	            break;
+	        case _constants.UPDATE_CURRENT_ALERTS:
+	            newState.currentAlerts = [].concat(_toConsumableArray(action.currentAlerts));
+	            break;
+	        default:
+	            return state;
+	    }
+	    return newState;
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(291);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	var initialState = {
+	    allAlerts: [],
+	    currentAlerts: []
 	};
 
 /***/ }

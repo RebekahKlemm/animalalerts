@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import Inbox from './Inbox';
 import { connect } from 'react-redux';
-import {changeView} from '../actions/view';
-
 
 class UserDisplay extends Component{
     constructor(props){
@@ -11,23 +9,21 @@ class UserDisplay extends Component{
     }
 
     render(){
-        return (<Inbox allMessages={this.props.allMessages}/>)
+        return (<Inbox allAlerts={this.props.allAlerts} currentAlerts={this.props.currentAlerts} currentUser={this.props.currentUser}/>)
     }
 
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        allMessages: state.messages.allMessages
+        allAlerts: state.alerts.allAlerts,
+        currentAlerts: state.alerts.currentAlerts,
+        currentUser: state.users.currentUser
     };
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        changeView: function(view){
-            dispatch(changeView(view));
-        }
-    }
+    return {}
 }
 
 

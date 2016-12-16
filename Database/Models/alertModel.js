@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var db = require('../_db');
 
-var messageSchema = {
+var alertSchema = {
     to: {
         type: Sequelize.STRING,
         allowNull: false
@@ -17,10 +17,10 @@ var messageSchema = {
 };
 
 
-var messageConfig = {};
+var alertConfig = {};
 
 
 
-const Message = db.define('message', messageSchema, messageConfig);
+const Alert = db.define('alert', alertSchema, alertConfig);
 
-module.exports = Message;
+module.exports = Alert;

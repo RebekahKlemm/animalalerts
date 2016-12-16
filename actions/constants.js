@@ -1,13 +1,15 @@
 export const ADD_USER = 'ADD_USER';
 export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER';
-
-// export const ADD_U_TO_DB = 'ADD_U_TO_DB';
-
 export const RECEIVE_USERS = 'RECEIVE_USERS';
+
+
 export const CHANGE_VIEW = 'CHANGE_VIEW';
 
 
-export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
+export const RECEIVE_ALERTS = 'RECEIVE_ALERTS';
+export const UPDATE_CURRENT_ALERTS = 'UPDATE_CURRENT_ALERTS';
+
+
 
 
 

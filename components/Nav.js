@@ -13,7 +13,9 @@ export default function Nav() {
                         <ul className="nav navbar-nav">
                             <li><a href="#">Signup <span className="sr-only">(current)</span></a></li>
                             <li><a href="#/login">Login</a></li>
-                            <li><a href="#/user">User</a></li>
+                            <li><a href="#/user/123">User123(Joe)</a></li>
+                            <li><a href="#/user/456">User456(Bill)</a></li>
+                            <li><a href="#/user/789">User789(Susie - Admin)</a></li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
                             <li><a href="#">Link</a></li>

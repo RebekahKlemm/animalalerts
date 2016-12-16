@@ -10,22 +10,36 @@ import {Provider} from 'react-redux';
 import store from '../store';
 import {addUtoDb} from '../actions/users';
 import axios from 'axios';
-import {receiveUsers} from '../actions/users';
-import {receiveMessages} from '../actions/messages';
+import {receiveUsers, updateCurrentUser} from '../actions/users';
+import {receiveAlerts, updateCurrentAlerts} from '../actions/alerts';
 
 const onAppEnter = function () {
     Promise.all([
         axios.get('/api/users'),
-        axios.get('/api/messages')
+        axios.get('/api/alerts')
     ])
         .then(responses => responses.map(r => r.data))
-        .then(([users, messages]) => {
+        .then(([users, alerts]) => {
             store.dispatch(receiveUsers(users));
-            store.dispatch(receiveMessages(messages));
+            store.dispatch(receiveAlerts(alerts));
         })
 
 };
 
+const onUserDisplayEnter = function (props) {
+    Promise.all([
+        axios.get('/api/users/' + props.params.id),
+        axios.get('/api/alerts/' + props.params.id)
+    ])
+        .then(responses => responses.map(r => r.data))
+        .then(([user, alerts]) => {
+            console.log('in index.js, onUserDisplayEnter, user ---->', user);
+            console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
+            store.dispatch(updateCurrentUser(user));
+            store.dispatch(updateCurrentAlerts(alerts));
+        })
+
+};
 
 ReactDOM.render(
     <Provider store={store}>
@@ -33,10 +47,11 @@ ReactDOM.render(
             <Route path='/' component={App} onEnter={onAppEnter}>
                 <IndexRoute component={SignupContainer}/>
                 <Route path ='/login' component={LoginContainer}/>
-                <Route path='/user' component={UserDisplay}/>
+                <Route path='/user/:id' component={UserDisplay} onEnter={onUserDisplayEnter}/>
             </Route>
         </Router>
     </Provider>,
     document.getElementById('app')
 );
 
+//{/*<Route path='/user' component={UserDisplay}/>*/}

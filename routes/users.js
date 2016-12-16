@@ -30,4 +30,13 @@ router.post('/signup', function (req, res, next){
         .catch(next);
 });
 
+router.get('/:id', function(req, res, next){
+    User.findOne({
+        where: {phone: req.params.id}
+    })
+        .then(function(user){
+            res.send(user);
+        })
+})
+
 module.exports = router;
