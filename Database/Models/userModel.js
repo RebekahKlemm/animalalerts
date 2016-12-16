@@ -22,9 +22,9 @@ var userSchema = {
         type: Sequelize.STRING,
         allowNull: false
     },
-    isAdmin: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+    role: {
+        type: Sequelize.STRING,
+        defaultValue: 'user'
     },
 };
 

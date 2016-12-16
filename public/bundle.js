@@ -66,17 +66,17 @@
 	
 	var _App = __webpack_require__(293);
 	
-	var _LoginContainer = __webpack_require__(312);
+	var _LoginContainer = __webpack_require__(295);
 	
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 	
-	var _UserDisplay = __webpack_require__(296);
+	var _UserDisplay = __webpack_require__(297);
 	
 	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(299);
+	var _store = __webpack_require__(300);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -86,15 +86,11 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _messages = __webpack_require__(311);
+	var _messages = __webpack_require__(312);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var onAppEnter = function onAppEnter() {
-	    // axios.get('/api/users')
-	    //     .then(response => response.data)
-	    //     .then(allUsers => store.dispatch(receiveUsers(allUsers)));
-	
 	    Promise.all([_axios2.default.get('/api/users'), _axios2.default.get('/api/messages')]).then(function (responses) {
 	        return responses.map(function (r) {
 	            return r.data;
@@ -30343,6 +30339,121 @@
 /* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _Login = __webpack_require__(296);
+	
+	var _Login2 = _interopRequireDefault(_Login);
+	
+	var _users = __webpack_require__(265);
+	
+	var _view = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var LoginContainer = function (_Component) {
+	    _inherits(LoginContainer, _Component);
+	
+	    function LoginContainer(props) {
+	        _classCallCheck(this, LoginContainer);
+	
+	        var _this = _possibleConstructorReturn(this, (LoginContainer.__proto__ || Object.getPrototypeOf(LoginContainer)).call(this, props));
+	
+	        _this.state = {
+	            phone: '',
+	            password: ''
+	        };
+	        _this.handleInputChange = _this.handleInputChange.bind(_this);
+	        _this.loginUser = _this.loginUser.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(LoginContainer, [{
+	        key: 'handleInputChange',
+	        value: function handleInputChange(e) {
+	            this.setState(_defineProperty({}, e.target.name, e.target.value));
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(_Login2.default, _extends({ handleInputChange: this.handleInputChange, loginUser: this.loginUser }, this.state));
+	        }
+	    }, {
+	        key: 'loginUser',
+	        value: function loginUser(e) {
+	            var _this2 = this;
+	
+	            console.log("got to loginUser function in LoginContainer, this.props", this.props);
+	            e.preventDefault();
+	            var loginAttempt = {
+	                phone: e.target.phone.value,
+	                password: e.target.password.value
+	            };
+	            this.props.allUsers.map(function (user) {
+	                if (loginAttempt.phone === user.phone && loginAttempt.password === user.password) {
+	                    _this2.setState({
+	                        phone: '',
+	                        password: ''
+	                    });
+	                    _this2.props.router.push('user');
+	                    // this.props.changeView('user');
+	                    _this2.props.updateCurrentUser(user);
+	                }
+	            });
+	        }
+	    }]);
+	
+	    return LoginContainer;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    console.log("mstp state", state);
+	    return {
+	        currentView: state.currentView,
+	        currentUser: state.users.currentUser,
+	        allUsers: state.users.allUsers
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {
+	        updateCurrentUser: function updateCurrentUser(user) {
+	            dispatch((0, _users.updateCurrentUser)(user));
+	        },
+	        changeView: function changeView(view) {
+	            dispatch((0, _view.changeView)(view));
+	        }
+	    };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginContainer);
+
+/***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -30398,7 +30509,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 296 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30413,7 +30524,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Inbox = __webpack_require__(297);
+	var _Inbox = __webpack_require__(298);
 	
 	var _Inbox2 = _interopRequireDefault(_Inbox);
 	
@@ -30465,7 +30576,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserDisplay);
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30481,7 +30592,7 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _Message = __webpack_require__(298);
+	var _Message = __webpack_require__(299);
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
@@ -30538,7 +30649,7 @@
 	//
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30587,33 +30698,9 @@
 	        })
 	    );
 	}
-	
-	//
-	// export default class Message extends Component{
-	//     constructor(props){
-	//         super(props)
-	//     }
-	//
-	//     render(props){
-	//         const allMessages = props.allMessages;
-	//         return(
-	//             <div>
-	//                 { allMessages.map((message) => {
-	//                         return(<div className="message" key=message.id>
-	//                             <h3>Message appears below</h3>
-	//                             <h3>To: {message.to}</h3>
-	//                             <h3>From: {message.from}</h3>
-	//                             <h3>Body: {message.body}</h3>
-	//                         </div>)
-	//                     }
-	//                 )}
-	//             </div>
-	//         )
-	//     }
-	// }
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30624,15 +30711,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(300);
+	var _rootReducer = __webpack_require__(301);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(304);
+	var _reduxThunk = __webpack_require__(305);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(305);
+	var _reduxLogger = __webpack_require__(306);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -30647,7 +30734,7 @@
 	exports.default = store;
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30662,15 +30749,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _userReducer = __webpack_require__(301);
+	var _userReducer = __webpack_require__(302);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _messageReducer = __webpack_require__(302);
+	var _messageReducer = __webpack_require__(303);
 	
 	var _messageReducer2 = _interopRequireDefault(_messageReducer);
 	
-	var _currentViewReducer = __webpack_require__(303);
+	var _currentViewReducer = __webpack_require__(304);
 	
 	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
 	
@@ -30679,7 +30766,7 @@
 	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, messages: _messageReducer2.default, currentView: _currentViewReducer2.default });
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30725,7 +30812,7 @@
 	};
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30768,7 +30855,7 @@
 	};
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30807,7 +30894,7 @@
 	};
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30835,7 +30922,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30846,11 +30933,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(306);
+	var _core = __webpack_require__(307);
 	
-	var _helpers = __webpack_require__(307);
+	var _helpers = __webpack_require__(308);
 	
-	var _defaults = __webpack_require__(310);
+	var _defaults = __webpack_require__(311);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -30953,7 +31040,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30963,9 +31050,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(307);
+	var _helpers = __webpack_require__(308);
 	
-	var _diff = __webpack_require__(308);
+	var _diff = __webpack_require__(309);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -31094,7 +31181,7 @@
 	}
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31118,7 +31205,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31128,7 +31215,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(309);
+	var _deepDiff = __webpack_require__(310);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -31214,7 +31301,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -31643,7 +31730,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31694,7 +31781,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31712,120 +31799,6 @@
 	        allMessages: allMessages
 	    };
 	};
-
-/***/ },
-/* 312 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	var _Login = __webpack_require__(295);
-	
-	var _Login2 = _interopRequireDefault(_Login);
-	
-	var _users = __webpack_require__(265);
-	
-	var _view = __webpack_require__(292);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var LoginContainer = function (_Component) {
-	    _inherits(LoginContainer, _Component);
-	
-	    function LoginContainer(props) {
-	        _classCallCheck(this, LoginContainer);
-	
-	        var _this = _possibleConstructorReturn(this, (LoginContainer.__proto__ || Object.getPrototypeOf(LoginContainer)).call(this, props));
-	
-	        _this.state = {
-	            phone: '',
-	            password: ''
-	        };
-	        _this.handleInputChange = _this.handleInputChange.bind(_this);
-	        _this.loginUser = _this.loginUser.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(LoginContainer, [{
-	        key: 'handleInputChange',
-	        value: function handleInputChange(e) {
-	            this.setState(_defineProperty({}, e.target.name, e.target.value));
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(_Login2.default, _extends({ handleInputChange: this.handleInputChange, loginUser: this.loginUser }, this.state));
-	        }
-	    }, {
-	        key: 'loginUser',
-	        value: function loginUser(e) {
-	            var _this2 = this;
-	
-	            console.log("got to loginUser function in LoginContainer, this.props", this.props);
-	            e.preventDefault();
-	            var loginAttempt = {
-	                phone: e.target.phone.value,
-	                password: e.target.password.value
-	            };
-	            this.props.allUsers.map(function (user) {
-	                if (loginAttempt.phone === user.phone && loginAttempt.password === user.password) {
-	                    _this2.setState({
-	                        phone: '',
-	                        password: ''
-	                    });
-	                    _this2.props.changeView('user');
-	                    _this2.props.updateCurrentUser(user);
-	                }
-	            });
-	        }
-	    }]);
-	
-	    return LoginContainer;
-	}(_react.Component);
-	
-	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    console.log("mstp state", state);
-	    return {
-	        currentView: state.currentView,
-	        currentUser: state.users.currentUser,
-	        allUsers: state.users.allUsers
-	    };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {
-	        updateCurrentUser: function updateCurrentUser(user) {
-	            dispatch((0, _users.updateCurrentUser)(user));
-	        },
-	        changeView: function changeView(view) {
-	            dispatch((0, _view.changeView)(view));
-	        }
-	    };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginContainer);
 
 /***/ }
 /******/ ]);

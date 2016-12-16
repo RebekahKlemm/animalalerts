@@ -14,10 +14,6 @@ import {receiveUsers} from '../actions/users';
 import {receiveMessages} from '../actions/messages';
 
 const onAppEnter = function () {
-    // axios.get('/api/users')
-    //     .then(response => response.data)
-    //     .then(allUsers => store.dispatch(receiveUsers(allUsers)));
-
     Promise.all([
         axios.get('/api/users'),
         axios.get('/api/messages')

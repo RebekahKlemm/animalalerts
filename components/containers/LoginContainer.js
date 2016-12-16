@@ -37,7 +37,8 @@ class LoginContainer extends Component{
                     phone: '',
                     password: ''
                 });
-                this.props.changeView('user');
+                this.props.router.push('user');
+                // this.props.changeView('user');
                 this.props.updateCurrentUser(user);
             }
         });

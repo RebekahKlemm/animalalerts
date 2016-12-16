@@ -28,28 +28,27 @@ app.use(function (err, req, res, next) {
 });
 
 
-
-
 //Synch the database
-db.sync()
-// db.sync({force: true})
-//     .then(function(){
-//         User.create({
-//             firstName: 'Me', lastName: 'Tester', address: 'Somewhere USA', phone: '555-555-5555', password: '12345'})
-//     })
-//     .then(function(){
-//         Message.create({
-//             to: 'someone', from: 'me', body: 'Here is a Test Message'})
-//     })
+// db.sync()
+db.sync({force: true})
+    .then(function(){
+        User.bulkCreate([
+            {firstName: 'Joe', lastName: 'Smith', address: '1503 Nicks Dr, Stevens Point, WI 54482', phone: '123', password: '123'},
+            {firstName: 'Bill', lastName: 'Johnson', address: '1542 E Military Rd, Superior, WI 54880', phone: '456', password: '456'},
+            {firstName: 'Susie', lastName: 'Williams', address: '12700 12th St, Kenosha, WI 53144', phone: '789', password: '789', role: 'admin'}
+        ])
+    })
+    .then(function(){
+        Message.bulkCreate([
+            {to: '123', from: '789', body: 'Here is an Alert to Joe from Susie'},
+            {to: '456', from: '789', body: 'Here is an Alert to Bill from Susie'}
+        ])
+    })
     .then(function () {
         app.listen(3001, function () {
             console.log('Server is listening on port 3001');
         });
     })
     .catch(console.error);
-
-
-
-
 
 module.exports = app;
