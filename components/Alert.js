@@ -8,9 +8,9 @@ export default function Alert(props){
         let currentAlerts = props.currentAlerts;
         const currentUser = props.currentUser;
 
-    if(currentUser.role === 'admin'){
-        currentAlerts = allAlerts
-    }
+    // if(currentUser.role === 'admin'){
+    //     currentAlerts = allAlerts
+    // }
 
         return(
             <div>

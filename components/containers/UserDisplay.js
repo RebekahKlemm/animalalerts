@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Inbox from './Inbox';
+import Inbox from '../Inbox';
 import { connect } from 'react-redux';
 
 class UserDisplay extends Component{

@@ -15,12 +15,21 @@ router.get('/', function (req, res, next){
 
 router.get('/:id', function(req, res, next){
     Alert.findAll({
-        where: {to: req.params.id}
+        where: {$or:[{to: req.params.id}, {from: req.params.id}]}
     })
         .then(function(alerts){
             res.send(alerts);
         })
 })
+
+// router.get('/:id', function(req, res, next){
+//     Alert.findAll({
+//         where: {to: req.params.id}
+//     })
+//         .then(function(alerts){
+//             res.send(alerts);
+//         })
+// })
 
 module.exports = router;
 

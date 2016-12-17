@@ -70,9 +70,13 @@
 	
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 	
-	var _UserDisplay = __webpack_require__(297);
+	var _UserDisplay = __webpack_require__(313);
 	
 	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
+	
+	var _AdminContainer = __webpack_require__(314);
+	
+	var _AdminContainer2 = _interopRequireDefault(_AdminContainer);
 	
 	var _reactRedux = __webpack_require__(234);
 	
@@ -86,7 +90,7 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _alerts = __webpack_require__(313);
+	var _alerts = __webpack_require__(312);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -133,7 +137,8 @@
 	            { path: '/', component: _App.App, onEnter: onAppEnter },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _SignupContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/user/:id', component: _UserDisplay2.default, onEnter: onUserDisplayEnter })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/user/:id', component: _UserDisplay2.default, onEnter: onUserDisplayEnter }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/admin/:id', component: _AdminContainer2.default, onEnter: onUserDisplayEnter })
 	        )
 	    )
 	), document.getElementById('app'));
@@ -30350,8 +30355,8 @@
 	                        null,
 	                        _react2.default.createElement(
 	                            "a",
-	                            { href: "#/user/789" },
-	                            "User789(Susie - Admin)"
+	                            { href: "#/admin/789" },
+	                            "Admin789(Susie)"
 	                        )
 	                    )
 	                ),
@@ -30545,69 +30550,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 297 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Inbox = __webpack_require__(298);
-	
-	var _Inbox2 = _interopRequireDefault(_Inbox);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var UserDisplay = function (_Component) {
-	    _inherits(UserDisplay, _Component);
-	
-	    function UserDisplay(props) {
-	        _classCallCheck(this, UserDisplay);
-	
-	        return _possibleConstructorReturn(this, (UserDisplay.__proto__ || Object.getPrototypeOf(UserDisplay)).call(this, props));
-	    }
-	
-	    _createClass(UserDisplay, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts, currentUser: this.props.currentUser });
-	        }
-	    }]);
-	
-	    return UserDisplay;
-	}(_react.Component);
-	
-	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    return {
-	        allAlerts: state.alerts.allAlerts,
-	        currentAlerts: state.alerts.currentAlerts,
-	        currentUser: state.users.currentUser
-	    };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {};
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserDisplay);
-
-/***/ },
+/* 297 */,
 /* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30624,7 +30567,7 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _Alert = __webpack_require__(314);
+	var _Alert = __webpack_require__(299);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	
@@ -30643,7 +30586,64 @@
 	}
 
 /***/ },
-/* 299 */,
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Alert;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Alert(props) {
+	    console.log("Alert props --------------->", props);
+	    var allAlerts = props.allAlerts;
+	    var currentAlerts = props.currentAlerts;
+	    var currentUser = props.currentUser;
+	
+	    // if(currentUser.role === 'admin'){
+	    //     currentAlerts = allAlerts
+	    // }
+	
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        currentAlerts.map(function (alert) {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "alert", key: alert.id },
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    "To: ",
+	                    alert.to
+	                ),
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    "From: ",
+	                    alert.from
+	                ),
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    "Body: ",
+	                    alert.body
+	                ),
+	                _react2.default.createElement("hr", null)
+	            );
+	        })
+	    );
+	}
+
+/***/ },
 /* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30697,7 +30697,7 @@
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _alertReducer = __webpack_require__(315);
+	var _alertReducer = __webpack_require__(303);
 	
 	var _alertReducer2 = _interopRequireDefault(_alertReducer);
 	
@@ -30756,7 +30756,49 @@
 	};
 
 /***/ },
-/* 303 */,
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
+	
+	    var newState = Object.assign({}, state);
+	    switch (action.type) {
+	        case _constants.RECEIVE_ALERTS:
+	            newState.allAlerts = [].concat(_toConsumableArray(newState.allAlerts), _toConsumableArray(action.allAlerts));
+	            break;
+	        case _constants.UPDATE_CURRENT_ALERTS:
+	            newState.currentAlerts = [].concat(_toConsumableArray(action.currentAlerts));
+	            break;
+	        default:
+	            return state;
+	    }
+	    return newState;
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(291);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	var initialState = {
+	    allAlerts: [],
+	    currentAlerts: []
+	};
+
+/***/ },
 /* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31683,8 +31725,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 312 */,
-/* 313 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31711,6 +31752,69 @@
 	};
 
 /***/ },
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Inbox = __webpack_require__(298);
+	
+	var _Inbox2 = _interopRequireDefault(_Inbox);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UserDisplay = function (_Component) {
+	    _inherits(UserDisplay, _Component);
+	
+	    function UserDisplay(props) {
+	        _classCallCheck(this, UserDisplay);
+	
+	        return _possibleConstructorReturn(this, (UserDisplay.__proto__ || Object.getPrototypeOf(UserDisplay)).call(this, props));
+	    }
+	
+	    _createClass(UserDisplay, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts, currentUser: this.props.currentUser });
+	        }
+	    }]);
+	
+	    return UserDisplay;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    return {
+	        allAlerts: state.alerts.allAlerts,
+	        currentAlerts: state.alerts.currentAlerts,
+	        currentUser: state.users.currentUser
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserDisplay);
+
+/***/ },
 /* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31719,97 +31823,61 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = Alert;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _UserDisplay = __webpack_require__(313);
 	
-	function Alert(props) {
-	    console.log("Alert props --------------->", props);
-	    var allAlerts = props.allAlerts;
-	    var currentAlerts = props.currentAlerts;
-	    var currentUser = props.currentUser;
+	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
 	
-	    if (currentUser.role === 'admin') {
-	        currentAlerts = allAlerts;
-	    }
-	
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        currentAlerts.map(function (alert) {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'alert', key: alert.id },
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'To: ',
-	                    alert.to
-	                ),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'From: ',
-	                    alert.from
-	                ),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'Body: ',
-	                    alert.body
-	                ),
-	                _react2.default.createElement('hr', null)
-	            );
-	        })
-	    );
-	}
-
-/***/ },
-/* 315 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	exports.default = function () {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-	    var action = arguments[1];
-	
-	    var newState = Object.assign({}, state);
-	    switch (action.type) {
-	        case _constants.RECEIVE_ALERTS:
-	            newState.allAlerts = [].concat(_toConsumableArray(newState.allAlerts), _toConsumableArray(action.allAlerts));
-	            break;
-	        case _constants.UPDATE_CURRENT_ALERTS:
-	            newState.currentAlerts = [].concat(_toConsumableArray(action.currentAlerts));
-	            break;
-	        default:
-	            return state;
-	    }
-	    return newState;
-	};
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(291);
+	var _reactRedux = __webpack_require__(234);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var initialState = {
-	    allAlerts: [],
-	    currentAlerts: []
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import Inbox from '../Inbox';
+	
+	
+	var AdminContainer = function (_Component) {
+	    _inherits(AdminContainer, _Component);
+	
+	    function AdminContainer(props) {
+	        _classCallCheck(this, AdminContainer);
+	
+	        return _possibleConstructorReturn(this, (AdminContainer.__proto__ || Object.getPrototypeOf(AdminContainer)).call(this, props));
+	    }
+	
+	    _createClass(AdminContainer, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(_UserDisplay2.default, null);
+	        }
+	    }]);
+	
+	    return AdminContainer;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    return {
+	        // allAlerts: state.alerts.allAlerts,
+	        // currentAlerts: state.alerts.currentAlerts,
+	        // currentUser: state.users.currentUser
+	    };
 	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AdminContainer);
 
 /***/ }
 /******/ ]);

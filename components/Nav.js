@@ -15,7 +15,7 @@ export default function Nav() {
                             <li><a href="#/login">Login</a></li>
                             <li><a href="#/user/123">User123(Joe)</a></li>
                             <li><a href="#/user/456">User456(Bill)</a></li>
-                            <li><a href="#/user/789">User789(Susie - Admin)</a></li>
+                            <li><a href="#/admin/789">Admin789(Susie)</a></li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
                             <li><a href="#">Link</a></li>

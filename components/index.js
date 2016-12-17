@@ -5,7 +5,8 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import SignupContainer from './containers/SignupContainer';
 import {App} from './App';
 import LoginContainer from './containers/LoginContainer';
-import UserDisplay from './UserDisplay';
+import UserDisplay from './containers/UserDisplay';
+import AdminContainer from './containers/AdminContainer';
 import {Provider} from 'react-redux';
 import store from '../store';
 import {addUtoDb} from '../actions/users';
@@ -48,6 +49,7 @@ ReactDOM.render(
                 <IndexRoute component={SignupContainer}/>
                 <Route path ='/login' component={LoginContainer}/>
                 <Route path='/user/:id' component={UserDisplay} onEnter={onUserDisplayEnter}/>
+                <Route path='/admin/:id' component={AdminContainer} onEnter={onUserDisplayEnter}/>
             </Route>
         </Router>
     </Provider>,
