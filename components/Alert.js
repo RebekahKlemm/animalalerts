@@ -5,7 +5,8 @@ import React, {Component} from 'react';
 export default function Alert(props){
     console.log("Alert props --------------->", props);
         const allAlerts = props.allAlerts;
-        let currentAlerts = props.currentAlerts;
+        let currentAlerts = [...props.currentAlerts];
+            currentAlerts.reverse();
         const currentUser = props.currentUser;
 
     // if(currentUser.role === 'admin'){

@@ -1,5 +1,5 @@
 import React from 'react'
-import {RECEIVE_ALERTS, UPDATE_CURRENT_ALERTS} from '../actions/constants';
+import {RECEIVE_ALERTS, UPDATE_CURRENT_ALERTS, ADD_ALERT} from '../actions/constants';
 
 const initialState = {
     allAlerts: [],
@@ -15,6 +15,10 @@ export default function (state = initialState, action) {
             break;
         case UPDATE_CURRENT_ALERTS:
             newState.currentAlerts = [...action.currentAlerts]
+            break;
+        case ADD_ALERT:
+            newState.allAlerts = [...newState.allAlerts, action.alert];
+            newState.currentAlerts = [...newState.currentAlerts, action.alert];
             break;
         default:
             return state;

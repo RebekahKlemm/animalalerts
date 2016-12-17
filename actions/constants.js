@@ -8,6 +8,7 @@ export const CHANGE_VIEW = 'CHANGE_VIEW';
 
 export const RECEIVE_ALERTS = 'RECEIVE_ALERTS';
 export const UPDATE_CURRENT_ALERTS = 'UPDATE_CURRENT_ALERTS';
+export const ADD_ALERT = 'ADD_ALERT';
 
 
 

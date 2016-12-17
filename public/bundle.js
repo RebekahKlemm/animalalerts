@@ -70,17 +70,17 @@
 	
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 	
-	var _UserDisplay = __webpack_require__(313);
+	var _UserDisplay = __webpack_require__(297);
 	
 	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
 	
-	var _AdminContainer = __webpack_require__(314);
+	var _AdminContainer = __webpack_require__(300);
 	
 	var _AdminContainer2 = _interopRequireDefault(_AdminContainer);
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(300);
+	var _store = __webpack_require__(301);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -90,7 +90,7 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _alerts = __webpack_require__(312);
+	var _alerts = __webpack_require__(313);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30211,6 +30211,7 @@
 	
 	var RECEIVE_ALERTS = exports.RECEIVE_ALERTS = 'RECEIVE_ALERTS';
 	var UPDATE_CURRENT_ALERTS = exports.UPDATE_CURRENT_ALERTS = 'UPDATE_CURRENT_ALERTS';
+	var ADD_ALERT = exports.ADD_ALERT = 'ADD_ALERT';
 
 /***/ },
 /* 292 */
@@ -30550,7 +30551,69 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 297 */,
+/* 297 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Inbox = __webpack_require__(298);
+	
+	var _Inbox2 = _interopRequireDefault(_Inbox);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UserDisplay = function (_Component) {
+	    _inherits(UserDisplay, _Component);
+	
+	    function UserDisplay(props) {
+	        _classCallCheck(this, UserDisplay);
+	
+	        return _possibleConstructorReturn(this, (UserDisplay.__proto__ || Object.getPrototypeOf(UserDisplay)).call(this, props));
+	    }
+	
+	    _createClass(UserDisplay, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts, currentUser: this.props.currentUser });
+	        }
+	    }]);
+	
+	    return UserDisplay;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    return {
+	        allAlerts: state.alerts.allAlerts,
+	        currentAlerts: state.alerts.currentAlerts,
+	        currentUser: state.users.currentUser
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserDisplay);
+
+/***/ },
 /* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30602,10 +30665,13 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	function Alert(props) {
 	    console.log("Alert props --------------->", props);
 	    var allAlerts = props.allAlerts;
-	    var currentAlerts = props.currentAlerts;
+	    var currentAlerts = [].concat(_toConsumableArray(props.currentAlerts));
+	    currentAlerts.reverse();
 	    var currentUser = props.currentUser;
 	
 	    // if(currentUser.role === 'admin'){
@@ -30653,17 +30719,92 @@
 	    value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _UserDisplay = __webpack_require__(297);
+	
+	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
+	
+	var _NewAlertContainer = __webpack_require__(314);
+	
+	var _NewAlertContainer2 = _interopRequireDefault(_NewAlertContainer);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// import Inbox from '../Inbox';
+	
+	
+	var AdminContainer = function (_Component) {
+	    _inherits(AdminContainer, _Component);
+	
+	    function AdminContainer(props) {
+	        _classCallCheck(this, AdminContainer);
+	
+	        return _possibleConstructorReturn(this, (AdminContainer.__proto__ || Object.getPrototypeOf(AdminContainer)).call(this, props));
+	    }
+	
+	    _createClass(AdminContainer, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_NewAlertContainer2.default, null),
+	                _react2.default.createElement(_UserDisplay2.default, null)
+	            );
+	        }
+	    }]);
+	
+	    return AdminContainer;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    return {
+	        // allAlerts: state.alerts.allAlerts,
+	        // currentAlerts: state.alerts.currentAlerts,
+	        // currentUser: state.users.currentUser
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AdminContainer);
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(301);
+	var _rootReducer = __webpack_require__(302);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(305);
+	var _reduxThunk = __webpack_require__(306);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(306);
+	var _reduxLogger = __webpack_require__(307);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -30678,7 +30819,7 @@
 	exports.default = store;
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30693,15 +30834,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _userReducer = __webpack_require__(302);
+	var _userReducer = __webpack_require__(303);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _alertReducer = __webpack_require__(303);
+	var _alertReducer = __webpack_require__(304);
 	
 	var _alertReducer2 = _interopRequireDefault(_alertReducer);
 	
-	var _currentViewReducer = __webpack_require__(304);
+	var _currentViewReducer = __webpack_require__(305);
 	
 	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
 	
@@ -30710,7 +30851,7 @@
 	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default });
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30756,7 +30897,7 @@
 	};
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30776,6 +30917,10 @@
 	            break;
 	        case _constants.UPDATE_CURRENT_ALERTS:
 	            newState.currentAlerts = [].concat(_toConsumableArray(action.currentAlerts));
+	            break;
+	        case _constants.ADD_ALERT:
+	            newState.allAlerts = [].concat(_toConsumableArray(newState.allAlerts), [action.alert]);
+	            newState.currentAlerts = [].concat(_toConsumableArray(newState.currentAlerts), [action.alert]);
 	            break;
 	        default:
 	            return state;
@@ -30799,7 +30944,7 @@
 	};
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30838,7 +30983,7 @@
 	};
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30866,7 +31011,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30877,11 +31022,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(307);
+	var _core = __webpack_require__(308);
 	
-	var _helpers = __webpack_require__(308);
+	var _helpers = __webpack_require__(309);
 	
-	var _defaults = __webpack_require__(311);
+	var _defaults = __webpack_require__(312);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -30984,7 +31129,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30994,9 +31139,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(308);
+	var _helpers = __webpack_require__(309);
 	
-	var _diff = __webpack_require__(309);
+	var _diff = __webpack_require__(310);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -31125,7 +31270,7 @@
 	}
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31149,7 +31294,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31159,7 +31304,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(310);
+	var _deepDiff = __webpack_require__(311);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -31245,7 +31390,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -31674,7 +31819,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31725,7 +31870,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31733,9 +31878,16 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.updateCurrentAlerts = exports.receiveAlerts = undefined;
+	exports.addAlert = exports.updateCurrentAlerts = exports.receiveAlerts = undefined;
+	exports.addAToDb = addAToDb;
 	
 	var _constants = __webpack_require__(291);
+	
+	var _axios = __webpack_require__(266);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var receiveAlerts = exports.receiveAlerts = function receiveAlerts(allAlerts) {
 	    return {
@@ -31750,69 +31902,25 @@
 	        currentAlerts: alerts
 	    };
 	};
-
-/***/ },
-/* 313 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Inbox = __webpack_require__(298);
-	
-	var _Inbox2 = _interopRequireDefault(_Inbox);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var UserDisplay = function (_Component) {
-	    _inherits(UserDisplay, _Component);
-	
-	    function UserDisplay(props) {
-	        _classCallCheck(this, UserDisplay);
-	
-	        return _possibleConstructorReturn(this, (UserDisplay.__proto__ || Object.getPrototypeOf(UserDisplay)).call(this, props));
-	    }
-	
-	    _createClass(UserDisplay, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts, currentUser: this.props.currentUser });
-	        }
-	    }]);
-	
-	    return UserDisplay;
-	}(_react.Component);
-	
-	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	var addAlert = exports.addAlert = function addAlert(alert) {
+	    console.log("inside addAlert action, here is alert", alert);
 	    return {
-	        allAlerts: state.alerts.allAlerts,
-	        currentAlerts: state.alerts.currentAlerts,
-	        currentUser: state.users.currentUser
+	        type: _constants.ADD_ALERT,
+	        alert: alert
 	    };
 	};
 	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {};
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserDisplay);
+	//asynch action creator (thunk)
+	function addAToDb(alert) {
+	    return function (dispatch) {
+	        return _axios2.default.post('/api/alerts/newAlert', alert).then(function (response) {
+	            return response.data;
+	        }).then(function (newAlert) {
+	            dispatch(addAlert(newAlert));
+	        });
+	    };
+	}
 
 /***/ },
 /* 314 */
@@ -31824,60 +31932,176 @@
 	    value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _UserDisplay = __webpack_require__(313);
-	
-	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
-	
 	var _reactRedux = __webpack_require__(234);
 	
+	var _NewAlert = __webpack_require__(315);
+	
+	var _NewAlert2 = _interopRequireDefault(_NewAlert);
+	
+	var _alerts = __webpack_require__(313);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import Inbox from '../Inbox';
 	
+	// import {changeView} from '../../actions/view';
 	
-	var AdminContainer = function (_Component) {
-	    _inherits(AdminContainer, _Component);
+	var NewAlertContainer = function (_Component) {
+	    _inherits(NewAlertContainer, _Component);
 	
-	    function AdminContainer(props) {
-	        _classCallCheck(this, AdminContainer);
+	    function NewAlertContainer(props) {
+	        _classCallCheck(this, NewAlertContainer);
 	
-	        return _possibleConstructorReturn(this, (AdminContainer.__proto__ || Object.getPrototypeOf(AdminContainer)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (NewAlertContainer.__proto__ || Object.getPrototypeOf(NewAlertContainer)).call(this, props));
+	
+	        _this.state = {
+	            to: '',
+	            from: '',
+	            body: ''
+	        };
+	        _this.handleInputChange = _this.handleInputChange.bind(_this);
+	        _this.addAlert = _this.addAlert.bind(_this);
+	
+	        return _this;
 	    }
 	
-	    _createClass(AdminContainer, [{
+	    _createClass(NewAlertContainer, [{
+	        key: 'handleInputChange',
+	        value: function handleInputChange(e) {
+	            this.setState(_defineProperty({}, e.target.name, e.target.value));
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_UserDisplay2.default, null);
+	            return _react2.default.createElement(_NewAlert2.default, _extends({ handleInputChange: this.handleInputChange, addAlert: this.addAlert }, this.state));
+	        }
+	    }, {
+	        key: 'addAlert',
+	        value: function addAlert(e) {
+	            e.preventDefault();
+	            var alert = {
+	                to: e.target.to.value,
+	                from: e.target.from.value,
+	                body: e.target.body.value
+	            };
+	            this.props.addAToDb(alert);
+	            // this.props.updateCurrentAlerts(alert);
+	            // this.props.changeView('user')
+	            // console.log('signupcontainer user.phone', user.phone)
+	            // this.props.router.push('admin/'+ this.props.currentUser.phone);
+	            this.setState({
+	                to: '',
+	                from: '',
+	                body: ''
+	            });
 	        }
 	    }]);
 	
-	    return AdminContainer;
+	    return NewAlertContainer;
 	}(_react.Component);
 	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
 	    return {
-	        // allAlerts: state.alerts.allAlerts,
-	        // currentAlerts: state.alerts.currentAlerts,
-	        // currentUser: state.users.currentUser
+	        // currentView: state.currentView
+	        currentUser: state.currentUser
 	    };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {};
+	    return {
+	        addAToDb: function addAToDb(alert) {
+	            dispatch((0, _alerts.addAToDb)(alert));
+	        },
+	        updateCurrentAlerts: function updateCurrentAlerts(alert) {
+	            dispatch((0, _alerts.updateCurrentAlerts)(alert));
+	        }
+	    };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AdminContainer);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewAlertContainer);
+
+/***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function (props) {
+	    return _react2.default.createElement(
+	        'form',
+	        { id: 'new-alert-form', className: 'form-group', style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
+	                return props.addAlert(e);
+	            } },
+	        _react2.default.createElement('input', {
+	            id: 'to-input',
+	            name: 'to',
+	            className: 'form-control',
+	            placeholder: 'Enter recipient phone number without spaces or dashes',
+	            onChange: function onChange(e) {
+	                return props.handleInputChange(e);
+	            },
+	            value: props.to
+	        }),
+	        _react2.default.createElement('input', {
+	            id: 'from-input',
+	            name: 'from',
+	            className: 'form-control',
+	            placeholder: 'Enter your phone number without spaces or dashes',
+	            onChange: function onChange(e) {
+	                return props.handleInputChange(e);
+	            },
+	            value: props.from
+	        }),
+	        _react2.default.createElement('input', {
+	            id: 'body-input',
+	            name: 'body',
+	            className: 'form-control',
+	            placeholder: 'Enter body of alert',
+	            onChange: function onChange(e) {
+	                return props.handleInputChange(e);
+	            },
+	            value: props.body
+	        }),
+	        _react2.default.createElement(
+	            'button',
+	            { id: 'alert-submit', type: 'submit', form: 'new-alert-form', value: 'Submit',
+	                className: 'btn btn-primary btn-block' },
+	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+	            ' SUBMIT'
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            { id: 'alert-warning', hidden: 'true', className: 'alert alert-warning' },
+	            'Please enter a valid name'
+	        )
+	    );
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(178);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }
 /******/ ]);

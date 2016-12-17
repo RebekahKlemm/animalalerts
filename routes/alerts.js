@@ -22,6 +22,23 @@ router.get('/:id', function(req, res, next){
         })
 })
 
+
+
+router.post('/newAlert', function (req, res, next){
+    Alert.create({
+        to: req.body.to,
+        from: req.body.from,
+        body: req.body.body,
+    })
+        .then(function(newAlert){
+            if (newAlert){
+                res.status(201).send(newAlert);
+            }
+        })
+        .catch(next);
+});
+
+
 // router.get('/:id', function(req, res, next){
 //     Alert.findAll({
 //         where: {to: req.params.id}

@@ -7,6 +7,7 @@ const db = require('./Database/_db');
 const app = express();
 const User = require('./Database/Models/userModel');
 const Alert = require('./Database/Models/alertModel');
+const Interest = require('./Database/Models/interestModel');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -42,6 +43,13 @@ db.sync({force: true})
         Alert.bulkCreate([
             {to: '123', from: '789', body: 'Here is an Alert to Joe from Susie'},
             {to: '456', from: '789', body: 'Here is an Alert to Bill from Susie'}
+        ])
+    })
+    .then(function(){
+        Interest.bulkCreate([
+            {category: 'wildlife'},
+            {category: 'farm animals'},
+            {category: 'domestic pets'}
         ])
     })
     .then(function () {

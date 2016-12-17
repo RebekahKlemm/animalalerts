@@ -1,4 +1,5 @@
-import {RECEIVE_ALERTS, UPDATE_CURRENT_ALERTS} from './constants';
+import {RECEIVE_ALERTS, UPDATE_CURRENT_ALERTS, ADD_ALERT} from './constants';
+import axios from 'axios';
 
 
 
@@ -15,3 +16,24 @@ export const updateCurrentAlerts = function (alerts) {
         currentAlerts: alerts
     };
 };
+
+
+export const addAlert = function (alert) {
+    console.log("inside addAlert action, here is alert", alert)
+    return {
+        type: ADD_ALERT,
+        alert: alert
+    };
+};
+
+
+//asynch action creator (thunk)
+export function addAToDb(alert){
+    return function (dispatch){
+        return axios.post('/api/alerts/newAlert', alert)
+            .then(response => response.data)
+            .then(function(newAlert){
+                dispatch(addAlert(newAlert))
+            })
+    }
+}
