@@ -13,14 +13,14 @@ export default function(props) {
                 onChange={e => props.handleInputChange(e)}
                 value={props.to}
             />
-            <input
-                id="from-input"
-                name="from"
-                className="form-control"
-                placeholder="Enter your phone number without spaces or dashes"
-                onChange={e => props.handleInputChange(e)}
-                value={props.from}
-            />
+            {/*<input*/}
+                {/*id="from-input"*/}
+                {/*name="from"*/}
+                {/*className="form-control"*/}
+                {/*placeholder="Enter your phone number without spaces or dashes"*/}
+                {/*onChange={e => props.handleInputChange(e)}*/}
+                {/*value={props.from}*/}
+            {/*/>*/}
             <input
                 id="body-input"
                 name="body"

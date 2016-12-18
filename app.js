@@ -8,9 +8,9 @@ const app = express();
 // const User = require('./Database/Models/userModel');
 // const Alert = require('./Database/Models/alertModel');
 // const Interest = require('./Database/Models/interestModel');
-const {User} = require('./Database/Models/index');
-const {Alert} = require('./Database/Models/index');
-const {Interest} = require('./Database/Models/index');
+const {User, Alert, Interest} = require('./Database/Models/index');
+// const {Alert} = require('./Database/Models/index');
+// const {Interest} = require('./Database/Models/index');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());

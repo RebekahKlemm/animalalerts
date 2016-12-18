@@ -29,7 +29,7 @@ class NewAlertContainer extends Component{
         e.preventDefault();
         const alert = {
             to: e.target.to.value,
-            from: e.target.from.value,
+            from: this.props.currentUser.phone,
             body: e.target.body.value
         }
         this.props.addAToDb(alert);
@@ -50,7 +50,7 @@ class NewAlertContainer extends Component{
 const mapStateToProps = (state, ownProps) => {
     return {
         // currentView: state.currentView
-        currentUser: state.currentUser
+        currentUser: state.users.currentUser
     };
 }
 

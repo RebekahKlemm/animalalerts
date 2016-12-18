@@ -30857,7 +30857,7 @@
 	            e.preventDefault();
 	            var alert = {
 	                to: e.target.to.value,
-	                from: e.target.from.value,
+	                from: this.props.currentUser.phone,
 	                body: e.target.body.value
 	            };
 	            this.props.addAToDb(alert);
@@ -30879,7 +30879,7 @@
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
 	    return {
 	        // currentView: state.currentView
-	        currentUser: state.currentUser
+	        currentUser: state.users.currentUser
 	    };
 	};
 	
@@ -30921,16 +30921,6 @@
 	                return props.handleInputChange(e);
 	            },
 	            value: props.to
-	        }),
-	        _react2.default.createElement('input', {
-	            id: 'from-input',
-	            name: 'from',
-	            className: 'form-control',
-	            placeholder: 'Enter your phone number without spaces or dashes',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.from
 	        }),
 	        _react2.default.createElement('input', {
 	            id: 'body-input',
