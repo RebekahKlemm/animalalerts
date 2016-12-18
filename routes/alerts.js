@@ -1,6 +1,8 @@
 const express = require('express');
 const db = require('../Database/_db');
-const Alert = require('../Database/Models/alertModel');
+// const Alert = require('../Database/Models/alertModel');
+const {Alert} = require('../Database/Models/index');
+
 
 // This router is mounted on /api/alerts
 const router = express.Router();

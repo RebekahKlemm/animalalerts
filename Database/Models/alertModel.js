@@ -19,8 +19,9 @@ var alertSchema = {
 
 var alertConfig = {};
 
-
-
 const Alert = db.define('alert', alertSchema, alertConfig);
+
+
+
 
 module.exports = Alert;

@@ -5,9 +5,12 @@ const bodyParser = require('body-parser');
 const db = require('./Database/_db');
 
 const app = express();
-const User = require('./Database/Models/userModel');
-const Alert = require('./Database/Models/alertModel');
-const Interest = require('./Database/Models/interestModel');
+// const User = require('./Database/Models/userModel');
+// const Alert = require('./Database/Models/alertModel');
+// const Interest = require('./Database/Models/interestModel');
+const {User} = require('./Database/Models/index');
+const {Alert} = require('./Database/Models/index');
+const {Interest} = require('./Database/Models/index');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());

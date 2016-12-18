@@ -80,7 +80,7 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(301);
+	var _store = __webpack_require__(304);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -90,7 +90,7 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _alerts = __webpack_require__(313);
+	var _alerts = __webpack_require__(303);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30729,7 +30729,7 @@
 	
 	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
 	
-	var _NewAlertContainer = __webpack_require__(314);
+	var _NewAlertContainer = __webpack_require__(301);
 	
 	var _NewAlertContainer2 = _interopRequireDefault(_NewAlertContainer);
 	
@@ -30794,17 +30794,251 @@
 	    value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _NewAlert = __webpack_require__(302);
+	
+	var _NewAlert2 = _interopRequireDefault(_NewAlert);
+	
+	var _alerts = __webpack_require__(303);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// import {changeView} from '../../actions/view';
+	
+	var NewAlertContainer = function (_Component) {
+	    _inherits(NewAlertContainer, _Component);
+	
+	    function NewAlertContainer(props) {
+	        _classCallCheck(this, NewAlertContainer);
+	
+	        var _this = _possibleConstructorReturn(this, (NewAlertContainer.__proto__ || Object.getPrototypeOf(NewAlertContainer)).call(this, props));
+	
+	        _this.state = {
+	            to: '',
+	            from: '',
+	            body: ''
+	        };
+	        _this.handleInputChange = _this.handleInputChange.bind(_this);
+	        _this.addAlert = _this.addAlert.bind(_this);
+	
+	        return _this;
+	    }
+	
+	    _createClass(NewAlertContainer, [{
+	        key: 'handleInputChange',
+	        value: function handleInputChange(e) {
+	            this.setState(_defineProperty({}, e.target.name, e.target.value));
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(_NewAlert2.default, _extends({ handleInputChange: this.handleInputChange, addAlert: this.addAlert }, this.state));
+	        }
+	    }, {
+	        key: 'addAlert',
+	        value: function addAlert(e) {
+	            e.preventDefault();
+	            var alert = {
+	                to: e.target.to.value,
+	                from: e.target.from.value,
+	                body: e.target.body.value
+	            };
+	            this.props.addAToDb(alert);
+	            // this.props.updateCurrentAlerts(alert);
+	            // this.props.changeView('user')
+	            // console.log('signupcontainer user.phone', user.phone)
+	            // this.props.router.push('admin/'+ this.props.currentUser.phone);
+	            this.setState({
+	                to: '',
+	                from: '',
+	                body: ''
+	            });
+	        }
+	    }]);
+	
+	    return NewAlertContainer;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    return {
+	        // currentView: state.currentView
+	        currentUser: state.currentUser
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {
+	        addAToDb: function addAToDb(alert) {
+	            dispatch((0, _alerts.addAToDb)(alert));
+	        },
+	        updateCurrentAlerts: function updateCurrentAlerts(alert) {
+	            dispatch((0, _alerts.updateCurrentAlerts)(alert));
+	        }
+	    };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewAlertContainer);
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function (props) {
+	    return _react2.default.createElement(
+	        'form',
+	        { id: 'new-alert-form', className: 'form-group', style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
+	                return props.addAlert(e);
+	            } },
+	        _react2.default.createElement('input', {
+	            id: 'to-input',
+	            name: 'to',
+	            className: 'form-control',
+	            placeholder: 'Enter recipient phone number without spaces or dashes',
+	            onChange: function onChange(e) {
+	                return props.handleInputChange(e);
+	            },
+	            value: props.to
+	        }),
+	        _react2.default.createElement('input', {
+	            id: 'from-input',
+	            name: 'from',
+	            className: 'form-control',
+	            placeholder: 'Enter your phone number without spaces or dashes',
+	            onChange: function onChange(e) {
+	                return props.handleInputChange(e);
+	            },
+	            value: props.from
+	        }),
+	        _react2.default.createElement('input', {
+	            id: 'body-input',
+	            name: 'body',
+	            className: 'form-control',
+	            placeholder: 'Enter body of alert',
+	            onChange: function onChange(e) {
+	                return props.handleInputChange(e);
+	            },
+	            value: props.body
+	        }),
+	        _react2.default.createElement(
+	            'button',
+	            { id: 'alert-submit', type: 'submit', form: 'new-alert-form', value: 'Submit',
+	                className: 'btn btn-primary btn-block' },
+	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+	            ' SUBMIT'
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            { id: 'alert-warning', hidden: 'true', className: 'alert alert-warning' },
+	            'Please enter a valid name'
+	        )
+	    );
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(178);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.addAlert = exports.updateCurrentAlerts = exports.receiveAlerts = undefined;
+	exports.addAToDb = addAToDb;
+	
+	var _constants = __webpack_require__(291);
+	
+	var _axios = __webpack_require__(266);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var receiveAlerts = exports.receiveAlerts = function receiveAlerts(allAlerts) {
+	    return {
+	        type: _constants.RECEIVE_ALERTS,
+	        allAlerts: allAlerts
+	    };
+	};
+	
+	var updateCurrentAlerts = exports.updateCurrentAlerts = function updateCurrentAlerts(alerts) {
+	    return {
+	        type: _constants.UPDATE_CURRENT_ALERTS,
+	        currentAlerts: alerts
+	    };
+	};
+	
+	var addAlert = exports.addAlert = function addAlert(alert) {
+	    console.log("inside addAlert action, here is alert", alert);
+	    return {
+	        type: _constants.ADD_ALERT,
+	        alert: alert
+	    };
+	};
+	
+	//asynch action creator (thunk)
+	function addAToDb(alert) {
+	    return function (dispatch) {
+	        return _axios2.default.post('/api/alerts/newAlert', alert).then(function (response) {
+	            return response.data;
+	        }).then(function (newAlert) {
+	            dispatch(addAlert(newAlert));
+	        });
+	    };
+	}
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(302);
+	var _rootReducer = __webpack_require__(305);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(306);
+	var _reduxThunk = __webpack_require__(309);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(307);
+	var _reduxLogger = __webpack_require__(310);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -30819,7 +31053,7 @@
 	exports.default = store;
 
 /***/ },
-/* 302 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30834,15 +31068,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _userReducer = __webpack_require__(303);
+	var _userReducer = __webpack_require__(306);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _alertReducer = __webpack_require__(304);
+	var _alertReducer = __webpack_require__(307);
 	
 	var _alertReducer2 = _interopRequireDefault(_alertReducer);
 	
-	var _currentViewReducer = __webpack_require__(305);
+	var _currentViewReducer = __webpack_require__(308);
 	
 	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
 	
@@ -30851,7 +31085,7 @@
 	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default });
 
 /***/ },
-/* 303 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30897,7 +31131,7 @@
 	};
 
 /***/ },
-/* 304 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30944,7 +31178,7 @@
 	};
 
 /***/ },
-/* 305 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30983,7 +31217,7 @@
 	};
 
 /***/ },
-/* 306 */
+/* 309 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31011,7 +31245,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 307 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31022,11 +31256,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(308);
+	var _core = __webpack_require__(311);
 	
-	var _helpers = __webpack_require__(309);
+	var _helpers = __webpack_require__(312);
 	
-	var _defaults = __webpack_require__(312);
+	var _defaults = __webpack_require__(315);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -31129,7 +31363,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 308 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31139,9 +31373,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(309);
+	var _helpers = __webpack_require__(312);
 	
-	var _diff = __webpack_require__(310);
+	var _diff = __webpack_require__(313);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -31270,7 +31504,7 @@
 	}
 
 /***/ },
-/* 309 */
+/* 312 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31294,7 +31528,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 310 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31304,7 +31538,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(311);
+	var _deepDiff = __webpack_require__(314);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -31390,7 +31624,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 311 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -31819,7 +32053,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 312 */
+/* 315 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31868,240 +32102,6 @@
 	  transformer: undefined
 	};
 	module.exports = exports['default'];
-
-/***/ },
-/* 313 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.addAlert = exports.updateCurrentAlerts = exports.receiveAlerts = undefined;
-	exports.addAToDb = addAToDb;
-	
-	var _constants = __webpack_require__(291);
-	
-	var _axios = __webpack_require__(266);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var receiveAlerts = exports.receiveAlerts = function receiveAlerts(allAlerts) {
-	    return {
-	        type: _constants.RECEIVE_ALERTS,
-	        allAlerts: allAlerts
-	    };
-	};
-	
-	var updateCurrentAlerts = exports.updateCurrentAlerts = function updateCurrentAlerts(alerts) {
-	    return {
-	        type: _constants.UPDATE_CURRENT_ALERTS,
-	        currentAlerts: alerts
-	    };
-	};
-	
-	var addAlert = exports.addAlert = function addAlert(alert) {
-	    console.log("inside addAlert action, here is alert", alert);
-	    return {
-	        type: _constants.ADD_ALERT,
-	        alert: alert
-	    };
-	};
-	
-	//asynch action creator (thunk)
-	function addAToDb(alert) {
-	    return function (dispatch) {
-	        return _axios2.default.post('/api/alerts/newAlert', alert).then(function (response) {
-	            return response.data;
-	        }).then(function (newAlert) {
-	            dispatch(addAlert(newAlert));
-	        });
-	    };
-	}
-
-/***/ },
-/* 314 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	var _NewAlert = __webpack_require__(315);
-	
-	var _NewAlert2 = _interopRequireDefault(_NewAlert);
-	
-	var _alerts = __webpack_require__(313);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	// import {changeView} from '../../actions/view';
-	
-	var NewAlertContainer = function (_Component) {
-	    _inherits(NewAlertContainer, _Component);
-	
-	    function NewAlertContainer(props) {
-	        _classCallCheck(this, NewAlertContainer);
-	
-	        var _this = _possibleConstructorReturn(this, (NewAlertContainer.__proto__ || Object.getPrototypeOf(NewAlertContainer)).call(this, props));
-	
-	        _this.state = {
-	            to: '',
-	            from: '',
-	            body: ''
-	        };
-	        _this.handleInputChange = _this.handleInputChange.bind(_this);
-	        _this.addAlert = _this.addAlert.bind(_this);
-	
-	        return _this;
-	    }
-	
-	    _createClass(NewAlertContainer, [{
-	        key: 'handleInputChange',
-	        value: function handleInputChange(e) {
-	            this.setState(_defineProperty({}, e.target.name, e.target.value));
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(_NewAlert2.default, _extends({ handleInputChange: this.handleInputChange, addAlert: this.addAlert }, this.state));
-	        }
-	    }, {
-	        key: 'addAlert',
-	        value: function addAlert(e) {
-	            e.preventDefault();
-	            var alert = {
-	                to: e.target.to.value,
-	                from: e.target.from.value,
-	                body: e.target.body.value
-	            };
-	            this.props.addAToDb(alert);
-	            // this.props.updateCurrentAlerts(alert);
-	            // this.props.changeView('user')
-	            // console.log('signupcontainer user.phone', user.phone)
-	            // this.props.router.push('admin/'+ this.props.currentUser.phone);
-	            this.setState({
-	                to: '',
-	                from: '',
-	                body: ''
-	            });
-	        }
-	    }]);
-	
-	    return NewAlertContainer;
-	}(_react.Component);
-	
-	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    return {
-	        // currentView: state.currentView
-	        currentUser: state.currentUser
-	    };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {
-	        addAToDb: function addAToDb(alert) {
-	            dispatch((0, _alerts.addAToDb)(alert));
-	        },
-	        updateCurrentAlerts: function updateCurrentAlerts(alert) {
-	            dispatch((0, _alerts.updateCurrentAlerts)(alert));
-	        }
-	    };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewAlertContainer);
-
-/***/ },
-/* 315 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	exports.default = function (props) {
-	    return _react2.default.createElement(
-	        'form',
-	        { id: 'new-alert-form', className: 'form-group', style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
-	                return props.addAlert(e);
-	            } },
-	        _react2.default.createElement('input', {
-	            id: 'to-input',
-	            name: 'to',
-	            className: 'form-control',
-	            placeholder: 'Enter recipient phone number without spaces or dashes',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.to
-	        }),
-	        _react2.default.createElement('input', {
-	            id: 'from-input',
-	            name: 'from',
-	            className: 'form-control',
-	            placeholder: 'Enter your phone number without spaces or dashes',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.from
-	        }),
-	        _react2.default.createElement('input', {
-	            id: 'body-input',
-	            name: 'body',
-	            className: 'form-control',
-	            placeholder: 'Enter body of alert',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.body
-	        }),
-	        _react2.default.createElement(
-	            'button',
-	            { id: 'alert-submit', type: 'submit', form: 'new-alert-form', value: 'Submit',
-	                className: 'btn btn-primary btn-block' },
-	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
-	            ' SUBMIT'
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            { id: 'alert-warning', hidden: 'true', className: 'alert alert-warning' },
-	            'Please enter a valid name'
-	        )
-	    );
-	};
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(178);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }
 /******/ ]);
