@@ -36,11 +36,16 @@ app.use(function (err, req, res, next) {
 db.sync()
 // db.sync({force: true})
 //     .then(function(){
-//         User.bulkCreate([
+//         return User.bulkCreate([
 //             {firstName: 'Joe', lastName: 'Smith', address: '1503 Nicks Dr, Stevens Point, WI 54482', phone: '123', password: '123'},
 //             {firstName: 'Bill', lastName: 'Johnson', address: '1542 E Military Rd, Superior, WI 54880', phone: '456', password: '456'},
 //             {firstName: 'Susie', lastName: 'Williams', address: '12700 12th St, Kenosha, WI 53144', phone: '789', password: '789', role: 'admin'}
 //         ])
+//     })
+//     .spread(function(joe, bill, susie){
+//         joe.setInterests(['wildlife']);
+//         bill.setInterests(['domestic pets']);
+//         susie.setInterests(['farm animals']);
 //     })
 //     .then(function(){
 //         Alert.bulkCreate([

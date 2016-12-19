@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
+import InterestOptions from './InterestOptions';
 
 
 export default function(props) {
+    console.log('**************props', props)
     return (
         <form id="new-alert-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.addAlert(e)}>
+            <p>Select Interest Categories to receive this alert:</p>
+                <InterestOptions allInterests={props.allInterests} handleInputChange={props.handleInputChange}/>
+                <p/>
             <input
                 id="to-input"
                 name="to"
@@ -13,6 +18,7 @@ export default function(props) {
                 onChange={e => props.handleInputChange(e)}
                 value={props.to}
             />
+
             {/*<input*/}
                 {/*id="from-input"*/}
                 {/*name="from"*/}

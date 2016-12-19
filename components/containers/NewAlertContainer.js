@@ -9,6 +9,7 @@ class NewAlertContainer extends Component{
         super(props)
         this.state = {
             to: '',
+            interests: [],
             from: '',
             body: '',
         }
@@ -17,11 +18,42 @@ class NewAlertContainer extends Component{
     }
 
     handleInputChange(e){
-        this.setState({[e.target.name]:e.target.value});
+        //handle interest check boxes
+        if(e.target.name === 'interests'){
+            //check to see if the interest is already in the array
+            if(this.state.interests.length > 0){
+                function matches(element){
+                    return element === e.target.value;
+                }
+                const index = this.state.interests.findIndex(matches);
+
+                //if the interest is in the array, remove it and update the State
+                if (index >= 0 ){
+                    const newState = this.state.interests.slice(0, index).concat(this.state.interests.slice(index+1))
+                    this.setState({interests: [...newState]});
+                }
+
+                //if the interest is not in the array, add it to the State
+                else{
+                    this.setState({interests: [...this.state.interests, e.target.value] })
+                }
+            }
+
+            //if there is nothing in the State interest array yet, add this interest
+            else {
+                this.setState({interests: [...this.state.interests, e.target.value] })
+            }
+        }
+
+        //handle the normal input fields
+        else{
+            this.setState({[e.target.name]:e.target.value});
+        }
     }
 
     render(){
-        return (<NewAlert handleInputChange={this.handleInputChange} addAlert={this.addAlert} {...this.state}/>)
+        // console.log('***********allInterests', this.props.allInterests)
+        return (<NewAlert allInterests={this.props.allInterests} handleInputChange={this.handleInputChange} addAlert={this.addAlert} {...this.state}/>)
     }
 
     addAlert(e){
@@ -35,7 +67,8 @@ class NewAlertContainer extends Component{
         this.setState({
             to: '',
             from: '',
-            body: ''
+            body: '',
+            interests: []
         })
     }
 
@@ -43,8 +76,10 @@ class NewAlertContainer extends Component{
 
 
 const mapStateToProps = (state, ownProps) => {
+    console.log('*************state', state)
     return {
-        currentUser: state.users.currentUser
+        currentUser: state.users.currentUser,
+        allInterests: state.interests.allInterests
     };
 }
 

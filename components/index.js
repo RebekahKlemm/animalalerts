@@ -33,7 +33,7 @@ const onAppEnter = function () {
 const onUserDisplayEnter = function (props) {
     Promise.all([
         axios.get('/api/users/' + props.params.id),
-        axios.get('/api/alerts/' + props.params.id)
+        axios.get('/api/alerts/' + props.params.id),
     ])
         .then(responses => responses.map(r => r.data))
         .then(([user, alerts]) => {

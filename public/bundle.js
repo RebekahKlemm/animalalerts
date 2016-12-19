@@ -30921,6 +30921,8 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -30939,6 +30941,7 @@
 	
 	        _this.state = {
 	            to: '',
+	            interests: [],
 	            from: '',
 	            body: ''
 	        };
@@ -30950,12 +30953,44 @@
 	    _createClass(NewAlertContainer, [{
 	        key: 'handleInputChange',
 	        value: function handleInputChange(e) {
-	            this.setState(_defineProperty({}, e.target.name, e.target.value));
+	            //handle interest check boxes
+	            if (e.target.name === 'interests') {
+	                //check to see if the interest is already in the array
+	                if (this.state.interests.length > 0) {
+	                    var matches = function matches(element) {
+	                        return element === e.target.value;
+	                    };
+	
+	                    var index = this.state.interests.findIndex(matches);
+	
+	                    //if the interest is in the array, remove it and update the State
+	                    if (index >= 0) {
+	                        var newState = this.state.interests.slice(0, index).concat(this.state.interests.slice(index + 1));
+	                        this.setState({ interests: [].concat(_toConsumableArray(newState)) });
+	                    }
+	
+	                    //if the interest is not in the array, add it to the State
+	                    else {
+	                            this.setState({ interests: [].concat(_toConsumableArray(this.state.interests), [e.target.value]) });
+	                        }
+	                }
+	
+	                //if there is nothing in the State interest array yet, add this interest
+	                else {
+	                        this.setState({ interests: [].concat(_toConsumableArray(this.state.interests), [e.target.value]) });
+	                    }
+	            }
+	
+	            //handle the normal input fields
+	            else {
+	                    this.setState(_defineProperty({}, e.target.name, e.target.value));
+	                }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_NewAlert2.default, _extends({ handleInputChange: this.handleInputChange, addAlert: this.addAlert }, this.state));
+	            // console.log('***********allInterests', this.props.allInterests)
+	            return _react2.default.createElement(_NewAlert2.default, _extends({ allInterests: this.props.allInterests, handleInputChange: this.handleInputChange, addAlert: this.addAlert }, this.state));
 	        }
 	    }, {
 	        key: 'addAlert',
@@ -30970,7 +31005,8 @@
 	            this.setState({
 	                to: '',
 	                from: '',
-	                body: ''
+	                body: '',
+	                interests: []
 	            });
 	        }
 	    }]);
@@ -30979,8 +31015,10 @@
 	}(_react.Component);
 	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    console.log('*************state', state);
 	    return {
-	        currentUser: state.users.currentUser
+	        currentUser: state.users.currentUser,
+	        allInterests: state.interests.allInterests
 	    };
 	};
 	
@@ -31008,11 +31046,19 @@
 	});
 	
 	exports.default = function (props) {
+	    console.log('**************props', props);
 	    return _react2.default.createElement(
 	        'form',
 	        { id: 'new-alert-form', className: 'form-group', style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
 	                return props.addAlert(e);
 	            } },
+	        _react2.default.createElement(
+	            'p',
+	            null,
+	            'Select Interest Categories to receive this alert:'
+	        ),
+	        _react2.default.createElement(_InterestOptions2.default, { allInterests: props.allInterests, handleInputChange: props.handleInputChange }),
+	        _react2.default.createElement('p', null),
 	        _react2.default.createElement('input', {
 	            id: 'to-input',
 	            name: 'to',
@@ -31054,6 +31100,10 @@
 	
 	var _reactRouter = __webpack_require__(178);
 	
+	var _InterestOptions = __webpack_require__(265);
+	
+	var _InterestOptions2 = _interopRequireDefault(_InterestOptions);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
