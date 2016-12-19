@@ -3,7 +3,6 @@ import InterestOptions from './InterestOptions';
 
 
 export default function(props) {
-    console.log('signup props ------>', props)
     return (
         <form id="new-signup-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.signUpUser(e)}>
             <input

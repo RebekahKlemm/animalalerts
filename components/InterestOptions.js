@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 
 export default function(props) {
-    console.log('interestoptions props ------>', props);
     let allInterests = [...props.allInterests];
 
     return(
         <div>
             { allInterests.map((interest) => {
-                console.log('interest --------->', interest)
                     return(
-                        <label className="checkbox-inline" key={interest.id}>
+                        <label className="checkbox-inline" key={interest.category}>
                             <input name='interests' type="checkbox" value={interest.category} onChange={e => props.handleInputChange(e)}/>{interest.category}
                         </label>
                     )

@@ -58,18 +58,19 @@ class SignupContainer extends Component{
     }
 
     render(){
-        console.log('signupContainer props', this.props)
         return (<Signup allInterests={this.props.allInterests} handleInputChange={this.handleInputChange} signUpUser={this.signUpUser} {...this.state}/>)
     }
 
     signUpUser(e){
         e.preventDefault();
+        console.log('...........this.state.interests', this.state.interests)
         const user = {
             first: e.target.first.value,
             last: e.target.last.value,
             address: e.target.address.value,
             phone: e.target.phone.value,
-            password: e.target.password.value
+            password: e.target.password.value,
+            interests: this.state.interests
         }
         this.props.addUToDb(user);
         this.props.router.push('user/'+user.phone);
@@ -78,7 +79,8 @@ class SignupContainer extends Component{
             last: '',
             address: '',
             phone: '',
-            password: ''
+            password: '',
+            interests: []
         })
     }
 

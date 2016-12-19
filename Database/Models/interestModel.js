@@ -4,7 +4,8 @@ var db = require('../_db');
 var interestSchema = {
     category: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        primaryKey: true
     }
 };
 

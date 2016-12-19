@@ -26524,68 +26524,69 @@
 	        return _this;
 	    }
 	
-	    //
-	    //     function isBigEnough(element) {
-	    //     return element >= 15;
-	    // }
-	    //
-	    //     [12, 5, 8, 130, 44].findIndex(isBigEnough); // 3
-	
-	
 	    _createClass(SignupContainer, [{
 	        key: 'handleInputChange',
 	        value: function handleInputChange(e) {
+	            //handle interest check boxes
 	            if (e.target.name === 'interests') {
+	                //check to see if the interest is already in the array
 	                if (this.state.interests.length > 0) {
 	                    var matches = function matches(element) {
 	                        return element === e.target.value;
 	                    };
 	
 	                    var index = this.state.interests.findIndex(matches);
+	
+	                    //if the interest is in the array, remove it and update the State
 	                    if (index >= 0) {
 	                        var newState = this.state.interests.slice(0, index).concat(this.state.interests.slice(index + 1));
 	                        this.setState({ interests: [].concat(_toConsumableArray(newState)) });
-	                    } else {
-	                        //this adds the category to the array
-	                        this.setState({ interests: [].concat(_toConsumableArray(this.state.interests), [e.target.value]) });
 	                    }
+	
+	                    //if the interest is not in the array, add it to the State
+	                    else {
+	                            this.setState({ interests: [].concat(_toConsumableArray(this.state.interests), [e.target.value]) });
+	                        }
 	                }
 	
-	                //this adds the category to the array
+	                //if there is nothing in the State interest array yet, add this interest
 	                else {
 	                        this.setState({ interests: [].concat(_toConsumableArray(this.state.interests), [e.target.value]) });
 	                    }
-	            } else {
-	                this.setState(_defineProperty({}, e.target.name, e.target.value));
 	            }
+	
+	            //handle the normal input fields
+	            else {
+	                    this.setState(_defineProperty({}, e.target.name, e.target.value));
+	                }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            console.log('signupContainer props', this.props);
 	            return _react2.default.createElement(_Signup2.default, _extends({ allInterests: this.props.allInterests, handleInputChange: this.handleInputChange, signUpUser: this.signUpUser }, this.state));
 	        }
 	    }, {
 	        key: 'signUpUser',
 	        value: function signUpUser(e) {
 	            e.preventDefault();
+	            console.log('...........this.state.interests', this.state.interests);
 	            var user = {
 	                first: e.target.first.value,
 	                last: e.target.last.value,
 	                address: e.target.address.value,
 	                phone: e.target.phone.value,
-	                password: e.target.password.value
+	                password: e.target.password.value,
+	                interests: this.state.interests
 	            };
 	            this.props.addUToDb(user);
-	            // this.props.changeView('user')
-	            // console.log('signupcontainer user.phone', user.phone)
 	            this.props.router.push('user/' + user.phone);
 	            this.setState({
 	                first: '',
 	                last: '',
 	                address: '',
 	                phone: '',
-	                password: ''
+	                password: '',
+	                interests: []
 	            });
 	        }
 	    }]);
@@ -28603,7 +28604,6 @@
 	});
 	
 	exports.default = function (props) {
-	    console.log('signup props ------>', props);
 	    return _react2.default.createElement(
 	        'form',
 	        { id: 'new-signup-form', className: 'form-group', style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
@@ -28697,17 +28697,15 @@
 	});
 	
 	exports.default = function (props) {
-	    console.log('interestoptions props ------>', props);
 	    var allInterests = [].concat(_toConsumableArray(props.allInterests));
 	
 	    return _react2.default.createElement(
 	        'div',
 	        null,
 	        allInterests.map(function (interest) {
-	            console.log('interest --------->', interest);
 	            return _react2.default.createElement(
 	                'label',
-	                { className: 'checkbox-inline', key: interest.id },
+	                { className: 'checkbox-inline', key: interest.category },
 	                _react2.default.createElement('input', { name: 'interests', type: 'checkbox', value: interest.category, onChange: function onChange(e) {
 	                        return props.handleInputChange(e);
 	                    } }),

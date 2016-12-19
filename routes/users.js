@@ -25,7 +25,9 @@ router.post('/signup', function (req, res, next){
     })
         .then(function(newUser){
             if (newUser){
-                res.status(201).send(newUser);
+                newUser.setInterests(req.body.interests)
+                    .then(res.status(201).send(newUser))
+
             }
         })
         .catch(next);
