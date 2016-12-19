@@ -1,9 +1,9 @@
 import React from 'react'
-// import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER} from '../actions/constants';
+import {RECEIVE_INTERESTS} from '../actions/constants';
 
 const initialState = {
     allInterests: [],
-    currentInterests: {}
+    currentInterests: []
 }
 
 
@@ -13,9 +13,9 @@ export default function (state = initialState, action) {
         // case ADD_USER:
         //     newState.allUsers = [...newState.allUsers, action.user];
         //     break;
-        // case RECEIVE_USERS:
-        //     newState.allUsers = [...newState.allUsers, ...action.allUsers];
-        //     break;
+        case RECEIVE_INTERESTS:
+            newState.allInterests = [...newState.allInterests, ...action.allInterests];
+            break;
         // case UPDATE_CURRENT_USER:
         //     newState.currentUser= Object.assign({}, action.user)
         //     break;

@@ -8,24 +8,61 @@ import {changeView} from '../../actions/view';
 class SignupContainer extends Component{
     constructor(props){
         super(props)
+
         this.state = {
             first: '',
             last: '',
             address: '',
             phone: '',
-            password: ''
+            password: '',
+            interests: []
         }
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.signUpUser = this.signUpUser.bind(this);
 
     }
 
+//
+//     function isBigEnough(element) {
+//     return element >= 15;
+// }
+//
+//     [12, 5, 8, 130, 44].findIndex(isBigEnough); // 3
+
+
+
+
     handleInputChange(e){
+        if(e.target.name === 'interests'){
+            if(this.state.interests.length > 0){
+                function matches(element){
+                    return element === e.target.value;
+                }
+                  const index = this.state.interests.findIndex(matches);
+                  if (index >= 0 ){
+                      const newState = this.state.interests.slice(0, index).concat(this.state.interests.slice(index+1))
+                      this.setState({interests: [...newState]});
+                  }
+              else{
+                  //this adds the category to the array
+                  this.setState({interests: [...this.state.interests, e.target.value] })
+              }
+            }
+
+            //this adds the category to the array
+            else {
+                this.setState({interests: [...this.state.interests, e.target.value] })
+            }
+        }
+        else{
             this.setState({[e.target.name]:e.target.value});
+        }
     }
 
     render(){
-        return (<Signup handleInputChange={this.handleInputChange} signUpUser={this.signUpUser} {...this.state}/>)
+        console.log('signupContainer props', this.props)
+        return (<Signup allInterests={this.props.allInterests} handleInputChange={this.handleInputChange} signUpUser={this.signUpUser} {...this.state}/>)
     }
 
     signUpUser(e){
@@ -55,7 +92,8 @@ class SignupContainer extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        currentView: state.currentView
+        currentView: state.currentView,
+        allInterests: state.interests.allInterests
     };
 }
 

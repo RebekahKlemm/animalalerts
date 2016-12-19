@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router';
+import InterestOptions from './InterestOptions';
 
 
 export default function(props) {
+    console.log('signup props ------>', props)
     return (
         <form id="new-signup-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.signUpUser(e)}>
             <input
@@ -46,6 +47,7 @@ export default function(props) {
                 onChange={e => props.handleInputChange(e)}
                 value={props.password}
             />
+            <InterestOptions allInterests={props.allInterests} interests={props.interests} handleInputChange={props.handleInputChange}/>
             <button id="signup-submit" type="submit" form="new-signup-form" value="Submit"
                     className="btn btn-primary btn-block">
                 <span className="glyphicon glyphicon-plus"></span> SUBMIT

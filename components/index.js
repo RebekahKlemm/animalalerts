@@ -13,16 +13,19 @@ import {addUtoDb} from '../actions/users';
 import axios from 'axios';
 import {receiveUsers, updateCurrentUser} from '../actions/users';
 import {receiveAlerts, updateCurrentAlerts} from '../actions/alerts';
+import {receiveInterests} from '../actions/interests';
 
 const onAppEnter = function () {
     Promise.all([
         axios.get('/api/users'),
-        axios.get('/api/alerts')
+        axios.get('/api/alerts'),
+        axios.get('/api/interests')
     ])
         .then(responses => responses.map(r => r.data))
-        .then(([users, alerts]) => {
+        .then(([users, alerts, interests]) => {
             store.dispatch(receiveUsers(users));
             store.dispatch(receiveAlerts(alerts));
+            store.dispatch(receiveInterests(interests));
         })
 
 };

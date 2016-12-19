@@ -14,7 +14,6 @@ class NewAlertContainer extends Component{
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.addAlert = this.addAlert.bind(this);
-
     }
 
     handleInputChange(e){
@@ -33,10 +32,6 @@ class NewAlertContainer extends Component{
             body: e.target.body.value
         }
         this.props.addAToDb(alert);
-        // this.props.updateCurrentAlerts(alert);
-        // this.props.changeView('user')
-        // console.log('signupcontainer user.phone', user.phone)
-        // this.props.router.push('admin/'+ this.props.currentUser.phone);
         this.setState({
             to: '',
             from: '',
@@ -49,7 +44,6 @@ class NewAlertContainer extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        // currentView: state.currentView
         currentUser: state.users.currentUser
     };
 }
