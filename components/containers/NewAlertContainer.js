@@ -59,7 +59,8 @@ class NewAlertContainer extends Component{
     addAlert(e){
         e.preventDefault();
         const alert = {
-            to: e.target.to.value,
+            // to: e.target.to.value,
+            to: this.state.interests,
             from: this.props.currentUser.phone,
             body: e.target.body.value
         }

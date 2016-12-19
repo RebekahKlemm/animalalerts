@@ -29,11 +29,13 @@ export const addAlert = function (alert) {
 
 //asynch action creator (thunk)
 export function addAToDb(alert){
+    console.log('AAAAAAAACtion alert', alert);
     return function (dispatch){
         return axios.post('/api/alerts/newAlert', alert)
-            .then(response => response.data)
-            .then(function(newAlert){
-                dispatch(addAlert(newAlert))
-            })
+            .then(response => console.log('RRRRRRRResponse', response));
+            // .then(response => response.data)
+            // .then(function(newAlert){
+            //     dispatch(addAlert(newAlert))
+            // })
     }
 }

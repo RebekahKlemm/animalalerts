@@ -30997,7 +30997,8 @@
 	        value: function addAlert(e) {
 	            e.preventDefault();
 	            var alert = {
-	                to: e.target.to.value,
+	                // to: e.target.to.value,
+	                to: this.state.interests,
 	                from: this.props.currentUser.phone,
 	                body: e.target.body.value
 	            };
@@ -31150,12 +31151,15 @@
 	
 	//asynch action creator (thunk)
 	function addAToDb(alert) {
+	    console.log('AAAAAAAACtion alert', alert);
 	    return function (dispatch) {
 	        return _axios2.default.post('/api/alerts/newAlert', alert).then(function (response) {
-	            return response.data;
-	        }).then(function (newAlert) {
-	            dispatch(addAlert(newAlert));
+	            return console.log('RRRRRRRResponse', response);
 	        });
+	        // .then(response => response.data)
+	        // .then(function(newAlert){
+	        //     dispatch(addAlert(newAlert))
+	        // })
 	    };
 	}
 
