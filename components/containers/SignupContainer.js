@@ -23,38 +23,35 @@ class SignupContainer extends Component{
 
     }
 
-//
-//     function isBigEnough(element) {
-//     return element >= 15;
-// }
-//
-//     [12, 5, 8, 130, 44].findIndex(isBigEnough); // 3
-
-
-
-
     handleInputChange(e){
+        //handle interest check boxes
         if(e.target.name === 'interests'){
+            //check to see if the interest is already in the array
             if(this.state.interests.length > 0){
                 function matches(element){
                     return element === e.target.value;
                 }
                   const index = this.state.interests.findIndex(matches);
+
+                    //if the interest is in the array, remove it and update the State
                   if (index >= 0 ){
                       const newState = this.state.interests.slice(0, index).concat(this.state.interests.slice(index+1))
                       this.setState({interests: [...newState]});
                   }
+
+                  //if the interest is not in the array, add it to the State
               else{
-                  //this adds the category to the array
                   this.setState({interests: [...this.state.interests, e.target.value] })
               }
             }
 
-            //this adds the category to the array
+            //if there is nothing in the State interest array yet, add this interest
             else {
                 this.setState({interests: [...this.state.interests, e.target.value] })
             }
         }
+
+        //handle the normal input fields
         else{
             this.setState({[e.target.name]:e.target.value});
         }
@@ -75,8 +72,6 @@ class SignupContainer extends Component{
             password: e.target.password.value
         }
         this.props.addUToDb(user);
-        // this.props.changeView('user')
-        // console.log('signupcontainer user.phone', user.phone)
         this.props.router.push('user/'+user.phone);
         this.setState({
             first: '',
