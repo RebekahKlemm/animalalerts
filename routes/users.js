@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../Database/_db');
 // const User = require('../Database/Models/userModel');
-const {User} = require('../Database/Models/index');
+const {User, LatLong} = require('../Database/Models/index');
 
 // This router is mounted on /api/users
 const router = express.Router();
@@ -61,10 +61,29 @@ router.get('/:id/latLong', function(req, res, next){
                 }
             });
         })
-        // .then(function(latLongResponse){
-        //     res.send(latLongResponse);
-        // })
+
 })
+
+
+//
+router.post('/:id/latLong', function (req, res, next){
+    User.findOne({
+        where: {phone: req.params.id}
+    })
+        .then(function(user){
+            LatLong.create({
+                lat: req.body.lat,
+                long: req.body.lng
+            })
+                .then(function(latLong){
+                    user.setLatLong(latLong);
+                    return latLong;
+                })
+                .then(latLong => res.send(latLong))
+            }
+        )
+});
+
 
 const OpenStates = require('openstates');
 

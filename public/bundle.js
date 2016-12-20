@@ -64,23 +64,23 @@
 	
 	var _SignupContainer2 = _interopRequireDefault(_SignupContainer);
 	
-	var _App = __webpack_require__(294);
+	var _App = __webpack_require__(295);
 	
-	var _LoginContainer = __webpack_require__(296);
+	var _LoginContainer = __webpack_require__(297);
 	
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 	
-	var _UserDisplay = __webpack_require__(298);
+	var _UserDisplay = __webpack_require__(299);
 	
 	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
 	
-	var _AdminContainer = __webpack_require__(301);
+	var _AdminContainer = __webpack_require__(302);
 	
 	var _AdminContainer2 = _interopRequireDefault(_AdminContainer);
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(305);
+	var _store = __webpack_require__(306);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -90,11 +90,11 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _alerts = __webpack_require__(304);
+	var _alerts = __webpack_require__(305);
 	
-	var _interests = __webpack_require__(319);
+	var _interests = __webpack_require__(320);
 	
-	var _addressDetails = __webpack_require__(320);
+	var _addressDetails = __webpack_require__(294);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -116,7 +116,7 @@
 	};
 	
 	var onUserDisplayEnter = function onUserDisplayEnter(props) {
-	    Promise.all([_axios2.default.get('/api/users/' + props.params.id), _axios2.default.get('/api/alerts/' + props.params.id), _axios2.default.get('/api/users/' + props.params.id + '/latLong')]).then(function (responses) {
+	    Promise.all([_axios2.default.get('/api/users/' + props.params.id), _axios2.default.get('/api/alerts/' + props.params.id)]).then(function (responses) {
 	        return responses.map(function (r) {
 	            return r.data;
 	        });
@@ -128,10 +128,10 @@
 	
 	        console.log('in index.js, onUserDisplayEnter, user ---->', user);
 	        console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
-	        console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
+	        // console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
 	        _store2.default.dispatch((0, _users.updateCurrentUser)(user));
 	        _store2.default.dispatch((0, _alerts.updateCurrentAlerts)(alerts));
-	        _store2.default.dispatch((0, _addressDetails.updateCurrentAddressDetails)(latLong));
+	        // store.dispatch(updateCurrentAddressDetails(latLong));
 	    });
 	};
 	
@@ -26494,6 +26494,8 @@
 	
 	var _view = __webpack_require__(293);
 	
+	var _addressDetails = __webpack_require__(294);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -26584,6 +26586,8 @@
 	                interests: this.state.interests
 	            };
 	            this.props.addUToDb(user);
+	            console.log("Signup Container between addUToDb and addLatLongToDb");
+	            this.props.addLatLongToDb(user);
 	            this.props.router.push('user/' + user.phone);
 	            this.setState({
 	                first: '',
@@ -26600,6 +26604,7 @@
 	}(_react.Component);
 	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    console.log('-----------> Signup Container state', state);
 	    return {
 	        currentView: state.currentView,
 	        allInterests: state.interests.allInterests
@@ -26613,6 +26618,9 @@
 	        },
 	        changeView: function changeView(view) {
 	            dispatch((0, _view.changeView)(view));
+	        },
+	        addLatLongToDb: function addLatLongToDb(user, lat, long) {
+	            dispatch((0, _addressDetails.addLatLongToDb)(user, lat, long));
 	        }
 	    };
 	};
@@ -30356,13 +30364,110 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.updateCurrentAddressDetails = undefined;
+	exports.addLatLongToDb = addLatLongToDb;
+	
+	var _axios = __webpack_require__(267);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
+	var _constants = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// export const addUser = function (user) {
+	//     return {
+	//         type: ADD_USER,
+	//         user: user
+	//     };
+	// };
+	//
+	//
+	// //asynch action creator (thunk)
+	// export function addUToDb(user){
+	//     return function (dispatch){
+	//         return axios.post('/api/users/signup', user)
+	//             .then(response => response.data)
+	//             .then(function(newUser){
+	//                 dispatch(addUser(newUser))
+	//             })
+	//     }
+	// }
+	
+	// export const receiveUsers = function (allUsers) {
+	//     return {
+	//         type: RECEIVE_USERS,
+	//         allUsers: allUsers
+	//     };
+	// };
+	//
+	
+	var updateCurrentAddressDetails = exports.updateCurrentAddressDetails = function updateCurrentAddressDetails(latLong) {
+	    console.log('inside updateCurrentAddressDetails, here is latLong', latLong);
+	    return {
+	        type: _constants.UPDATE_CURRENT_ADDRESS_DETAILS,
+	        latLong: latLong
+	    };
+	};
+	
+	// export function addLatLongToDb(user){
+	//     console.log('inside addLatLongToDb, here is user', user)
+	//     return function (dispatch){
+	//         return axios.get('/api/users/'+ user.phone +'/latLong')
+	//             .then(response => response.data)
+	//             .then(function(latLong){
+	//                 console.log('inside addLatLongToDb, here is latLong', latLong)
+	//                 dispatch(updateCurrentAddressDetails(latLong))
+	//             })
+	//     }
+	// }
+	
+	// var googleMapsClient = require('@google/maps').createClient({
+	//     key: 'AIzaSyBFetAhXRcymhUCT9_2_k-nEs8TEkDiOo8'
+	// });
+	//
+	// .then(function(user){
+	//     // Geocode an address.
+	//     googleMapsClient.geocode({
+	//         address: user.address
+	//     }, function(err, response) {
+	//         if (!err) {
+	//             res.send(response.json.results[0].geometry.location);
+	//         }
+	//     });
+	// })
+	
+	function addLatLongToDb(user) {
+	    console.log('inside addLatLongToDb, here is user', user);
+	    return function (dispatch) {
+	        return _axios2.default.get('/api/users/' + user.phone + '/latLong').then(function (response) {
+	            return response.data;
+	        }).then(function (latLong) {
+	            return _axios2.default.post('/api/users/' + user.phone + '/latLong', latLong);
+	        }).then(function (latLong) {
+	            console.log('inside addLatLongToDb, here is latLong', latLong);
+	            dispatch(updateCurrentAddressDetails(latLong.data));
+	            return latLong;
+	        });
+	    };
+	}
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.App = undefined;
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Nav = __webpack_require__(295);
+	var _Nav = __webpack_require__(296);
 	
 	var _Nav2 = _interopRequireDefault(_Nav);
 	
@@ -30386,7 +30491,7 @@
 	};
 
 /***/ },
-/* 295 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30494,7 +30599,7 @@
 	}
 
 /***/ },
-/* 296 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30513,7 +30618,7 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _Login = __webpack_require__(297);
+	var _Login = __webpack_require__(298);
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
@@ -30607,7 +30712,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginContainer);
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30665,7 +30770,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30680,7 +30785,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Inbox = __webpack_require__(299);
+	var _Inbox = __webpack_require__(300);
 	
 	var _Inbox2 = _interopRequireDefault(_Inbox);
 	
@@ -30728,7 +30833,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UserDisplay);
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30744,7 +30849,7 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _Alert = __webpack_require__(300);
+	var _Alert = __webpack_require__(301);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	
@@ -30763,7 +30868,7 @@
 	}
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30824,7 +30929,7 @@
 	}
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30839,11 +30944,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _UserDisplay = __webpack_require__(298);
+	var _UserDisplay = __webpack_require__(299);
 	
 	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
 	
-	var _NewAlertContainer = __webpack_require__(302);
+	var _NewAlertContainer = __webpack_require__(303);
 	
 	var _NewAlertContainer2 = _interopRequireDefault(_NewAlertContainer);
 	
@@ -30899,7 +31004,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AdminContainer);
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30918,11 +31023,11 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _NewAlert = __webpack_require__(303);
+	var _NewAlert = __webpack_require__(304);
 	
 	var _NewAlert2 = _interopRequireDefault(_NewAlert);
 	
-	var _alerts = __webpack_require__(304);
+	var _alerts = __webpack_require__(305);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -31044,7 +31149,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewAlertContainer);
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31115,7 +31220,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31172,7 +31277,7 @@
 	}
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31183,15 +31288,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(306);
+	var _rootReducer = __webpack_require__(307);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(312);
+	var _reduxThunk = __webpack_require__(313);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(313);
+	var _reduxLogger = __webpack_require__(314);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -31206,7 +31311,7 @@
 	exports.default = store;
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31221,23 +31326,23 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _userReducer = __webpack_require__(307);
+	var _userReducer = __webpack_require__(308);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _alertReducer = __webpack_require__(308);
+	var _alertReducer = __webpack_require__(309);
 	
 	var _alertReducer2 = _interopRequireDefault(_alertReducer);
 	
-	var _currentViewReducer = __webpack_require__(309);
+	var _currentViewReducer = __webpack_require__(310);
 	
 	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
 	
-	var _interestReducer = __webpack_require__(310);
+	var _interestReducer = __webpack_require__(311);
 	
 	var _interestReducer2 = _interopRequireDefault(_interestReducer);
 	
-	var _addressDetailsReducer = __webpack_require__(311);
+	var _addressDetailsReducer = __webpack_require__(312);
 	
 	var _addressDetailsReducer2 = _interopRequireDefault(_addressDetailsReducer);
 	
@@ -31246,7 +31351,7 @@
 	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default, interests: _interestReducer2.default, addressDetails: _addressDetailsReducer2.default });
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31292,7 +31397,7 @@
 	};
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31339,7 +31444,7 @@
 	};
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31378,7 +31483,7 @@
 	};
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31424,7 +31529,7 @@
 	};
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31446,7 +31551,9 @@
 	        //     newState.allUsers = [...newState.allUsers, ...action.allUsers];
 	        //     break;
 	        case _constants.UPDATE_CURRENT_ADDRESS_DETAILS:
-	            newState.lat = action.latLong.lat, newState.long = action.latLong.lng;
+	            console.log('inside addressDetails reducer, here is action', action);
+	            newState.lat = action.latLong.lat;
+	            newState.long = action.latLong.long;
 	            break;
 	        default:
 	            return state;
@@ -31468,7 +31575,7 @@
 	};
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31496,7 +31603,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31507,11 +31614,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(314);
+	var _core = __webpack_require__(315);
 	
-	var _helpers = __webpack_require__(315);
+	var _helpers = __webpack_require__(316);
 	
-	var _defaults = __webpack_require__(318);
+	var _defaults = __webpack_require__(319);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -31614,7 +31721,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31624,9 +31731,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(315);
+	var _helpers = __webpack_require__(316);
 	
-	var _diff = __webpack_require__(316);
+	var _diff = __webpack_require__(317);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -31755,7 +31862,7 @@
 	}
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31779,7 +31886,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31789,7 +31896,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(317);
+	var _deepDiff = __webpack_require__(318);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -31875,7 +31982,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -32304,7 +32411,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32355,7 +32462,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32380,59 +32487,6 @@
 	    return {
 	        type: _constants.RECEIVE_INTERESTS,
 	        allInterests: allInterests
-	    };
-	};
-
-/***/ },
-/* 320 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.updateCurrentAddressDetails = undefined;
-	
-	var _axios = __webpack_require__(267);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
-	var _constants = __webpack_require__(292);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	// export const addUser = function (user) {
-	//     return {
-	//         type: ADD_USER,
-	//         user: user
-	//     };
-	// };
-	//
-	//
-	// //asynch action creator (thunk)
-	// export function addUToDb(user){
-	//     return function (dispatch){
-	//         return axios.post('/api/users/signup', user)
-	//             .then(response => response.data)
-	//             .then(function(newUser){
-	//                 dispatch(addUser(newUser))
-	//             })
-	//     }
-	// }
-	
-	// export const receiveUsers = function (allUsers) {
-	//     return {
-	//         type: RECEIVE_USERS,
-	//         allUsers: allUsers
-	//     };
-	// };
-	//
-	
-	var updateCurrentAddressDetails = exports.updateCurrentAddressDetails = function updateCurrentAddressDetails(latLong) {
-	    return {
-	        type: _constants.UPDATE_CURRENT_ADDRESS_DETAILS,
-	        latLong: latLong
 	    };
 	};
 

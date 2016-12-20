@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Signup from '../Signup';
 import {addUser, addUToDb} from '../../actions/users'
 import {changeView} from '../../actions/view';
+import {addLatLongToDb} from '../../actions/addressDetails'
 
 class SignupContainer extends Component{
     constructor(props){
@@ -73,6 +74,8 @@ class SignupContainer extends Component{
             interests: this.state.interests
         }
         this.props.addUToDb(user);
+        console.log("Signup Container between addUToDb and addLatLongToDb")
+        this.props.addLatLongToDb(user);
         this.props.router.push('user/'+user.phone);
         this.setState({
             first: '',
@@ -88,6 +91,7 @@ class SignupContainer extends Component{
 
 
 const mapStateToProps = (state, ownProps) => {
+    console.log('-----------> Signup Container state', state)
     return {
         currentView: state.currentView,
         allInterests: state.interests.allInterests
@@ -103,6 +107,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             },
             changeView: function(view){
                 dispatch(changeView(view));
+            },
+            addLatLongToDb: function(user, lat, long){
+                dispatch(addLatLongToDb(user, lat, long))
             }
     }
 }
