@@ -92,9 +92,9 @@
 	
 	var _alerts = __webpack_require__(304);
 	
-	var _interests = __webpack_require__(318);
+	var _interests = __webpack_require__(319);
 	
-	var _addressDetails = __webpack_require__(319);
+	var _addressDetails = __webpack_require__(320);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30758,7 +30758,6 @@
 	    return _react2.default.createElement(
 	        'div',
 	        null,
-	        currentUser.latLong,
 	        _react2.default.createElement(_Alert2.default, { allAlerts: allAlerts, currentAlerts: currentAlerts, currentUser: currentUser })
 	    );
 	}
@@ -31188,11 +31187,11 @@
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(311);
+	var _reduxThunk = __webpack_require__(312);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(312);
+	var _reduxLogger = __webpack_require__(313);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -31238,7 +31237,7 @@
 	
 	var _interestReducer2 = _interopRequireDefault(_interestReducer);
 	
-	var _addressDetailsReducer = __webpack_require__(320);
+	var _addressDetailsReducer = __webpack_require__(311);
 	
 	var _addressDetailsReducer2 = _interopRequireDefault(_addressDetailsReducer);
 	
@@ -31426,6 +31425,50 @@
 
 /***/ },
 /* 311 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
+	
+	    var newState = Object.assign({}, state);
+	    switch (action.type) {
+	        // case ADD_USER:
+	        //     newState.allUsers = [...newState.allUsers, action.user];
+	        //     break;
+	        // case RECEIVE_USERS:
+	        //     newState.allUsers = [...newState.allUsers, ...action.allUsers];
+	        //     break;
+	        case _constants.UPDATE_CURRENT_ADDRESS_DETAILS:
+	            newState.lat = action.latLong.lat, newState.long = action.latLong.lng;
+	            break;
+	        default:
+	            return state;
+	    }
+	    return newState;
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {
+	    lat: '',
+	    long: ''
+	};
+
+/***/ },
+/* 312 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31453,7 +31496,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31464,11 +31507,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(313);
+	var _core = __webpack_require__(314);
 	
-	var _helpers = __webpack_require__(314);
+	var _helpers = __webpack_require__(315);
 	
-	var _defaults = __webpack_require__(317);
+	var _defaults = __webpack_require__(318);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -31571,7 +31614,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31581,9 +31624,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(314);
+	var _helpers = __webpack_require__(315);
 	
-	var _diff = __webpack_require__(315);
+	var _diff = __webpack_require__(316);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -31712,7 +31755,7 @@
 	}
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31736,7 +31779,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31746,7 +31789,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(316);
+	var _deepDiff = __webpack_require__(317);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -31832,7 +31875,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -32261,7 +32304,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32312,7 +32355,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32341,7 +32384,7 @@
 	};
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32391,50 +32434,6 @@
 	        type: _constants.UPDATE_CURRENT_ADDRESS_DETAILS,
 	        latLong: latLong
 	    };
-	};
-
-/***/ },
-/* 320 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	exports.default = function () {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-	    var action = arguments[1];
-	
-	    var newState = Object.assign({}, state);
-	    switch (action.type) {
-	        // case ADD_USER:
-	        //     newState.allUsers = [...newState.allUsers, action.user];
-	        //     break;
-	        // case RECEIVE_USERS:
-	        //     newState.allUsers = [...newState.allUsers, ...action.allUsers];
-	        //     break;
-	        case _constants.UPDATE_CURRENT_ADDRESS_DETAILS:
-	            newState.lat = action.latLong.lat, newState.long = action.latLong.lng;
-	            break;
-	        default:
-	            return state;
-	    }
-	    return newState;
-	};
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(292);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var initialState = {
-	    lat: '',
-	    long: ''
 	};
 
 /***/ }

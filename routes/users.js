@@ -66,4 +66,47 @@ router.get('/:id/latLong', function(req, res, next){
         // })
 })
 
+const OpenStates = require('openstates');
+
+var openstates = new OpenStates('abc');
+
+
+// router.get('/:id/legislators', function(req, res, next){
+//     // User.findOne({
+//     //     where: {phone: req.params.id}
+//     // })
+//     //     .then(function(user){
+//             openstates.legDetail('NCL000173', function(err, json) {
+//                 if (err) throw err;
+//                 res.send(json);
+//             });
+//     // })
+//
+//
+// })
+
+router.get('/:id/legislators', function(req, res, next){
+    User.findOne({
+        where: {phone: req.params.id}
+    })
+        .then(function(user){
+            openstates.geoLookup(44.5212, -89.5218, function(err, json) {
+                if (err) throw err;
+                res.send(json);
+            });
+        })
+
+
+})
+
+// Lookup all legislators that serve districts containing a given point
+// OpenStates.prototype.geoLookup = function(lat, long, callback) {
+//     var params = {
+//         lat: lat,
+//         long: long
+//     };
+//     this.makeRequest('legislators/geo', params, callback);
+// };
+
+
 module.exports = router;
