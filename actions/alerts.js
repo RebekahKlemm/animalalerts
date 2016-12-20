@@ -32,10 +32,13 @@ export function addAToDb(alert){
     console.log('AAAAAAAACtion alert', alert);
     return function (dispatch){
         return axios.post('/api/alerts/newAlert', alert)
-            .then(response => console.log('RRRRRRRResponse', response));
-            // .then(response => response.data)
-            // .then(function(newAlert){
-            //     dispatch(addAlert(newAlert))
-            // })
+            .then(function(response){
+                console.log('RRRRRRRResponse', response)
+                return response
+            })
+            .then(response => response.data)
+            .then(function(newAlert){
+                dispatch(addAlert(newAlert))
+            })
     }
 }

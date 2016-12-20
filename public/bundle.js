@@ -31154,12 +31154,13 @@
 	    console.log('AAAAAAAACtion alert', alert);
 	    return function (dispatch) {
 	        return _axios2.default.post('/api/alerts/newAlert', alert).then(function (response) {
-	            return console.log('RRRRRRRResponse', response);
+	            console.log('RRRRRRRResponse', response);
+	            return response;
+	        }).then(function (response) {
+	            return response.data;
+	        }).then(function (newAlert) {
+	            dispatch(addAlert(newAlert));
 	        });
-	        // .then(response => response.data)
-	        // .then(function(newAlert){
-	        //     dispatch(addAlert(newAlert))
-	        // })
 	    };
 	}
 

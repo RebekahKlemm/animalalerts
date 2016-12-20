@@ -49,11 +49,15 @@ router.post('/newAlert', function (req, res, next){
                                 .then(function(alert){
                                     console.log('aaaaaaalert', alert)
                                     interestObj.addAlert([alert])
+                                    console.log('INTEREST OBJECT', interestObj)
+                                    res.send(alert);
                                 })
                         })
                     })
             })
     )
+
+});
 
 
 // router.post('/newAlert', function (req, res, next){
@@ -101,7 +105,7 @@ router.post('/newAlert', function (req, res, next){
     //         })
     // )
     //     .catch(next);
-});
+// });
 
 
 // router.post('/newAlert', function (req, res, next){
