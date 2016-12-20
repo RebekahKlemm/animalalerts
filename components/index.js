@@ -14,6 +14,7 @@ import axios from 'axios';
 import {receiveUsers, updateCurrentUser} from '../actions/users';
 import {receiveAlerts, updateCurrentAlerts} from '../actions/alerts';
 import {receiveInterests} from '../actions/interests';
+import {updateCurrentAddressDetails} from '../actions/addressDetails';
 
 const onAppEnter = function () {
     Promise.all([
@@ -34,13 +35,16 @@ const onUserDisplayEnter = function (props) {
     Promise.all([
         axios.get('/api/users/' + props.params.id),
         axios.get('/api/alerts/' + props.params.id),
+        axios.get('/api/users/'+ props.params.id +'/latLong')
     ])
         .then(responses => responses.map(r => r.data))
-        .then(([user, alerts]) => {
+        .then(([user, alerts, latLong]) => {
             console.log('in index.js, onUserDisplayEnter, user ---->', user);
             console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
+            console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
             store.dispatch(updateCurrentUser(user));
             store.dispatch(updateCurrentAlerts(alerts));
+            store.dispatch(updateCurrentAddressDetails(latLong));
         })
 
 };

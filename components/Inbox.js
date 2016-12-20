@@ -9,7 +9,7 @@ export default function Inbox(props){
     const currentAlerts = props.currentAlerts;
     const currentUser = props.currentUser;
     return(
-        <div>
+        <div>{currentUser.latLong}
 
                 <Alert allAlerts={allAlerts} currentAlerts={currentAlerts} currentUser={currentUser}/>
 

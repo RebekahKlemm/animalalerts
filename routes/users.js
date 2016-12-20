@@ -42,4 +42,28 @@ router.get('/:id', function(req, res, next){
         })
 })
 
+
+var googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyBFetAhXRcymhUCT9_2_k-nEs8TEkDiOo8'
+});
+
+router.get('/:id/latLong', function(req, res, next){
+    User.findOne({
+        where: {phone: req.params.id}
+    })
+        .then(function(user){
+            // Geocode an address.
+            googleMapsClient.geocode({
+                address: user.address
+            }, function(err, response) {
+                if (!err) {
+                    res.send(response.json.results[0].geometry.location);
+                }
+            });
+        })
+        // .then(function(latLongResponse){
+        //     res.send(latLongResponse);
+        // })
+})
+
 module.exports = router;

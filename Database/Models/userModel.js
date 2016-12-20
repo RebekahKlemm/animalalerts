@@ -30,7 +30,19 @@ var userSchema = {
 };
 
 
-var userConfig = {};
+var userConfig = {
+    // hooks: {
+    //     beforeValidate: function formatAddressURL(page) {
+    //         //if/else statement
+    //     }
+    // },
+    // getterMethods: {
+    //     latLongRoute: function () {
+    //         return '/api/users/' + this.phone + '/latLong';
+    //     }
+    // }
+
+};
 
 
 

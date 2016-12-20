@@ -94,6 +94,8 @@
 	
 	var _interests = __webpack_require__(318);
 	
+	var _addressDetails = __webpack_require__(319);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var onAppEnter = function onAppEnter() {
@@ -114,19 +116,22 @@
 	};
 	
 	var onUserDisplayEnter = function onUserDisplayEnter(props) {
-	    Promise.all([_axios2.default.get('/api/users/' + props.params.id), _axios2.default.get('/api/alerts/' + props.params.id)]).then(function (responses) {
+	    Promise.all([_axios2.default.get('/api/users/' + props.params.id), _axios2.default.get('/api/alerts/' + props.params.id), _axios2.default.get('/api/users/' + props.params.id + '/latLong')]).then(function (responses) {
 	        return responses.map(function (r) {
 	            return r.data;
 	        });
 	    }).then(function (_ref3) {
-	        var _ref4 = _slicedToArray(_ref3, 2),
+	        var _ref4 = _slicedToArray(_ref3, 3),
 	            user = _ref4[0],
-	            alerts = _ref4[1];
+	            alerts = _ref4[1],
+	            latLong = _ref4[2];
 	
 	        console.log('in index.js, onUserDisplayEnter, user ---->', user);
 	        console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
+	        console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
 	        _store2.default.dispatch((0, _users.updateCurrentUser)(user));
 	        _store2.default.dispatch((0, _alerts.updateCurrentAlerts)(alerts));
+	        _store2.default.dispatch((0, _addressDetails.updateCurrentAddressDetails)(latLong));
 	    });
 	};
 	
@@ -30319,6 +30324,8 @@
 	var ADD_ALERT = exports.ADD_ALERT = 'ADD_ALERT';
 	
 	var RECEIVE_INTERESTS = exports.RECEIVE_INTERESTS = 'RECEIVE_INTERESTS';
+	
+	var UPDATE_CURRENT_ADDRESS_DETAILS = exports.UPDATE_CURRENT_ADDRESS_DETAILS = 'UPDATE_CURRENT_ADDRESS_DETAILS';
 
 /***/ },
 /* 293 */
@@ -30751,6 +30758,7 @@
 	    return _react2.default.createElement(
 	        'div',
 	        null,
+	        currentUser.latLong,
 	        _react2.default.createElement(_Alert2.default, { allAlerts: allAlerts, currentAlerts: currentAlerts, currentUser: currentUser })
 	    );
 	}
@@ -31230,9 +31238,13 @@
 	
 	var _interestReducer2 = _interopRequireDefault(_interestReducer);
 	
+	var _addressDetailsReducer = __webpack_require__(320);
+	
+	var _addressDetailsReducer2 = _interopRequireDefault(_addressDetailsReducer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default, interests: _interestReducer2.default });
+	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default, interests: _interestReducer2.default, addressDetails: _addressDetailsReducer2.default });
 
 /***/ },
 /* 307 */
@@ -32326,6 +32338,103 @@
 	        type: _constants.RECEIVE_INTERESTS,
 	        allInterests: allInterests
 	    };
+	};
+
+/***/ },
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.updateCurrentAddressDetails = undefined;
+	
+	var _axios = __webpack_require__(267);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
+	var _constants = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// export const addUser = function (user) {
+	//     return {
+	//         type: ADD_USER,
+	//         user: user
+	//     };
+	// };
+	//
+	//
+	// //asynch action creator (thunk)
+	// export function addUToDb(user){
+	//     return function (dispatch){
+	//         return axios.post('/api/users/signup', user)
+	//             .then(response => response.data)
+	//             .then(function(newUser){
+	//                 dispatch(addUser(newUser))
+	//             })
+	//     }
+	// }
+	
+	// export const receiveUsers = function (allUsers) {
+	//     return {
+	//         type: RECEIVE_USERS,
+	//         allUsers: allUsers
+	//     };
+	// };
+	//
+	
+	var updateCurrentAddressDetails = exports.updateCurrentAddressDetails = function updateCurrentAddressDetails(latLong) {
+	    return {
+	        type: _constants.UPDATE_CURRENT_ADDRESS_DETAILS,
+	        latLong: latLong
+	    };
+	};
+
+/***/ },
+/* 320 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
+	
+	    var newState = Object.assign({}, state);
+	    switch (action.type) {
+	        // case ADD_USER:
+	        //     newState.allUsers = [...newState.allUsers, action.user];
+	        //     break;
+	        // case RECEIVE_USERS:
+	        //     newState.allUsers = [...newState.allUsers, ...action.allUsers];
+	        //     break;
+	        case _constants.UPDATE_CURRENT_ADDRESS_DETAILS:
+	            newState.lat = action.latLong.lat, newState.long = action.latLong.lng;
+	            break;
+	        default:
+	            return state;
+	    }
+	    return newState;
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {
+	    lat: '',
+	    long: ''
 	};
 
 /***/ }
