@@ -25,21 +25,13 @@ router.get('/:id', function(req, res, next){
 })
 
 router.post('/newAlert', function (req, res, next){
-    console.log("got into newAlert route, req body interests", req.body.to)
-    let interestObj = {};
-    req.body.to.map(interestCat =>
-        Interest.findOne({where:{category: interestCat}})
-        // .then(console.log('here is the interest the database found: ', interest)))
-            .then(function(interestInstance){
-                 interestObj=interestInstance
-                console.log('iiiiiiinterestObj', interestObj)
-                return interestObj
-            })
-            .then(function(interestObj){
-                interestObj.getUsers()
+    // console.log("got into newAlert route, req body interests", req.body.to)
+    var toSend = [];
+        Interest.findOne({where:{category: req.body.to}})
+            .then(function(interest){
+                interest.getUsers()
                     .then(function(users){
-                        console.log('uuuuuuuuuser', users)
-                        users.map(function(user){
+                        return users.map(function(user){
                             Alert.create({
                                 to: user.dataValues.phone,
                                 //might have to be user.dataValues.phone
@@ -47,15 +39,21 @@ router.post('/newAlert', function (req, res, next){
                                 body: req.body.body,
                             })
                                 .then(function(alert){
-                                    console.log('aaaaaaalert', alert)
-                                    interestObj.addAlert([alert])
-                                    console.log('INTEREST OBJECT', interestObj)
-                                    res.send(alert);
+                                    interest.addAlert([alert])
+                                    toSend.push(alert);
+                                    if(toSend.length === users.length){
+                                        // console.log('toSend----------->', toSend)
+                                        res.send(toSend);
+                                    }
+
                                 })
                         })
                     })
+                    // .then(function(){
+                    //     // console.log('toSend----------->', toSend)
+                    //     // res.send(toSend);
+                    // })
             })
-    )
 
 });
 

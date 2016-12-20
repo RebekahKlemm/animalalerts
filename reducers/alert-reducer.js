@@ -17,8 +17,8 @@ export default function (state = initialState, action) {
             newState.currentAlerts = [...action.currentAlerts]
             break;
         case ADD_ALERT:
-            newState.allAlerts = [...newState.allAlerts, action.alert];
-            newState.currentAlerts = [...newState.currentAlerts, action.alert];
+            newState.allAlerts = [...newState.allAlerts, ...action.alert];
+            newState.currentAlerts = [...newState.currentAlerts, ...action.alert];
             break;
         default:
             return state;

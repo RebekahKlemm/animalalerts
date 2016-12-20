@@ -31056,7 +31056,7 @@
 	        _react2.default.createElement(
 	            'p',
 	            null,
-	            'Select Interest Categories to receive this alert:'
+	            'Select Interest Category to receive this alert:'
 	        ),
 	        _react2.default.createElement(_InterestOptions2.default, { allInterests: props.allInterests, handleInputChange: props.handleInputChange }),
 	        _react2.default.createElement('p', null),
@@ -31142,7 +31142,7 @@
 	};
 	
 	var addAlert = exports.addAlert = function addAlert(alert) {
-	    console.log("inside addAlert action, here is alert", alert);
+	    // console.log("inside addAlert action, here is alert", alert)
 	    return {
 	        type: _constants.ADD_ALERT,
 	        alert: alert
@@ -31151,10 +31151,10 @@
 	
 	//asynch action creator (thunk)
 	function addAToDb(alert) {
-	    console.log('AAAAAAAACtion alert', alert);
+	    // console.log('AAAAAAAACtion alert', alert);
 	    return function (dispatch) {
 	        return _axios2.default.post('/api/alerts/newAlert', alert).then(function (response) {
-	            console.log('RRRRRRRResponse', response);
+	            // console.log('RRRRRRRResponse', response)
 	            return response;
 	        }).then(function (response) {
 	            return response.data;
@@ -31303,8 +31303,8 @@
 	            newState.currentAlerts = [].concat(_toConsumableArray(action.currentAlerts));
 	            break;
 	        case _constants.ADD_ALERT:
-	            newState.allAlerts = [].concat(_toConsumableArray(newState.allAlerts), [action.alert]);
-	            newState.currentAlerts = [].concat(_toConsumableArray(newState.currentAlerts), [action.alert]);
+	            newState.allAlerts = [].concat(_toConsumableArray(newState.allAlerts), _toConsumableArray(action.alert));
+	            newState.currentAlerts = [].concat(_toConsumableArray(newState.currentAlerts), _toConsumableArray(action.alert));
 	            break;
 	        default:
 	            return state;

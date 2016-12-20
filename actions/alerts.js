@@ -19,7 +19,7 @@ export const updateCurrentAlerts = function (alerts) {
 
 
 export const addAlert = function (alert) {
-    console.log("inside addAlert action, here is alert", alert)
+    // console.log("inside addAlert action, here is alert", alert)
     return {
         type: ADD_ALERT,
         alert: alert
@@ -29,11 +29,11 @@ export const addAlert = function (alert) {
 
 //asynch action creator (thunk)
 export function addAToDb(alert){
-    console.log('AAAAAAAACtion alert', alert);
+    // console.log('AAAAAAAACtion alert', alert);
     return function (dispatch){
         return axios.post('/api/alerts/newAlert', alert)
             .then(function(response){
-                console.log('RRRRRRRResponse', response)
+                // console.log('RRRRRRRResponse', response)
                 return response
             })
             .then(response => response.data)
