@@ -10,6 +10,7 @@ const router = express.Router();
 router.get('/', function (req, res, next){
     User.findAll()
         .then(function(users){
+            // console.log('inside router.get in users, here is users', users)
             res.send(users);
         })
 });

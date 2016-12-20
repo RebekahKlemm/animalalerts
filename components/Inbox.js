@@ -4,7 +4,7 @@ import Alert from './Alert';
 
 
 export default function Inbox(props){
-    console.log("Inbox props --------------->", props);
+    // console.log("Inbox props --------------->", props);
     const allAlerts = props.allAlerts;
     const currentAlerts = props.currentAlerts;
     const currentUser = props.currentUser;

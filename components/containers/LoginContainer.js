@@ -25,7 +25,7 @@ class LoginContainer extends Component{
     }
 
     loginUser(e){
-        console.log("got to loginUser function in LoginContainer, this.props", this.props)
+        // console.log("got to loginUser function in LoginContainer, this.props", this.props)
         e.preventDefault();
         const loginAttempt = {
             phone: e.target.phone.value,
@@ -44,7 +44,7 @@ class LoginContainer extends Component{
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log("mstp state", state)
+    // console.log("mstp state", state)
     return {
         currentView: state.currentView,
         currentUser: state.users.currentUser,

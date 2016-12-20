@@ -9,7 +9,17 @@ class UserDisplay extends Component{
     }
 
     render(){
-        return (<Inbox allAlerts={this.props.allAlerts} currentAlerts={this.props.currentAlerts} currentUser={this.props.currentUser}/>)
+        if (this.props.currentAlerts) {
+            return (
+
+                <Inbox allAlerts={this.props.allAlerts} currentAlerts={this.props.currentAlerts}
+                       currentUser={this.props.currentUser}/>
+
+            )
+        }
+        else return (
+            <div>Congratulations on signing up</div>
+        )
     }
 
 }

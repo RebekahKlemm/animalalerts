@@ -64,7 +64,7 @@ class SignupContainer extends Component{
 
     signUpUser(e){
         e.preventDefault();
-        console.log('...........this.state.interests', this.state.interests)
+        // console.log('...........this.state.interests', this.state.interests)
         const user = {
             first: e.target.first.value,
             last: e.target.last.value,
@@ -74,7 +74,7 @@ class SignupContainer extends Component{
             interests: this.state.interests
         }
         this.props.addUToDb(user);
-        console.log("Signup Container between addUToDb and addLatLongToDb")
+        // console.log("Signup Container between addUToDb and addLatLongToDb")
         this.props.addLatLongToDb(user);
         this.props.router.push('user/'+user.phone);
         this.setState({
@@ -91,7 +91,7 @@ class SignupContainer extends Component{
 
 
 const mapStateToProps = (state, ownProps) => {
-    console.log('-----------> Signup Container state', state)
+    // console.log('-----------> Signup Container state', state)
     return {
         currentView: state.currentView,
         allInterests: state.interests.allInterests

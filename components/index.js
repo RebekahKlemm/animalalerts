@@ -39,8 +39,8 @@ const onUserDisplayEnter = function (props) {
     ])
         .then(responses => responses.map(r => r.data))
         .then(([user, alerts, latLong]) => {
-            console.log('in index.js, onUserDisplayEnter, user ---->', user);
-            console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
+            // console.log('in index.js, onUserDisplayEnter, user ---->', user);
+            // console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
             // console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
             store.dispatch(updateCurrentUser(user));
             store.dispatch(updateCurrentAlerts(alerts));

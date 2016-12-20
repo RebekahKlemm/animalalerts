@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 
 export default function(props) {
-    console.log("props in Login --->", props)
+    // console.log("props in Login --->", props)
     return (
         <form id="new-login-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.loginUser(e)}>
             <input

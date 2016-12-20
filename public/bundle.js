@@ -126,8 +126,8 @@
 	            alerts = _ref4[1],
 	            latLong = _ref4[2];
 	
-	        console.log('in index.js, onUserDisplayEnter, user ---->', user);
-	        console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
+	        // console.log('in index.js, onUserDisplayEnter, user ---->', user);
+	        // console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
 	        // console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
 	        _store2.default.dispatch((0, _users.updateCurrentUser)(user));
 	        _store2.default.dispatch((0, _alerts.updateCurrentAlerts)(alerts));
@@ -26576,7 +26576,7 @@
 	        key: 'signUpUser',
 	        value: function signUpUser(e) {
 	            e.preventDefault();
-	            console.log('...........this.state.interests', this.state.interests);
+	            // console.log('...........this.state.interests', this.state.interests)
 	            var user = {
 	                first: e.target.first.value,
 	                last: e.target.last.value,
@@ -26586,7 +26586,7 @@
 	                interests: this.state.interests
 	            };
 	            this.props.addUToDb(user);
-	            console.log("Signup Container between addUToDb and addLatLongToDb");
+	            // console.log("Signup Container between addUToDb and addLatLongToDb")
 	            this.props.addLatLongToDb(user);
 	            this.props.router.push('user/' + user.phone);
 	            this.setState({
@@ -26604,7 +26604,7 @@
 	}(_react.Component);
 	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    console.log('-----------> Signup Container state', state);
+	    // console.log('-----------> Signup Container state', state)
 	    return {
 	        currentView: state.currentView,
 	        allInterests: state.interests.allInterests
@@ -30668,7 +30668,7 @@
 	        value: function loginUser(e) {
 	            var _this2 = this;
 	
-	            console.log("got to loginUser function in LoginContainer, this.props", this.props);
+	            // console.log("got to loginUser function in LoginContainer, this.props", this.props)
 	            e.preventDefault();
 	            var loginAttempt = {
 	                phone: e.target.phone.value,
@@ -30690,7 +30690,7 @@
 	}(_react.Component);
 	
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    console.log("mstp state", state);
+	    // console.log("mstp state", state)
 	    return {
 	        currentView: state.currentView,
 	        currentUser: state.users.currentUser,
@@ -30722,7 +30722,7 @@
 	});
 	
 	exports.default = function (props) {
-	    console.log("props in Login --->", props);
+	    // console.log("props in Login --->", props)
 	    return _react2.default.createElement(
 	        "form",
 	        { id: "new-login-form", className: "form-group", style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
@@ -30811,7 +30811,14 @@
 	    _createClass(UserDisplay, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts, currentUser: this.props.currentUser });
+	            if (this.props.currentAlerts) {
+	                return _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts,
+	                    currentUser: this.props.currentUser });
+	            } else return _react2.default.createElement(
+	                'div',
+	                null,
+	                'Congratulations on signing up'
+	            );
 	        }
 	    }]);
 	
@@ -30856,7 +30863,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function Inbox(props) {
-	    console.log("Inbox props --------------->", props);
+	    // console.log("Inbox props --------------->", props);
 	    var allAlerts = props.allAlerts;
 	    var currentAlerts = props.currentAlerts;
 	    var currentUser = props.currentUser;
@@ -30887,7 +30894,7 @@
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
 	function Alert(props) {
-	    console.log("Alert props --------------->", props);
+	    // console.log("Alert props --------------->", props);
 	    var allAlerts = props.allAlerts;
 	    var currentAlerts = [].concat(_toConsumableArray(props.currentAlerts));
 	    currentAlerts.reverse();
@@ -31551,7 +31558,7 @@
 	        //     newState.allUsers = [...newState.allUsers, ...action.allUsers];
 	        //     break;
 	        case _constants.UPDATE_CURRENT_ADDRESS_DETAILS:
-	            console.log('inside addressDetails reducer, here is action', action);
+	            // console.log('inside addressDetails reducer, here is action', action)
 	            newState.lat = action.latLong.lat;
 	            newState.long = action.latLong.long;
 	            break;

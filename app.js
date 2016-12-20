@@ -8,7 +8,7 @@ const app = express();
 // const User = require('./Database/Models/userModel');
 // const Alert = require('./Database/Models/alertModel');
 // const Interest = require('./Database/Models/interestModel');
-const {User, Alert, Interest} = require('./Database/Models/index');
+const {User, Alert, Interest, LatLong} = require('./Database/Models/index');
 // const {Alert} = require('./Database/Models/index');
 // const {Interest} = require('./Database/Models/index');
 
@@ -34,6 +34,8 @@ app.use(function (err, req, res, next) {
 
 //Synch the database
 // db.sync()
+
+// Reset and re-seed the database:
 db.sync({force: true})
     .then(function(){
         return User.bulkCreate([
@@ -43,9 +45,40 @@ db.sync({force: true})
         ])
     })
     .spread(function(joe, bill, susie){
-        joe.setInterests(['wildlife']);
-        bill.setInterests(['domestic pets']);
-        susie.setInterests(['farm animals']);
+        User.findOne({where:{ phone: joe.phone}})
+            .then(function(user){
+                LatLong.create({
+                    lat: 44.521200,
+                    long:-89.521800
+                })
+                    .then(function(latLong1){
+                        user.setLatLong(latLong1);
+                        user.setInterests(['wildlife']);
+                    })
+            })
+        User.findOne({where:{ phone: bill.phone}})
+            .then(function(user){
+                LatLong.create({
+                    lat: 46.606755,
+                    long:-92.227903
+                })
+                    .then(function(latLong1){
+                        user.setLatLong(latLong1);
+                        user.setInterests(['domestic pets']);
+                    })
+            })
+        User.findOne({where:{ phone: susie.phone}})
+            .then(function(user){
+                LatLong.create({
+                    lat: 42.642076,
+                    long:-87.962181
+                })
+                    .then(function(latLong1){
+                        user.setLatLong(latLong1);
+                        user.setInterests(['farm animals']);
+                    })
+            })
+
     })
     .then(function(){
         Alert.bulkCreate([
@@ -61,10 +94,11 @@ db.sync({force: true})
         ])
     })
     .then(function () {
-        app.listen(3001, function () {
-            console.log('Server is listening on port 3001');
-        });
-    })
+    app.listen(3001, function () {
+        console.log('Server is listening on port 3001');
+    });
+})
     .catch(console.error);
+
 
 module.exports = app;
