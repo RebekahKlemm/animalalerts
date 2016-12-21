@@ -28,11 +28,12 @@ import {UPDATE_CURRENT_ADDRESS_DETAILS} from './constants';
 // };
 //
 
-export const updateCurrentAddressDetails = function (latLong) {
+export const updateCurrentAddressDetails = function (latLong, stateLegislators) {
     console.log('inside updateCurrentAddressDetails, here is latLong', latLong)
     return {
         type: UPDATE_CURRENT_ADDRESS_DETAILS,
-        latLong: latLong
+        latLong: latLong,
+        stateLegislators: stateLegislators
     };
 };
 

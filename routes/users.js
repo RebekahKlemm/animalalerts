@@ -110,10 +110,19 @@ router.get('/:id/legislators', function(req, res, next){
         where: {phone: req.params.id}
     })
         .then(function(user){
-            openstates.geoLookup(44.5212, -89.5218, function(err, json) {
-                if (err) throw err;
-                res.send(json);
-            });
+            user.getLatLong()
+                .then(function (latLong){
+                    console.log('user.getLatLong', latLong)
+                    return latLong;
+                })
+                .then(function(latLong){
+                    // openstates.geoLookup(44.5212, -89.5218, function(err, json) {
+                    openstates.geoLookup(latLong.lat, latLong.long, function(err, json) {
+                        if (err) throw err;
+                        res.send(json);
+                    });
+                })
+
         })
 
 

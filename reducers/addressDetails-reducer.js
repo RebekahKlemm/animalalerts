@@ -3,7 +3,8 @@ import {UPDATE_CURRENT_ADDRESS_DETAILS} from '../actions/constants';
 
 const initialState = {
     lat:'',
-    long:''
+    long:'',
+    stateLegislators: []
 }
 
 
@@ -19,7 +20,8 @@ export default function (state = initialState, action) {
         case UPDATE_CURRENT_ADDRESS_DETAILS:
             // console.log('inside addressDetails reducer, here is action', action)
                 newState.lat= action.latLong.lat;
-                newState.long=action.latLong.lng
+                newState.long=action.latLong.lng;
+                newState.stateLegislators=action.stateLegislators;
             break;
         default:
             return state;

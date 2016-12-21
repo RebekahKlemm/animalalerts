@@ -116,22 +116,23 @@
 	};
 	
 	var onUserDisplayEnter = function onUserDisplayEnter(props) {
-	    Promise.all([_axios2.default.get('/api/users/' + props.params.id), _axios2.default.get('/api/alerts/' + props.params.id), _axios2.default.get('/api/users/' + props.params.id + '/latLong')]).then(function (responses) {
+	    Promise.all([_axios2.default.get('/api/users/' + props.params.id), _axios2.default.get('/api/alerts/' + props.params.id), _axios2.default.get('/api/users/' + props.params.id + '/latLong'), _axios2.default.get('/api/users/' + props.params.id + '/legislators')]).then(function (responses) {
 	        return responses.map(function (r) {
 	            return r.data;
 	        });
 	    }).then(function (_ref3) {
-	        var _ref4 = _slicedToArray(_ref3, 3),
+	        var _ref4 = _slicedToArray(_ref3, 4),
 	            user = _ref4[0],
 	            alerts = _ref4[1],
-	            latLong = _ref4[2];
+	            latLong = _ref4[2],
+	            stateLegislators = _ref4[3];
 	
 	        // console.log('in index.js, onUserDisplayEnter, user ---->', user);
 	        // console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
 	        // console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
 	        _store2.default.dispatch((0, _users.updateCurrentUser)(user));
 	        _store2.default.dispatch((0, _alerts.updateCurrentAlerts)(alerts));
-	        _store2.default.dispatch((0, _addressDetails.updateCurrentAddressDetails)(latLong));
+	        _store2.default.dispatch((0, _addressDetails.updateCurrentAddressDetails)(latLong, stateLegislators));
 	    });
 	};
 	
@@ -30402,11 +30403,12 @@
 	// };
 	//
 	
-	var updateCurrentAddressDetails = exports.updateCurrentAddressDetails = function updateCurrentAddressDetails(latLong) {
+	var updateCurrentAddressDetails = exports.updateCurrentAddressDetails = function updateCurrentAddressDetails(latLong, stateLegislators) {
 	    console.log('inside updateCurrentAddressDetails, here is latLong', latLong);
 	    return {
 	        type: _constants.UPDATE_CURRENT_ADDRESS_DETAILS,
-	        latLong: latLong
+	        latLong: latLong,
+	        stateLegislators: stateLegislators
 	    };
 	};
 	
@@ -31562,6 +31564,7 @@
 	            // console.log('inside addressDetails reducer, here is action', action)
 	            newState.lat = action.latLong.lat;
 	            newState.long = action.latLong.lng;
+	            newState.stateLegislators = action.stateLegislators;
 	            break;
 	        default:
 	            return state;
@@ -31579,7 +31582,8 @@
 	
 	var initialState = {
 	    lat: '',
-	    long: ''
+	    long: '',
+	    stateLegislators: []
 	};
 
 /***/ },
