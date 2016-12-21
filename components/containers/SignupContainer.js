@@ -76,7 +76,10 @@ class SignupContainer extends Component{
         this.props.addUToDb(user);
         // console.log("Signup Container between addUToDb and addLatLongToDb")
         this.props.addLatLongToDb(user);
-        this.props.router.push('user/'+user.phone);
+
+        this.props.router.push('welcome/'+user.phone);
+        // this.props.router.push('user/'+user.phone);
+
         this.setState({
             first: '',
             last: '',

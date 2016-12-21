@@ -78,9 +78,13 @@
 	
 	var _AdminContainer2 = _interopRequireDefault(_AdminContainer);
 	
+	var _Welcome = __webpack_require__(306);
+	
+	var _Welcome2 = _interopRequireDefault(_Welcome);
+	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(306);
+	var _store = __webpack_require__(307);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -92,7 +96,7 @@
 	
 	var _alerts = __webpack_require__(305);
 	
-	var _interests = __webpack_require__(320);
+	var _interests = __webpack_require__(321);
 	
 	var _addressDetails = __webpack_require__(294);
 	
@@ -136,6 +140,25 @@
 	    });
 	};
 	
+	// const onUserDisplayEnter = function (props) {
+	//     Promise.all([
+	//         axios.get('/api/users/' + props.params.id),
+	//         axios.get('/api/alerts/' + props.params.id),
+	//         axios.get('/api/users/'+ props.params.id +'/latLong'),
+	//         axios.get('/api/users/'+ props.params.id + '/legislators')
+	//     ])
+	//         .then(responses => responses.map(r => r.data))
+	//         .then(([user, alerts, latLong, stateLegislators]) => {
+	//             // console.log('in index.js, onUserDisplayEnter, user ---->', user);
+	//             // console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
+	//             // console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
+	//             store.dispatch(updateCurrentUser(user));
+	//             store.dispatch(updateCurrentAlerts(alerts));
+	//             store.dispatch(updateCurrentAddressDetails(latLong, stateLegislators));
+	//         })
+	//
+	// };
+	
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: _store2.default },
@@ -147,6 +170,7 @@
 	            { path: '/', component: _App.App, onEnter: onAppEnter },
 	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _SignupContainer2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/welcome/:id', component: _Welcome2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/user/:id', component: _UserDisplay2.default, onEnter: onUserDisplayEnter }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/admin/:id', component: _AdminContainer2.default, onEnter: onUserDisplayEnter })
 	        )
@@ -26589,7 +26613,10 @@
 	            this.props.addUToDb(user);
 	            // console.log("Signup Container between addUToDb and addLatLongToDb")
 	            this.props.addLatLongToDb(user);
-	            this.props.router.push('user/' + user.phone);
+	
+	            this.props.router.push('welcome/' + user.phone);
+	            // this.props.router.push('user/'+user.phone);
+	
 	            this.setState({
 	                first: '',
 	                last: '',
@@ -31296,17 +31323,102 @@
 	    value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _reactRouter = __webpack_require__(178);
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Welcome = function (_Component) {
+	    _inherits(Welcome, _Component);
+	
+	    function Welcome(props) {
+	        _classCallCheck(this, Welcome);
+	
+	        return _possibleConstructorReturn(this, (Welcome.__proto__ || Object.getPrototypeOf(Welcome)).call(this, props));
+	    }
+	
+	    _createClass(Welcome, [{
+	        key: 'render',
+	        value: function render() {
+	            console.log('-------------->this.params', this.props.params.id);
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'successfulSignup' },
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Congratulations on a Successful Signup'
+	                ),
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/user/' + this.props.params.id },
+	                    'Click here to go to your User Homepage'
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Welcome;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    console.log('-----------> Welcome state', state);
+	    return {
+	        currentView: state.currentView,
+	        allInterests: state.interests.allInterests
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {
+	        // addUToDb: function(user){
+	        //     dispatch(addUToDb(user));
+	        // },
+	        // changeView: function(view){
+	        //     dispatch(changeView(view));
+	        // },
+	        // addLatLongToDb: function(user, lat, long){
+	        //     dispatch(addLatLongToDb(user, lat, long))
+	        // }
+	    };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Welcome);
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(307);
+	var _rootReducer = __webpack_require__(308);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(313);
+	var _reduxThunk = __webpack_require__(314);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(314);
+	var _reduxLogger = __webpack_require__(315);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -31321,7 +31433,7 @@
 	exports.default = store;
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31336,23 +31448,23 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _userReducer = __webpack_require__(308);
+	var _userReducer = __webpack_require__(309);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _alertReducer = __webpack_require__(309);
+	var _alertReducer = __webpack_require__(310);
 	
 	var _alertReducer2 = _interopRequireDefault(_alertReducer);
 	
-	var _currentViewReducer = __webpack_require__(310);
+	var _currentViewReducer = __webpack_require__(311);
 	
 	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
 	
-	var _interestReducer = __webpack_require__(311);
+	var _interestReducer = __webpack_require__(312);
 	
 	var _interestReducer2 = _interopRequireDefault(_interestReducer);
 	
-	var _addressDetailsReducer = __webpack_require__(312);
+	var _addressDetailsReducer = __webpack_require__(313);
 	
 	var _addressDetailsReducer2 = _interopRequireDefault(_addressDetailsReducer);
 	
@@ -31361,7 +31473,7 @@
 	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default, interests: _interestReducer2.default, addressDetails: _addressDetailsReducer2.default });
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31407,7 +31519,7 @@
 	};
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31454,7 +31566,7 @@
 	};
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31493,7 +31605,7 @@
 	};
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31539,7 +31651,7 @@
 	};
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31587,7 +31699,7 @@
 	};
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31615,7 +31727,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31626,11 +31738,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(315);
+	var _core = __webpack_require__(316);
 	
-	var _helpers = __webpack_require__(316);
+	var _helpers = __webpack_require__(317);
 	
-	var _defaults = __webpack_require__(319);
+	var _defaults = __webpack_require__(320);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -31733,7 +31845,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31743,9 +31855,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(316);
+	var _helpers = __webpack_require__(317);
 	
-	var _diff = __webpack_require__(317);
+	var _diff = __webpack_require__(318);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -31874,7 +31986,7 @@
 	}
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31898,7 +32010,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31908,7 +32020,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(318);
+	var _deepDiff = __webpack_require__(319);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -31994,7 +32106,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -32423,7 +32535,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32474,7 +32586,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

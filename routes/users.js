@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.get('/', function (req, res, next){
-    User.findAll()
+    User.findAll({ include: [ LatLong ] })
         .then(function(users){
             // console.log('inside router.get in users, here is users', users)
             res.send(users);
@@ -39,6 +39,7 @@ router.get('/:id', function(req, res, next){
         where: {phone: req.params.id}
     })
         .then(function(user){
+            console.log('------------>inside user router /:id, here is user I return from db', user)
             res.send(user);
         })
 })

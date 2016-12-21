@@ -71,7 +71,6 @@ export function addLatLongToDb(user){
             .then(response => response.data)
             .then(function(latLong){
                 return axios.post('/api/users/' + user.phone +'/latLong', latLong)
-
             })
             // .then(function(latLong){
             //     console.log('inside addLatLongToDb, here is latLong', latLong)

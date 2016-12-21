@@ -7,6 +7,7 @@ import {App} from './App';
 import LoginContainer from './containers/LoginContainer';
 import UserDisplay from './containers/UserDisplay';
 import AdminContainer from './containers/AdminContainer';
+import Welcome from './containers/Welcome';
 import {Provider} from 'react-redux';
 import store from '../store';
 import {addUtoDb} from '../actions/users';
@@ -50,12 +51,32 @@ const onUserDisplayEnter = function (props) {
 
 };
 
+// const onUserDisplayEnter = function (props) {
+//     Promise.all([
+//         axios.get('/api/users/' + props.params.id),
+//         axios.get('/api/alerts/' + props.params.id),
+//         axios.get('/api/users/'+ props.params.id +'/latLong'),
+//         axios.get('/api/users/'+ props.params.id + '/legislators')
+//     ])
+//         .then(responses => responses.map(r => r.data))
+//         .then(([user, alerts, latLong, stateLegislators]) => {
+//             // console.log('in index.js, onUserDisplayEnter, user ---->', user);
+//             // console.log('in index.js, onUserDisplayEnter, alerts ---->', alerts);
+//             // console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
+//             store.dispatch(updateCurrentUser(user));
+//             store.dispatch(updateCurrentAlerts(alerts));
+//             store.dispatch(updateCurrentAddressDetails(latLong, stateLegislators));
+//         })
+//
+// };
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={hashHistory}>
             <Route path='/' component={App} onEnter={onAppEnter}>
                 <IndexRoute component={SignupContainer}/>
                 <Route path ='/login' component={LoginContainer}/>
+                <Route path ='/welcome/:id' component={Welcome}/>
                 <Route path='/user/:id' component={UserDisplay} onEnter={onUserDisplayEnter}/>
                 <Route path='/admin/:id' component={AdminContainer} onEnter={onUserDisplayEnter}/>
             </Route>
