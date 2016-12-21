@@ -30819,6 +30819,10 @@
 	
 	var _Inbox2 = _interopRequireDefault(_Inbox);
 	
+	var _LegislatorsContainer = __webpack_require__(322);
+	
+	var _LegislatorsContainer2 = _interopRequireDefault(_LegislatorsContainer);
+	
 	var _reactRedux = __webpack_require__(234);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -30841,14 +30845,18 @@
 	    _createClass(UserDisplay, [{
 	        key: 'render',
 	        value: function render() {
-	            if (this.props.currentAlerts) {
-	                return _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts,
-	                    currentUser: this.props.currentUser });
-	            } else return _react2.default.createElement(
+	            // if (this.props.currentAlerts) {
+	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'Congratulations on signing up'
+	                _react2.default.createElement(_LegislatorsContainer2.default, null),
+	                _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts,
+	                    currentUser: this.props.currentUser })
 	            );
+	            // }
+	            // else return (
+	            //     <div>Congratulations on signing up</div>
+	            // )
 	        }
 	    }]);
 	
@@ -32613,6 +32621,135 @@
 	        allInterests: allInterests
 	    };
 	};
+
+/***/ },
+/* 322 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _StateLegislators = __webpack_require__(323);
+	
+	var _StateLegislators2 = _interopRequireDefault(_StateLegislators);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var LegislatorsContainer = function (_Component) {
+	    _inherits(LegislatorsContainer, _Component);
+	
+	    function LegislatorsContainer(props) {
+	        _classCallCheck(this, LegislatorsContainer);
+	
+	        return _possibleConstructorReturn(this, (LegislatorsContainer.__proto__ || Object.getPrototypeOf(LegislatorsContainer)).call(this, props));
+	    }
+	
+	    _createClass(LegislatorsContainer, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_StateLegislators2.default, { addressDetails: this.props.addressDetails, currentUser: this.props.currentUser })
+	            );
+	        }
+	    }]);
+	
+	    return LegislatorsContainer;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    return {
+	        addressDetails: state.addressDetails,
+	        currentUser: state.users.currentUser
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LegislatorsContainer);
+
+/***/ },
+/* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = StateLegislator;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function StateLegislator(props) {
+	    // console.log("StateLegislator props --------------->", props);
+	    var addressDetails = props.addressDetails;
+	    var currentStateLegislators = [].concat(_toConsumableArray(props.addressDetails.stateLegislators));
+	    // currentStateLegislators.reverse();
+	    var currentUser = props.currentUser;
+	
+	    // if(currentUser.role === 'admin'){
+	    //     currentStateLegislators = allStateLegislators
+	    // }
+	
+	    return _react2.default.createElement(
+	        "div",
+	        { className: "clearfix" },
+	        currentStateLegislators.map(function (stateLegislator) {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "stateLegislators clearfix", key: stateLegislator.id },
+	                _react2.default.createElement("img", { src: stateLegislator.photo_url, className: "img-thumbnail" }),
+	                _react2.default.createElement(
+	                    "h4",
+	                    null,
+	                    stateLegislator.full_name
+	                ),
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    stateLegislator.party
+	                ),
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    stateLegislator.offices[0].phone
+	                ),
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    stateLegislator.offices[0].email
+	                )
+	            );
+	        })
+	    );
+	}
 
 /***/ }
 /******/ ]);

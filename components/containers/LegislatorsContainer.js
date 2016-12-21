@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import Inbox from '../Inbox';
+import StateLegislators from '../StateLegislators';
 import { connect } from 'react-redux';
 
 class LegislatorsContainer extends Component{
@@ -10,7 +10,9 @@ class LegislatorsContainer extends Component{
 
     render(){
         return(
-            <Legislators addressDetails={this.props.addressDetails}/>
+            <div>
+                <StateLegislators addressDetails={this.props.addressDetails} currentUser={this.props.currentUser}/>
+            </div>
         )
     }
 
@@ -18,7 +20,8 @@ class LegislatorsContainer extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        addressDetails: state.addressDetails
+        addressDetails: state.addressDetails,
+        currentUser: state.users.currentUser
     };
 }
 

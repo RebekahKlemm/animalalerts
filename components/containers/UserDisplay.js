@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Inbox from '../Inbox';
+import LegislatorsContainer from './LegislatorsContainer';
 import { connect } from 'react-redux';
 
 class UserDisplay extends Component{
@@ -9,17 +10,18 @@ class UserDisplay extends Component{
     }
 
     render(){
-        if (this.props.currentAlerts) {
+        // if (this.props.currentAlerts) {
             return (
-
+                <div>
+                <LegislatorsContainer/>
                 <Inbox allAlerts={this.props.allAlerts} currentAlerts={this.props.currentAlerts}
                        currentUser={this.props.currentUser}/>
-
+                </div>
             )
-        }
-        else return (
-            <div>Congratulations on signing up</div>
-        )
+        // }
+        // else return (
+        //     <div>Congratulations on signing up</div>
+        // )
     }
 
 }
