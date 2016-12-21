@@ -116,7 +116,7 @@
 	};
 	
 	var onUserDisplayEnter = function onUserDisplayEnter(props) {
-	    Promise.all([_axios2.default.get('/api/users/' + props.params.id), _axios2.default.get('/api/alerts/' + props.params.id)]).then(function (responses) {
+	    Promise.all([_axios2.default.get('/api/users/' + props.params.id), _axios2.default.get('/api/alerts/' + props.params.id), _axios2.default.get('/api/users/' + props.params.id + '/latLong')]).then(function (responses) {
 	        return responses.map(function (r) {
 	            return r.data;
 	        });
@@ -131,7 +131,7 @@
 	        // console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
 	        _store2.default.dispatch((0, _users.updateCurrentUser)(user));
 	        _store2.default.dispatch((0, _alerts.updateCurrentAlerts)(alerts));
-	        // store.dispatch(updateCurrentAddressDetails(latLong));
+	        _store2.default.dispatch((0, _addressDetails.updateCurrentAddressDetails)(latLong));
 	    });
 	};
 	
@@ -30444,11 +30444,12 @@
 	            return response.data;
 	        }).then(function (latLong) {
 	            return _axios2.default.post('/api/users/' + user.phone + '/latLong', latLong);
-	        }).then(function (latLong) {
-	            console.log('inside addLatLongToDb, here is latLong', latLong);
-	            dispatch(updateCurrentAddressDetails(latLong.data));
-	            return latLong;
 	        });
+	        // .then(function(latLong){
+	        //     console.log('inside addLatLongToDb, here is latLong', latLong)
+	        //     dispatch(updateCurrentAddressDetails(latLong.data))
+	        //     return latLong
+	        // })
 	    };
 	}
 
@@ -31560,7 +31561,7 @@
 	        case _constants.UPDATE_CURRENT_ADDRESS_DETAILS:
 	            // console.log('inside addressDetails reducer, here is action', action)
 	            newState.lat = action.latLong.lat;
-	            newState.long = action.latLong.long;
+	            newState.long = action.latLong.lng;
 	            break;
 	        default:
 	            return state;

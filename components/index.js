@@ -35,7 +35,7 @@ const onUserDisplayEnter = function (props) {
     Promise.all([
         axios.get('/api/users/' + props.params.id),
         axios.get('/api/alerts/' + props.params.id),
-        // axios.get('/api/users/'+ props.params.id +'/latLong')
+        axios.get('/api/users/'+ props.params.id +'/latLong')
     ])
         .then(responses => responses.map(r => r.data))
         .then(([user, alerts, latLong]) => {
@@ -44,7 +44,7 @@ const onUserDisplayEnter = function (props) {
             // console.log('in index.js, onUserDisplayEnter, latLong ---->', latLong);
             store.dispatch(updateCurrentUser(user));
             store.dispatch(updateCurrentAlerts(alerts));
-            // store.dispatch(updateCurrentAddressDetails(latLong));
+            store.dispatch(updateCurrentAddressDetails(latLong));
         })
 
 };

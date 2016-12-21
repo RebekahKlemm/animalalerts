@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
         case UPDATE_CURRENT_ADDRESS_DETAILS:
             // console.log('inside addressDetails reducer, here is action', action)
                 newState.lat= action.latLong.lat;
-                newState.long=action.latLong.long
+                newState.long=action.latLong.lng
             break;
         default:
             return state;

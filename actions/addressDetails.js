@@ -72,11 +72,11 @@ export function addLatLongToDb(user){
                 return axios.post('/api/users/' + user.phone +'/latLong', latLong)
 
             })
-            .then(function(latLong){
-                console.log('inside addLatLongToDb, here is latLong', latLong)
-                dispatch(updateCurrentAddressDetails(latLong.data))
-                return latLong
-            })
+            // .then(function(latLong){
+            //     console.log('inside addLatLongToDb, here is latLong', latLong)
+            //     dispatch(updateCurrentAddressDetails(latLong.data))
+            //     return latLong
+            // })
 
     }
 }
