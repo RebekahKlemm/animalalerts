@@ -15,10 +15,10 @@ export default function StateLegislator(props){
 
     return(
         <div className="clearfix">
-            <h3>My State Legislators</h3>
+            <h3 id='stateLegHeader'>My State Legislators</h3>
             { currentStateLegislators.map((stateLegislator) => {
                     return(
-                        <div className="stateLegislators clearfix" key={stateLegislator.id}>
+                        <div className="stateLegislators col-sm-6" key={stateLegislator.id}>
                             <img src={stateLegislator.photo_url} className="img-thumbnail"/>
                             <h4>{ stateLegislator.full_name }</h4>
                             <p>{stateLegislator.party}</p>

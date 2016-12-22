@@ -30860,9 +30860,21 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'container' },
-	                _react2.default.createElement(_LegislatorsContainer2.default, null),
-	                _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts,
-	                    currentUser: this.props.currentUser })
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-sm-7' },
+	                        _react2.default.createElement(_LegislatorsContainer2.default, null)
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-sm-5' },
+	                        _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts,
+	                            currentUser: this.props.currentUser })
+	                    )
+	                )
 	            );
 	            // }
 	            // else return (
@@ -30916,6 +30928,7 @@
 	    var allAlerts = props.allAlerts;
 	    var currentAlerts = props.currentAlerts;
 	    var currentUser = props.currentUser;
+	
 	    return _react2.default.createElement(
 	        'div',
 	        null,
@@ -30960,10 +30973,43 @@
 	        'Alert Inbox'
 	    );
 	
+	    var emptyInbox = void 0;
+	
+	    if (currentAlerts.length === 0) {
+	        emptyInbox = _react2.default.createElement(
+	            'div',
+	            { className: 'container' },
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'row' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-sm-6' },
+	                    _react2.default.createElement('img', { className: 'inboxImage', src: '/inbox.jpg' })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-sm-6' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        { className: 'helperText' },
+	                        'Hint: Click on the Admin Link in the Nav bar to send a message to the group you signed up for (wildlife, farm animals, domestic pets)'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h4',
+	                        null,
+	                        'Clicking the admin link will log you in as an admin, so after you send the message, you will need to login as yourself to check your messages'
+	                    )
+	                )
+	            )
+	        );
+	    }
+	
 	    return _react2.default.createElement(
 	        'div',
 	        null,
 	        header,
+	        emptyInbox,
 	        currentAlerts.map(function (alert) {
 	            return _react2.default.createElement(
 	                'div',
@@ -31036,7 +31082,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'LegislatorsContainer' },
 	                _react2.default.createElement(_StateLegislators2.default, { addressDetails: this.props.addressDetails, currentUser: this.props.currentUser })
 	            );
 	        }
@@ -31062,7 +31108,7 @@
 /* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -31089,35 +31135,35 @@
 	    // }
 	
 	    return _react2.default.createElement(
-	        "div",
-	        { className: "clearfix" },
+	        'div',
+	        { className: 'clearfix' },
 	        _react2.default.createElement(
-	            "h3",
-	            null,
-	            "My State Legislators"
+	            'h3',
+	            { id: 'stateLegHeader' },
+	            'My State Legislators'
 	        ),
 	        currentStateLegislators.map(function (stateLegislator) {
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "stateLegislators clearfix", key: stateLegislator.id },
-	                _react2.default.createElement("img", { src: stateLegislator.photo_url, className: "img-thumbnail" }),
+	                'div',
+	                { className: 'stateLegislators col-sm-6', key: stateLegislator.id },
+	                _react2.default.createElement('img', { src: stateLegislator.photo_url, className: 'img-thumbnail' }),
 	                _react2.default.createElement(
-	                    "h4",
+	                    'h4',
 	                    null,
 	                    stateLegislator.full_name
 	                ),
 	                _react2.default.createElement(
-	                    "p",
+	                    'p',
 	                    null,
 	                    stateLegislator.party
 	                ),
 	                _react2.default.createElement(
-	                    "p",
+	                    'p',
 	                    null,
 	                    stateLegislator.offices[0].phone
 	                ),
 	                _react2.default.createElement(
-	                    "p",
+	                    'p',
 	                    null,
 	                    stateLegislator.offices[0].email
 	                )
@@ -31371,7 +31417,7 @@
 	        _react2.default.createElement(
 	            'h5',
 	            null,
-	            'Select Interest Category (all users subscribed to this interest category will receive this alert)'
+	            '(all users subscribed to the chosen interest category will receive this alert)'
 	        ),
 	        _react2.default.createElement(_InterestOptions2.default, { allInterests: props.allInterests, handleInputChange: props.handleInputChange }),
 	        _react2.default.createElement('br', null),
@@ -31514,15 +31560,20 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'successfulSignup' },
+	                _react2.default.createElement('iframe', { src: '//giphy.com/embed/l0HlHFRbmaZtBRhXG', width: '480', height: '270', frameBorder: '0', className: 'giphy-embed', allowFullScreen: true }),
 	                _react2.default.createElement(
 	                    'p',
 	                    null,
-	                    'Congratulations on a Successful Signup'
+	                    _react2.default.createElement('a', { href: 'http://giphy.com/gifs/colbertlateshow-stephen-colbert-welcome-late-show-l0HlHFRbmaZtBRhXG' })
 	                ),
 	                _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: '/user/' + this.props.params.id },
-	                    'Click here to go to your User Homepage'
+	                    'h3',
+	                    null,
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/user/' + this.props.params.id },
+	                        'Click here to go to your User Homepage'
+	                    )
 	                )
 	            );
 	        }

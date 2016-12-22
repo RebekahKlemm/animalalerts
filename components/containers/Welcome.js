@@ -13,8 +13,14 @@ class Welcome extends Component {
         console.log('-------------->this.params', this.props.params.id)
         return (
             <div className="successfulSignup">
-                <p>Congratulations on a Successful Signup</p>
+
+                <iframe src="//giphy.com/embed/l0HlHFRbmaZtBRhXG" width="480" height="270" frameBorder="0" className="giphy-embed" allowFullScreen></iframe>
+                <p>
+                    <a href="http://giphy.com/gifs/colbertlateshow-stephen-colbert-welcome-late-show-l0HlHFRbmaZtBRhXG"/>
+                </p>
+                <h3>
                 <Link to={'/user/'+ this.props.params.id}>Click here to go to your User Homepage</Link>
+                    </h3>
             </div>
         )
     }

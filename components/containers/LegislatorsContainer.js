@@ -10,7 +10,7 @@ class LegislatorsContainer extends Component{
 
     render(){
         return(
-            <div>
+            <div className='LegislatorsContainer'>
                 <StateLegislators addressDetails={this.props.addressDetails} currentUser={this.props.currentUser}/>
             </div>
         )

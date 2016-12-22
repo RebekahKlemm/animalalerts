@@ -13,9 +13,15 @@ class UserDisplay extends Component{
         // if (this.props.currentAlerts) {
             return (
                 <div className="container">
-                <LegislatorsContainer/>
-                <Inbox allAlerts={this.props.allAlerts} currentAlerts={this.props.currentAlerts}
-                       currentUser={this.props.currentUser}/>
+                    <div className="row">
+                        <div className="col-sm-7">
+                            <LegislatorsContainer/>
+                        </div>
+                        <div className="col-sm-5">
+                            <Inbox allAlerts={this.props.allAlerts} currentAlerts={this.props.currentAlerts}
+                                   currentUser={this.props.currentUser}/>
+                        </div>
+                    </div>
                 </div>
             )
         // }

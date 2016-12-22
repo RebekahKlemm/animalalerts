@@ -9,7 +9,7 @@ export default function(props) {
         <form id="new-alert-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.addAlert(e)}>
 
             <h3>Send a New Alert</h3>
-            <h5>Select Interest Category (all users subscribed to this interest category will receive this alert)</h5>
+            <h5>(all users subscribed to the chosen interest category will receive this alert)</h5>
                 <InterestOptions allInterests={props.allInterests} handleInputChange={props.handleInputChange}/>
               <br></br>
             {/*<input*/}

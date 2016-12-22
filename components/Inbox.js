@@ -8,6 +8,8 @@ export default function Inbox(props){
     const allAlerts = props.allAlerts;
     const currentAlerts = props.currentAlerts;
     const currentUser = props.currentUser;
+
+
     return(
         <div>
 
