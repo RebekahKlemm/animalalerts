@@ -28,14 +28,29 @@ const NewAdmin = (props) => {
     const inputValue = props.inputValue;
 
     return (
-        <form className='form-group' style={{marginTop: '20px'}}>
+        <div>
+    <div className="dropdown">
+        <select className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+            <span className="caret"/></select>
+        <ul className="dropdown-menu">
+            <li><a href="#">HTML</a></li>
+            <li><a href="#">CSS</a></li>
+            <li><a href="#">JavaScript</a></li>
+        </ul>
+    </div>
+        <form className='form-group' style={{marginTop: '20px'}} onSubmit={props.addAdmin}>
             <input
                 onChange={handleChange}
                 value={inputValue}
                 className='form-control'
                 placeholder="Enter user name"
             />
+            <button type="submit" form="new-admin-form" value="Submit"
+                    className="btn btn-primary btn-block">
+                <span className="glyphicon glyphicon-plus"/> SUBMIT
+            </button>
         </form>
+            </div>
     )
 };
 

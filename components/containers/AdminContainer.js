@@ -14,10 +14,18 @@ class AdminContainer extends Component{
 
     render(){
         return (
-            <div>
-                <NewAlertContainer/>
-                <NewAdminContainer/>
-                <UserDisplay/>
+            <div className="container">
+                <div className="row">
+                    <div className="col-sm-6">
+                        <NewAlertContainer/>
+                    </div>
+                    <div className="col-sm-6">
+                        <NewAdminContainer/>
+                    </div>
+                </div>
+                <div className="row">
+                    <UserDisplay/>
+                </div>
             </div>
         )
     }

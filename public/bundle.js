@@ -78,13 +78,13 @@
 	
 	var _AdminContainer2 = _interopRequireDefault(_AdminContainer);
 	
-	var _Welcome = __webpack_require__(308);
+	var _Welcome = __webpack_require__(310);
 	
 	var _Welcome2 = _interopRequireDefault(_Welcome);
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(309);
+	var _store = __webpack_require__(311);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -96,7 +96,7 @@
 	
 	var _alerts = __webpack_require__(307);
 	
-	var _interests = __webpack_require__(323);
+	var _interests = __webpack_require__(325);
 	
 	var _addressDetails = __webpack_require__(294);
 	
@@ -31226,7 +31226,7 @@
 	
 	var _NewAlertContainer2 = _interopRequireDefault(_NewAlertContainer);
 	
-	var _NewAdminContainer = __webpack_require__(324);
+	var _NewAdminContainer = __webpack_require__(308);
 	
 	var _NewAdminContainer2 = _interopRequireDefault(_NewAdminContainer);
 	
@@ -31257,10 +31257,26 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_NewAlertContainer2.default, null),
-	                _react2.default.createElement(_NewAdminContainer2.default, null),
-	                _react2.default.createElement(_UserDisplay2.default, null)
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-sm-6' },
+	                        _react2.default.createElement(_NewAlertContainer2.default, null)
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-sm-6' },
+	                        _react2.default.createElement(_NewAdminContainer2.default, null)
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(_UserDisplay2.default, null)
+	                )
 	            );
 	        }
 	    }]);
@@ -31447,7 +31463,7 @@
 	        _react2.default.createElement(
 	            'h3',
 	            null,
-	            'Send a New Alert'
+	            'Send New Alert'
 	        ),
 	        _react2.default.createElement(
 	            'h5',
@@ -31561,6 +31577,237 @@
 	    value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _NewAdmin = __webpack_require__(309);
+	
+	var _NewAdmin2 = _interopRequireDefault(_NewAdmin);
+	
+	var _users = __webpack_require__(266);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var NewAdminContainer = function (_Component) {
+	    _inherits(NewAdminContainer, _Component);
+	
+	    function NewAdminContainer(props) {
+	        _classCallCheck(this, NewAdminContainer);
+	
+	        var _this = _possibleConstructorReturn(this, (NewAdminContainer.__proto__ || Object.getPrototypeOf(NewAdminContainer)).call(this, props));
+	
+	        _this.state = {
+	            admin: {},
+	            inputValue: ''
+	        };
+	        _this.handleInputChange = _this.handleInputChange.bind(_this);
+	        _this.addAdmin = _this.addAdmin.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(NewAdminContainer, [{
+	        key: 'handleInputChange',
+	        value: function handleInputChange(e) {
+	            this.setState({
+	                inputValue: e.target.value
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var inputValue = this.state.inputValue;
+	            var filteredUsers = this.props.allUsers.filter(function (user) {
+	                return user.firstName.match(inputValue);
+	            });
+	
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'Add Admin'
+	                ),
+	                _react2.default.createElement(_NewAdmin2.default, _extends({ allUsers: this.props.allUsers, handleInputChange: this.handleInputChange, addAdmin: this.addAdmin }, this.state)),
+	                filteredUsers.map(function (user) {
+	                    return _react2.default.createElement(
+	                        'div',
+	                        { className: 'userList', key: user.phone },
+	                        _react2.default.createElement(
+	                            'h4',
+	                            null,
+	                            user.fullName
+	                        )
+	                    );
+	                })
+	            );
+	        }
+	    }, {
+	        key: 'addAdmin',
+	        value: function addAdmin(e) {
+	            e.preventDefault();
+	            var user = e.target.user.value;
+	            var newRole = 'admin';
+	
+	            this.props.addUserRoleToDb(user, newRole);
+	            this.setState({
+	                admin: {}
+	            });
+	        }
+	    }]);
+	
+	    return NewAdminContainer;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    console.log('*************state', state);
+	    return {
+	        // currentUser: state.users.currentUser,
+	        // allInterests: state.interests.allInterests
+	        allUsers: state.users.allUsers
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {
+	        addUserRoleToDb: function addUserRoleToDb(user, newRole) {
+	            dispatch((0, _users.addUserRoleToDb)(user, newRole));
+	        }
+	    };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewAdminContainer);
+
+/***/ },
+/* 309 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var NewAdmin = function NewAdmin(props) {
+	    console.log('NewAdmin props----->', props);
+	
+	    var handleChange = props.handleInputChange;
+	    var inputValue = props.inputValue;
+	
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'dropdown' },
+	            _react2.default.createElement(
+	                'select',
+	                { className: 'btn btn-primary dropdown-toggle', type: 'button', 'data-toggle': 'dropdown' },
+	                'Dropdown Example',
+	                _react2.default.createElement('span', { className: 'caret' })
+	            ),
+	            _react2.default.createElement(
+	                'ul',
+	                { className: 'dropdown-menu' },
+	                _react2.default.createElement(
+	                    'li',
+	                    null,
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: '#' },
+	                        'HTML'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'li',
+	                    null,
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: '#' },
+	                        'CSS'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'li',
+	                    null,
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: '#' },
+	                        'JavaScript'
+	                    )
+	                )
+	            )
+	        ),
+	        _react2.default.createElement(
+	            'form',
+	            { className: 'form-group', style: { marginTop: '20px' }, onSubmit: props.addAdmin },
+	            _react2.default.createElement('input', {
+	                onChange: handleChange,
+	                value: inputValue,
+	                className: 'form-control',
+	                placeholder: 'Enter user name'
+	            }),
+	            _react2.default.createElement(
+	                'button',
+	                { type: 'submit', form: 'new-admin-form', value: 'Submit',
+	                    className: 'btn btn-primary btn-block' },
+	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+	                ' SUBMIT'
+	            )
+	        )
+	    );
+	}; // import React, { Component } from 'react';
+	//
+	// export default function(props) {
+	//     console.log('**************NewAdmin props', props)
+	//     return (
+	//         <div>
+	//             <h3>Add a New Admin</h3>
+	//             <div className="dropdown">
+	//                 <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+	//                     <span className="caret"/>
+	//                 </button>
+	//                 <ul className="dropdown-menu">
+	//                     <li><a href="#">HTML</a></li>
+	//                     <li><a href="#">CSS</a></li>
+	//                     <li><a href="#">JavaScript</a></li>
+	//                 </ul>
+	//             </div>
+	//         </div>
+	//     )
+	// }
+	
+	exports.default = NewAdmin;
+
+/***/ },
+/* 310 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _reactRouter = __webpack_require__(178);
@@ -31642,7 +31889,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Welcome);
 
 /***/ },
-/* 309 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31653,15 +31900,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(310);
+	var _rootReducer = __webpack_require__(312);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(316);
+	var _reduxThunk = __webpack_require__(318);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(317);
+	var _reduxLogger = __webpack_require__(319);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -31676,7 +31923,7 @@
 	exports.default = store;
 
 /***/ },
-/* 310 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31691,23 +31938,23 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _userReducer = __webpack_require__(311);
+	var _userReducer = __webpack_require__(313);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _alertReducer = __webpack_require__(312);
+	var _alertReducer = __webpack_require__(314);
 	
 	var _alertReducer2 = _interopRequireDefault(_alertReducer);
 	
-	var _currentViewReducer = __webpack_require__(313);
+	var _currentViewReducer = __webpack_require__(315);
 	
 	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
 	
-	var _interestReducer = __webpack_require__(314);
+	var _interestReducer = __webpack_require__(316);
 	
 	var _interestReducer2 = _interopRequireDefault(_interestReducer);
 	
-	var _addressDetailsReducer = __webpack_require__(315);
+	var _addressDetailsReducer = __webpack_require__(317);
 	
 	var _addressDetailsReducer2 = _interopRequireDefault(_addressDetailsReducer);
 	
@@ -31716,7 +31963,7 @@
 	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default, interests: _interestReducer2.default, addressDetails: _addressDetailsReducer2.default });
 
 /***/ },
-/* 311 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31765,7 +32012,7 @@
 	};
 
 /***/ },
-/* 312 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31812,7 +32059,7 @@
 	};
 
 /***/ },
-/* 313 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31851,7 +32098,7 @@
 	};
 
 /***/ },
-/* 314 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31897,7 +32144,7 @@
 	};
 
 /***/ },
-/* 315 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31945,7 +32192,7 @@
 	};
 
 /***/ },
-/* 316 */
+/* 318 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31973,7 +32220,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 317 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31984,11 +32231,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(318);
+	var _core = __webpack_require__(320);
 	
-	var _helpers = __webpack_require__(319);
+	var _helpers = __webpack_require__(321);
 	
-	var _defaults = __webpack_require__(322);
+	var _defaults = __webpack_require__(324);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -32091,7 +32338,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 318 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32101,9 +32348,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(319);
+	var _helpers = __webpack_require__(321);
 	
-	var _diff = __webpack_require__(320);
+	var _diff = __webpack_require__(322);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -32232,7 +32479,7 @@
 	}
 
 /***/ },
-/* 319 */
+/* 321 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32256,7 +32503,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 320 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32266,7 +32513,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(321);
+	var _deepDiff = __webpack_require__(323);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -32352,7 +32599,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 321 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -32781,7 +33028,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 322 */
+/* 324 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32832,7 +33079,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 323 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32859,181 +33106,6 @@
 	        allInterests: allInterests
 	    };
 	};
-
-/***/ },
-/* 324 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	var _NewAdmin = __webpack_require__(325);
-	
-	var _NewAdmin2 = _interopRequireDefault(_NewAdmin);
-	
-	var _users = __webpack_require__(266);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var NewAdminContainer = function (_Component) {
-	    _inherits(NewAdminContainer, _Component);
-	
-	    function NewAdminContainer(props) {
-	        _classCallCheck(this, NewAdminContainer);
-	
-	        var _this = _possibleConstructorReturn(this, (NewAdminContainer.__proto__ || Object.getPrototypeOf(NewAdminContainer)).call(this, props));
-	
-	        _this.state = {
-	            admin: {},
-	            inputValue: ''
-	        };
-	        _this.handleInputChange = _this.handleInputChange.bind(_this);
-	        _this.addAdmin = _this.addAdmin.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(NewAdminContainer, [{
-	        key: 'handleInputChange',
-	        value: function handleInputChange(e) {
-	            this.setState({
-	                inputValue: e.target.value
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var inputValue = this.state.inputValue;
-	            var filteredUsers = this.props.allUsers.filter(function (user) {
-	                return user.firstName.match(inputValue);
-	            });
-	
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    'Add New Admin'
-	                ),
-	                _react2.default.createElement(_NewAdmin2.default, _extends({ allUsers: this.props.allUsers, handleInputChange: this.handleInputChange, addAdmin: this.addAdmin }, this.state)),
-	                filteredUsers.map(function (user) {
-	                    return _react2.default.createElement(
-	                        'div',
-	                        { key: user.phone },
-	                        user.firstName
-	                    );
-	                })
-	            );
-	        }
-	    }, {
-	        key: 'addAdmin',
-	        value: function addAdmin(e) {
-	            e.preventDefault();
-	            var user = e.target.user.value;
-	            var newRole = 'admin';
-	
-	            this.props.addUserRoleToDb(user, newRole);
-	            this.setState({
-	                admin: {}
-	            });
-	        }
-	    }]);
-	
-	    return NewAdminContainer;
-	}(_react.Component);
-	
-	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    console.log('*************state', state);
-	    return {
-	        // currentUser: state.users.currentUser,
-	        // allInterests: state.interests.allInterests
-	        allUsers: state.users.allUsers
-	    };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {
-	        addUserRoleToDb: function addUserRoleToDb(user, newRole) {
-	            dispatch((0, _users.addUserRoleToDb)(user, newRole));
-	        }
-	    };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewAdminContainer);
-
-/***/ },
-/* 325 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var NewAdmin = function NewAdmin(props) {
-	    console.log('NewAdmin props----->', props);
-	
-	    var handleChange = props.handleInputChange;
-	    var inputValue = props.inputValue;
-	
-	    return _react2.default.createElement(
-	        'form',
-	        { className: 'form-group', style: { marginTop: '20px' } },
-	        _react2.default.createElement('input', {
-	            onChange: handleChange,
-	            value: inputValue,
-	            className: 'form-control',
-	            placeholder: 'Enter user name'
-	        })
-	    );
-	}; // import React, { Component } from 'react';
-	//
-	// export default function(props) {
-	//     console.log('**************NewAdmin props', props)
-	//     return (
-	//         <div>
-	//             <h3>Add a New Admin</h3>
-	//             <div className="dropdown">
-	//                 <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-	//                     <span className="caret"/>
-	//                 </button>
-	//                 <ul className="dropdown-menu">
-	//                     <li><a href="#">HTML</a></li>
-	//                     <li><a href="#">CSS</a></li>
-	//                     <li><a href="#">JavaScript</a></li>
-	//                 </ul>
-	//             </div>
-	//         </div>
-	//     )
-	// }
-	
-	exports.default = NewAdmin;
 
 /***/ }
 /******/ ]);

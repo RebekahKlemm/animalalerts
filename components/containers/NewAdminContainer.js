@@ -27,17 +27,15 @@ class NewAdminContainer extends Component{
 
         return (
             <div>
-                <h3>Add New Admin</h3>
+                <h3>Add Admin</h3>
                 <NewAdmin allUsers={this.props.allUsers} handleInputChange={this.handleInputChange} addAdmin={this.addAdmin} {...this.state}/>
                 {filteredUsers.map(function(user){
                     return(
-                        <div key={user.phone}>
-                            {user.firstName}
+                        <div className='userList' key={user.phone}>
+                            <h4>{user.fullName}</h4>
                         </div>
                     )
                 })
-
-
                 }
             </div>
         )

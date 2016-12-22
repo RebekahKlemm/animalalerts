@@ -46,6 +46,21 @@ var userConfig = {
             })
         }
     },
+    getterMethods: {
+        fullName: function() {
+            return this.firstName + ' ' + this.lastName
+        }
+    },
+    // instanceMethods: {
+    //     fullName: function(){
+    //         return this.firstName + ' ' + this.lastName
+    //     }
+    // }
+    // getterMethods: {
+    //     fullName: function (){
+    //         return this.getDataValue('firstName') + ' ' + this.getDataValue('lastName');
+    //     }
+    // }
     // getterMethods: {
     //     latLongRoute: function () {
     //         return '/api/users/' + this.phone + '/latLong';
