@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import UserDisplay from './UserDisplay';
 import NewAlertContainer from './NewAlertContainer';
+import NewAdminContainer from './NewAdminContainer';
+
 
 // import Inbox from '../Inbox';
 import { connect } from 'react-redux';
@@ -14,6 +16,7 @@ class AdminContainer extends Component{
         return (
             <div>
                 <NewAlertContainer/>
+                <NewAdminContainer/>
                 <UserDisplay/>
             </div>
         )

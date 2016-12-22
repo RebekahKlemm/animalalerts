@@ -6,11 +6,10 @@ const {User, LatLong} = require('../Database/Models/index');
 // This router is mounted on /api/users
 const router = express.Router();
 
-
+//This route demonstrates eager loading
 router.get('/', function (req, res, next){
     User.findAll({ include: [ LatLong ] })
         .then(function(users){
-            // console.log('inside router.get in users, here is users', users)
             res.send(users);
         })
 });
@@ -39,7 +38,7 @@ router.get('/:id', function(req, res, next){
         where: {phone: req.params.id}
     })
         .then(function(user){
-            console.log('------------>inside user router /:id, here is user I return from db', user)
+            // console.log('------------>inside user router /:id, here is user I return from db', user)
             res.send(user);
         })
 })
@@ -137,6 +136,18 @@ router.get('/:id/legislators', function(req, res, next){
 //     };
 //     this.makeRequest('legislators/geo', params, callback);
 // };
+
+
+router.post('/changeUserRole', function (req, res, next){
+    User.findOne({
+        where: {phone: req.body.user.phone}
+    })
+        .then(function(user) {
+            user.update({
+                role: req.body.role
+            })
+        }).then(user => res.send(user));
+});
 
 
 module.exports = router;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER} from './constants';
+import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER} from './constants';
 
 export const addUser = function (user) {
     return {
@@ -36,13 +36,46 @@ export const updateCurrentUser = function (user) {
 };
 
 
+export const updateUser = function (updatedUser) {
+    return {
+        type: UPDATE_USER,
+        user: updatedUser
+    };
+};
+
+
 //asynch action creator (thunk)
-// export function findUinDb(user){
+export function addUserRoleToDb(user){
+    return function (dispatch){
+        return axios.post('/api/users/changeUserRole', user)
+            // .then(function(response){
+            //     // console.log('RRRRRRRResponse', response)
+            //     return response
+            // })
+            .then(response => response.data)
+            .then(function(updatedUser){
+                dispatch(updateUser(updatedUser))
+            })
+    }
+}
+
+
+// //asynch action creator (thunk)
+// export function addAToDb(alert){
+//     // console.log('AAAAAAAACtion alert', alert);
 //     return function (dispatch){
-//         return axios.get('/api/users')
+//         return axios.post('/api/alerts/newAlert', alert)
+//             .then(function(response){
+//                 // console.log('RRRRRRRResponse', response)
+//                 return response
+//             })
 //             .then(response => response.data)
-//             .then(function(user){
-//                 dispatch(updateCurrentUser(user))
+//             .then(function(newAlert){
+//                 dispatch(addAlert(newAlert))
 //             })
 //     }
 // }
+
+
+
+

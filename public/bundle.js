@@ -28818,8 +28818,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.updateCurrentUser = exports.receiveUsers = exports.addUser = undefined;
+	exports.updateUser = exports.updateCurrentUser = exports.receiveUsers = exports.addUser = undefined;
 	exports.addUToDb = addUToDb;
+	exports.addUserRoleToDb = addUserRoleToDb;
 	
 	var _axios = __webpack_require__(267);
 	
@@ -28861,13 +28862,41 @@
 	    };
 	};
 	
+	var updateUser = exports.updateUser = function updateUser(updatedUser) {
+	    return {
+	        type: _constants.UPDATE_USER,
+	        user: updatedUser
+	    };
+	};
+	
 	//asynch action creator (thunk)
-	// export function findUinDb(user){
+	function addUserRoleToDb(user) {
+	    return function (dispatch) {
+	        return _axios2.default.post('/api/users/changeUserRole', user)
+	        // .then(function(response){
+	        //     // console.log('RRRRRRRResponse', response)
+	        //     return response
+	        // })
+	        .then(function (response) {
+	            return response.data;
+	        }).then(function (updatedUser) {
+	            dispatch(updateUser(updatedUser));
+	        });
+	    };
+	}
+	
+	// //asynch action creator (thunk)
+	// export function addAToDb(alert){
+	//     // console.log('AAAAAAAACtion alert', alert);
 	//     return function (dispatch){
-	//         return axios.get('/api/users')
+	//         return axios.post('/api/alerts/newAlert', alert)
+	//             .then(function(response){
+	//                 // console.log('RRRRRRRResponse', response)
+	//                 return response
+	//             })
 	//             .then(response => response.data)
-	//             .then(function(user){
-	//                 dispatch(updateCurrentUser(user))
+	//             .then(function(newAlert){
+	//                 dispatch(addAlert(newAlert))
 	//             })
 	//     }
 	// }
@@ -30372,6 +30401,7 @@
 	});
 	var ADD_USER = exports.ADD_USER = 'ADD_USER';
 	var UPDATE_CURRENT_USER = exports.UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER';
+	var UPDATE_USER = exports.UPDATE_USER = 'UPDATE_USER';
 	var RECEIVE_USERS = exports.RECEIVE_USERS = 'RECEIVE_USERS';
 	
 	var CHANGE_VIEW = exports.CHANGE_VIEW = 'CHANGE_VIEW';
@@ -31196,6 +31226,10 @@
 	
 	var _NewAlertContainer2 = _interopRequireDefault(_NewAlertContainer);
 	
+	var _NewAdminContainer = __webpack_require__(324);
+	
+	var _NewAdminContainer2 = _interopRequireDefault(_NewAdminContainer);
+	
 	var _reactRedux = __webpack_require__(234);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31225,6 +31259,7 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(_NewAlertContainer2.default, null),
+	                _react2.default.createElement(_NewAdminContainer2.default, null),
 	                _react2.default.createElement(_UserDisplay2.default, null)
 	            );
 	        }
@@ -31704,6 +31739,9 @@
 	            break;
 	        case _constants.UPDATE_CURRENT_USER:
 	            newState.currentUser = Object.assign({}, action.user);
+	            break;
+	        case _constants.UPDATE_USER:
+	            newState.allUsers[action.user.phone] = Object.assign({}, action.user);
 	            break;
 	        default:
 	            return state;
@@ -32821,6 +32859,181 @@
 	        allInterests: allInterests
 	    };
 	};
+
+/***/ },
+/* 324 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	var _NewAdmin = __webpack_require__(325);
+	
+	var _NewAdmin2 = _interopRequireDefault(_NewAdmin);
+	
+	var _users = __webpack_require__(266);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var NewAdminContainer = function (_Component) {
+	    _inherits(NewAdminContainer, _Component);
+	
+	    function NewAdminContainer(props) {
+	        _classCallCheck(this, NewAdminContainer);
+	
+	        var _this = _possibleConstructorReturn(this, (NewAdminContainer.__proto__ || Object.getPrototypeOf(NewAdminContainer)).call(this, props));
+	
+	        _this.state = {
+	            admin: {},
+	            inputValue: ''
+	        };
+	        _this.handleInputChange = _this.handleInputChange.bind(_this);
+	        _this.addAdmin = _this.addAdmin.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(NewAdminContainer, [{
+	        key: 'handleInputChange',
+	        value: function handleInputChange(e) {
+	            this.setState({
+	                inputValue: e.target.value
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var inputValue = this.state.inputValue;
+	            var filteredUsers = this.props.allUsers.filter(function (user) {
+	                return user.firstName.match(inputValue);
+	            });
+	
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'Add New Admin'
+	                ),
+	                _react2.default.createElement(_NewAdmin2.default, _extends({ allUsers: this.props.allUsers, handleInputChange: this.handleInputChange, addAdmin: this.addAdmin }, this.state)),
+	                filteredUsers.map(function (user) {
+	                    return _react2.default.createElement(
+	                        'div',
+	                        { key: user.phone },
+	                        user.firstName
+	                    );
+	                })
+	            );
+	        }
+	    }, {
+	        key: 'addAdmin',
+	        value: function addAdmin(e) {
+	            e.preventDefault();
+	            var user = e.target.user.value;
+	            var newRole = 'admin';
+	
+	            this.props.addUserRoleToDb(user, newRole);
+	            this.setState({
+	                admin: {}
+	            });
+	        }
+	    }]);
+	
+	    return NewAdminContainer;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    console.log('*************state', state);
+	    return {
+	        // currentUser: state.users.currentUser,
+	        // allInterests: state.interests.allInterests
+	        allUsers: state.users.allUsers
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {
+	        addUserRoleToDb: function addUserRoleToDb(user, newRole) {
+	            dispatch((0, _users.addUserRoleToDb)(user, newRole));
+	        }
+	    };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewAdminContainer);
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var NewAdmin = function NewAdmin(props) {
+	    console.log('NewAdmin props----->', props);
+	
+	    var handleChange = props.handleInputChange;
+	    var inputValue = props.inputValue;
+	
+	    return _react2.default.createElement(
+	        'form',
+	        { className: 'form-group', style: { marginTop: '20px' } },
+	        _react2.default.createElement('input', {
+	            onChange: handleChange,
+	            value: inputValue,
+	            className: 'form-control',
+	            placeholder: 'Enter user name'
+	        })
+	    );
+	}; // import React, { Component } from 'react';
+	//
+	// export default function(props) {
+	//     console.log('**************NewAdmin props', props)
+	//     return (
+	//         <div>
+	//             <h3>Add a New Admin</h3>
+	//             <div className="dropdown">
+	//                 <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+	//                     <span className="caret"/>
+	//                 </button>
+	//                 <ul className="dropdown-menu">
+	//                     <li><a href="#">HTML</a></li>
+	//                     <li><a href="#">CSS</a></li>
+	//                     <li><a href="#">JavaScript</a></li>
+	//                 </ul>
+	//             </div>
+	//         </div>
+	//     )
+	// }
+	
+	exports.default = NewAdmin;
 
 /***/ }
 /******/ ]);

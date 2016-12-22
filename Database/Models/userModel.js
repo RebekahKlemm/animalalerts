@@ -31,11 +31,21 @@ var userSchema = {
 
 
 var userConfig = {
-    // hooks: {
-    //     beforeValidate: function formatAddressURL(page) {
-    //         //if/else statement
-    //     }
-    // },
+    hooks: {
+        beforeValidate: function (user) {
+            var googleMapsClient = require('@google/maps').createClient({
+                key: 'AIzaSyBFetAhXRcymhUCT9_2_k-nEs8TEkDiOo8'
+            });
+            googleMapsClient.geocode({
+                address: user.address
+            }, function(err, response) {
+                if (response.json.results.length === 0) {
+                    Sequelize.Promise.reject("You must enter a valid U.S. address")
+                        .catch(err)
+                }
+            })
+        }
+    },
     // getterMethods: {
     //     latLongRoute: function () {
     //         return '/api/users/' + this.phone + '/latLong';
