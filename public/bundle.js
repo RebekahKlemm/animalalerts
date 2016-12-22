@@ -74,17 +74,17 @@
 	
 	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
 	
-	var _AdminContainer = __webpack_require__(302);
+	var _AdminContainer = __webpack_require__(304);
 	
 	var _AdminContainer2 = _interopRequireDefault(_AdminContainer);
 	
-	var _Welcome = __webpack_require__(306);
+	var _Welcome = __webpack_require__(308);
 	
 	var _Welcome2 = _interopRequireDefault(_Welcome);
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(307);
+	var _store = __webpack_require__(309);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -94,9 +94,9 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _alerts = __webpack_require__(305);
+	var _alerts = __webpack_require__(307);
 	
-	var _interests = __webpack_require__(321);
+	var _interests = __webpack_require__(323);
 	
 	var _addressDetails = __webpack_require__(294);
 	
@@ -28646,73 +28646,94 @@
 	
 	exports.default = function (props) {
 	    return _react2.default.createElement(
-	        'form',
-	        { id: 'new-signup-form', className: 'form-group', style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
-	                return props.signUpUser(e);
-	            } },
-	        _react2.default.createElement('input', {
-	            id: 'first-name-input',
-	            name: 'first',
-	            className: 'form-control',
-	            placeholder: 'Enter first name',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.first
-	        }),
-	        _react2.default.createElement('input', {
-	            id: 'last-name-input',
-	            name: 'last',
-	            className: 'form-control',
-	            placeholder: 'Enter last name',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.last
-	        }),
-	        _react2.default.createElement('input', {
-	            id: 'address-input',
-	            name: 'address',
-	            className: 'form-control',
-	            placeholder: 'Enter address',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.address
-	        }),
-	        _react2.default.createElement('input', {
-	            id: 'phone-input',
-	            name: 'phone',
-	            className: 'form-control',
-	            placeholder: 'Enter phone number',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.phone
-	
-	        }),
-	        _react2.default.createElement('input', {
-	            id: 'password-input',
-	            name: 'password',
-	            className: 'form-control',
-	            placeholder: 'Enter password',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.password
-	        }),
-	        _react2.default.createElement(_InterestOptions2.default, { allInterests: props.allInterests, interests: props.interests, handleInputChange: props.handleInputChange }),
+	        'div',
+	        null,
 	        _react2.default.createElement(
-	            'button',
-	            { id: 'signup-submit', type: 'submit', form: 'new-signup-form', value: 'Submit',
-	                className: 'btn btn-primary btn-block' },
-	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
-	            ' SUBMIT'
+	            'h3',
+	            null,
+	            'Welcome to Animal Alerts! '
 	        ),
 	        _react2.default.createElement(
-	            'div',
-	            { id: 'alert-warning', hidden: 'true', className: 'alert alert-warning' },
-	            'Please enter a valid name'
+	            'h4',
+	            null,
+	            'Sign up below to receive alerts from authorized admins on current issues that affect animals.'
+	        ),
+	        _react2.default.createElement(
+	            'form',
+	            { id: 'new-signup-form', className: 'form-group', style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
+	                    return props.signUpUser(e);
+	                } },
+	            _react2.default.createElement('input', {
+	                id: 'first-name-input',
+	                name: 'first',
+	                className: 'form-control',
+	                placeholder: 'Enter first name',
+	                onChange: function onChange(e) {
+	                    return props.handleInputChange(e);
+	                },
+	                value: props.first
+	            }),
+	            _react2.default.createElement('input', {
+	                id: 'last-name-input',
+	                name: 'last',
+	                className: 'form-control',
+	                placeholder: 'Enter last name',
+	                onChange: function onChange(e) {
+	                    return props.handleInputChange(e);
+	                },
+	                value: props.last
+	            }),
+	            _react2.default.createElement('input', {
+	                id: 'address-input',
+	                name: 'address',
+	                className: 'form-control',
+	                placeholder: 'Enter address',
+	                onChange: function onChange(e) {
+	                    return props.handleInputChange(e);
+	                },
+	                value: props.address
+	            }),
+	            _react2.default.createElement('input', {
+	                id: 'phone-input',
+	                name: 'phone',
+	                className: 'form-control',
+	                placeholder: 'Enter phone number - this is used as your login id, so make sure it\'s unique (but it doesn\'t have to be real)',
+	                onChange: function onChange(e) {
+	                    return props.handleInputChange(e);
+	                },
+	                value: props.phone
+	
+	            }),
+	            _react2.default.createElement('input', {
+	                id: 'password-input',
+	                name: 'password',
+	                className: 'form-control',
+	                placeholder: 'Enter password',
+	                onChange: function onChange(e) {
+	                    return props.handleInputChange(e);
+	                },
+	                value: props.password
+	            }),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Subscribe to alerts on the following topics:'
+	            ),
+	            _react2.default.createElement(_InterestOptions2.default, { allInterests: props.allInterests, interests: props.interests, handleInputChange: props.handleInputChange }),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	                'button',
+	                { id: 'signup-submit', type: 'submit', form: 'new-signup-form', value: 'Submit',
+	                    className: 'btn btn-primary btn-block' },
+	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+	                ' Sign me up'
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { id: 'alert-warning', hidden: 'true', className: 'alert alert-warning' },
+	                'Please enter a valid name'
+	            )
 	        )
 	    );
 	};
@@ -30524,7 +30545,7 @@
 /* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -30535,94 +30556,84 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(178);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function Nav() {
 	    return _react2.default.createElement(
-	        "nav",
-	        { className: "navbar navbar-inverse blue" },
+	        'nav',
+	        { className: 'navbar navbar-inverse blue' },
 	        _react2.default.createElement(
-	            "div",
-	            { className: "container-fluid" },
+	            'div',
+	            { className: 'container-fluid' },
 	            _react2.default.createElement(
-	                "div",
-	                { className: "navbar-header" },
+	                'div',
+	                { className: 'navbar-header' },
 	                _react2.default.createElement(
-	                    "a",
-	                    { className: "navbar-brand", href: "#" },
-	                    "Brand"
+	                    'a',
+	                    { className: 'navbar-brand', href: '#' },
+	                    'Animal Alerts'
 	                )
 	            ),
 	            _react2.default.createElement(
-	                "div",
-	                { className: "collapse navbar-collapse", id: "bs-example-navbar-collapse-1" },
+	                'div',
+	                { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
 	                _react2.default.createElement(
-	                    "ul",
-	                    { className: "nav navbar-nav" },
+	                    'ul',
+	                    { className: 'nav navbar-nav' },
 	                    _react2.default.createElement(
-	                        "li",
+	                        'li',
 	                        null,
 	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#" },
-	                            "Signup ",
+	                            _reactRouter.Link,
+	                            { href: '#' },
+	                            'Signup ',
 	                            _react2.default.createElement(
-	                                "span",
-	                                { className: "sr-only" },
-	                                "(current)"
+	                                'span',
+	                                { className: 'sr-only' },
+	                                '(current)'
 	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "li",
+	                        'li',
 	                        null,
 	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#/login" },
-	                            "Login"
+	                            'a',
+	                            { href: '#/login' },
+	                            'Login'
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "li",
+	                        'li',
 	                        null,
 	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#/user/123" },
-	                            "User123(Joe)"
+	                            'a',
+	                            { href: '#/user/123' },
+	                            'User123(Joe)'
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "li",
+	                        'li',
 	                        null,
 	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#/user/456" },
-	                            "User456(Bill)"
+	                            'a',
+	                            { href: '#/user/456' },
+	                            'User456(Bill)'
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "li",
+	                        'li',
 	                        null,
 	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#/admin/789" },
-	                            "Admin789(Susie)"
+	                            'a',
+	                            { href: '#/admin/789' },
+	                            'Admin789(Susie)'
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement(
-	                    "ul",
-	                    { className: "nav navbar-nav navbar-right" },
-	                    _react2.default.createElement(
-	                        "li",
-	                        null,
-	                        _react2.default.createElement(
-	                            "a",
-	                            { href: "#" },
-	                            "Link"
-	                        )
-	                    )
-	                )
+	                _react2.default.createElement('ul', { className: 'nav navbar-nav navbar-right' })
 	            )
 	        )
 	    );
@@ -30819,7 +30830,7 @@
 	
 	var _Inbox2 = _interopRequireDefault(_Inbox);
 	
-	var _LegislatorsContainer = __webpack_require__(322);
+	var _LegislatorsContainer = __webpack_require__(302);
 	
 	var _LegislatorsContainer2 = _interopRequireDefault(_LegislatorsContainer);
 	
@@ -30848,7 +30859,7 @@
 	            // if (this.props.currentAlerts) {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { className: 'container' },
 	                _react2.default.createElement(_LegislatorsContainer2.default, null),
 	                _react2.default.createElement(_Inbox2.default, { allAlerts: this.props.allAlerts, currentAlerts: this.props.currentAlerts,
 	                    currentUser: this.props.currentUser })
@@ -30916,7 +30927,7 @@
 /* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -30932,42 +30943,50 @@
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
 	function Alert(props) {
-	    // console.log("Alert props --------------->", props);
-	    var allAlerts = props.allAlerts;
 	    var currentAlerts = [].concat(_toConsumableArray(props.currentAlerts));
 	    currentAlerts.reverse();
 	    var currentUser = props.currentUser;
 	
-	    // if(currentUser.role === 'admin'){
-	    //     currentAlerts = allAlerts
-	    // }
+	    var header = void 0;
+	    if (currentUser.role === 'admin') {
+	        header = _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Admin Outbox'
+	        );
+	    } else header = _react2.default.createElement(
+	        'h3',
+	        null,
+	        'Alert Inbox'
+	    );
 	
 	    return _react2.default.createElement(
-	        "div",
+	        'div',
 	        null,
+	        header,
 	        currentAlerts.map(function (alert) {
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "alert", key: alert.id },
+	                'div',
+	                { className: 'alert', key: alert.id },
 	                _react2.default.createElement(
-	                    "p",
+	                    'p',
 	                    null,
-	                    "To: ",
+	                    'To: ',
 	                    alert.to
 	                ),
 	                _react2.default.createElement(
-	                    "p",
+	                    'p',
 	                    null,
-	                    "From: ",
+	                    'From: ',
 	                    alert.from
 	                ),
 	                _react2.default.createElement(
-	                    "p",
+	                    'p',
 	                    null,
-	                    "Body: ",
+	                    'Body: ',
 	                    alert.body
 	                ),
-	                _react2.default.createElement("hr", null)
+	                _react2.default.createElement('hr', null)
 	            );
 	        })
 	    );
@@ -30989,11 +31008,145 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _StateLegislators = __webpack_require__(303);
+	
+	var _StateLegislators2 = _interopRequireDefault(_StateLegislators);
+	
+	var _reactRedux = __webpack_require__(234);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var LegislatorsContainer = function (_Component) {
+	    _inherits(LegislatorsContainer, _Component);
+	
+	    function LegislatorsContainer(props) {
+	        _classCallCheck(this, LegislatorsContainer);
+	
+	        return _possibleConstructorReturn(this, (LegislatorsContainer.__proto__ || Object.getPrototypeOf(LegislatorsContainer)).call(this, props));
+	    }
+	
+	    _createClass(LegislatorsContainer, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_StateLegislators2.default, { addressDetails: this.props.addressDetails, currentUser: this.props.currentUser })
+	            );
+	        }
+	    }]);
+	
+	    return LegislatorsContainer;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	    return {
+	        addressDetails: state.addressDetails,
+	        currentUser: state.users.currentUser
+	    };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	    return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LegislatorsContainer);
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = StateLegislator;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function StateLegislator(props) {
+	    // console.log("StateLegislator props --------------->", props);
+	    var addressDetails = props.addressDetails;
+	    var currentStateLegislators = [].concat(_toConsumableArray(props.addressDetails.stateLegislators));
+	    // currentStateLegislators.reverse();
+	    var currentUser = props.currentUser;
+	
+	    // if(currentUser.role === 'admin'){
+	    //     currentStateLegislators = allStateLegislators
+	    // }
+	
+	    return _react2.default.createElement(
+	        "div",
+	        { className: "clearfix" },
+	        _react2.default.createElement(
+	            "h3",
+	            null,
+	            "My State Legislators"
+	        ),
+	        currentStateLegislators.map(function (stateLegislator) {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "stateLegislators clearfix", key: stateLegislator.id },
+	                _react2.default.createElement("img", { src: stateLegislator.photo_url, className: "img-thumbnail" }),
+	                _react2.default.createElement(
+	                    "h4",
+	                    null,
+	                    stateLegislator.full_name
+	                ),
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    stateLegislator.party
+	                ),
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    stateLegislator.offices[0].phone
+	                ),
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    stateLegislator.offices[0].email
+	                )
+	            );
+	        })
+	    );
+	}
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
 	var _UserDisplay = __webpack_require__(299);
 	
 	var _UserDisplay2 = _interopRequireDefault(_UserDisplay);
 	
-	var _NewAlertContainer = __webpack_require__(303);
+	var _NewAlertContainer = __webpack_require__(305);
 	
 	var _NewAlertContainer2 = _interopRequireDefault(_NewAlertContainer);
 	
@@ -31049,7 +31202,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AdminContainer);
 
 /***/ },
-/* 303 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31068,11 +31221,11 @@
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _NewAlert = __webpack_require__(304);
+	var _NewAlert = __webpack_require__(306);
 	
 	var _NewAlert2 = _interopRequireDefault(_NewAlert);
 	
-	var _alerts = __webpack_require__(305);
+	var _alerts = __webpack_require__(307);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -31194,7 +31347,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewAlertContainer);
 
 /***/ },
-/* 304 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31211,22 +31364,17 @@
 	                return props.addAlert(e);
 	            } },
 	        _react2.default.createElement(
-	            'p',
+	            'h3',
 	            null,
-	            'Select Interest Category to receive this alert:'
+	            'Send a New Alert'
+	        ),
+	        _react2.default.createElement(
+	            'h5',
+	            null,
+	            'Select Interest Category (all users subscribed to this interest category will receive this alert)'
 	        ),
 	        _react2.default.createElement(_InterestOptions2.default, { allInterests: props.allInterests, handleInputChange: props.handleInputChange }),
-	        _react2.default.createElement('p', null),
-	        _react2.default.createElement('input', {
-	            id: 'to-input',
-	            name: 'to',
-	            className: 'form-control',
-	            placeholder: 'Enter recipient phone number without spaces or dashes',
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.to
-	        }),
+	        _react2.default.createElement('br', null),
 	        _react2.default.createElement('input', {
 	            id: 'body-input',
 	            name: 'body',
@@ -31244,6 +31392,7 @@
 	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
 	            ' SUBMIT'
 	        ),
+	        _react2.default.createElement('hr', null),
 	        _react2.default.createElement(
 	            'div',
 	            { id: 'alert-warning', hidden: 'true', className: 'alert alert-warning' },
@@ -31265,7 +31414,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 305 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31322,7 +31471,7 @@
 	}
 
 /***/ },
-/* 306 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31407,7 +31556,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Welcome);
 
 /***/ },
-/* 307 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31418,15 +31567,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(308);
+	var _rootReducer = __webpack_require__(310);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(314);
+	var _reduxThunk = __webpack_require__(316);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(315);
+	var _reduxLogger = __webpack_require__(317);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -31441,7 +31590,7 @@
 	exports.default = store;
 
 /***/ },
-/* 308 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31456,23 +31605,23 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _userReducer = __webpack_require__(309);
+	var _userReducer = __webpack_require__(311);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _alertReducer = __webpack_require__(310);
+	var _alertReducer = __webpack_require__(312);
 	
 	var _alertReducer2 = _interopRequireDefault(_alertReducer);
 	
-	var _currentViewReducer = __webpack_require__(311);
+	var _currentViewReducer = __webpack_require__(313);
 	
 	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
 	
-	var _interestReducer = __webpack_require__(312);
+	var _interestReducer = __webpack_require__(314);
 	
 	var _interestReducer2 = _interopRequireDefault(_interestReducer);
 	
-	var _addressDetailsReducer = __webpack_require__(313);
+	var _addressDetailsReducer = __webpack_require__(315);
 	
 	var _addressDetailsReducer2 = _interopRequireDefault(_addressDetailsReducer);
 	
@@ -31481,7 +31630,7 @@
 	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default, interests: _interestReducer2.default, addressDetails: _addressDetailsReducer2.default });
 
 /***/ },
-/* 309 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31527,7 +31676,7 @@
 	};
 
 /***/ },
-/* 310 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31574,7 +31723,7 @@
 	};
 
 /***/ },
-/* 311 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31613,7 +31762,7 @@
 	};
 
 /***/ },
-/* 312 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31659,7 +31808,7 @@
 	};
 
 /***/ },
-/* 313 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31707,7 +31856,7 @@
 	};
 
 /***/ },
-/* 314 */
+/* 316 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31735,7 +31884,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 315 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31746,11 +31895,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(316);
+	var _core = __webpack_require__(318);
 	
-	var _helpers = __webpack_require__(317);
+	var _helpers = __webpack_require__(319);
 	
-	var _defaults = __webpack_require__(320);
+	var _defaults = __webpack_require__(322);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -31853,7 +32002,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 316 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31863,9 +32012,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(317);
+	var _helpers = __webpack_require__(319);
 	
-	var _diff = __webpack_require__(318);
+	var _diff = __webpack_require__(320);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -31994,7 +32143,7 @@
 	}
 
 /***/ },
-/* 317 */
+/* 319 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32018,7 +32167,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 318 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32028,7 +32177,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(319);
+	var _deepDiff = __webpack_require__(321);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -32114,7 +32263,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 319 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -32543,7 +32692,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 320 */
+/* 322 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32594,7 +32743,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 321 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32621,135 +32770,6 @@
 	        allInterests: allInterests
 	    };
 	};
-
-/***/ },
-/* 322 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _StateLegislators = __webpack_require__(323);
-	
-	var _StateLegislators2 = _interopRequireDefault(_StateLegislators);
-	
-	var _reactRedux = __webpack_require__(234);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var LegislatorsContainer = function (_Component) {
-	    _inherits(LegislatorsContainer, _Component);
-	
-	    function LegislatorsContainer(props) {
-	        _classCallCheck(this, LegislatorsContainer);
-	
-	        return _possibleConstructorReturn(this, (LegislatorsContainer.__proto__ || Object.getPrototypeOf(LegislatorsContainer)).call(this, props));
-	    }
-	
-	    _createClass(LegislatorsContainer, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(_StateLegislators2.default, { addressDetails: this.props.addressDetails, currentUser: this.props.currentUser })
-	            );
-	        }
-	    }]);
-	
-	    return LegislatorsContainer;
-	}(_react.Component);
-	
-	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    return {
-	        addressDetails: state.addressDetails,
-	        currentUser: state.users.currentUser
-	    };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {};
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LegislatorsContainer);
-
-/***/ },
-/* 323 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = StateLegislator;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	function StateLegislator(props) {
-	    // console.log("StateLegislator props --------------->", props);
-	    var addressDetails = props.addressDetails;
-	    var currentStateLegislators = [].concat(_toConsumableArray(props.addressDetails.stateLegislators));
-	    // currentStateLegislators.reverse();
-	    var currentUser = props.currentUser;
-	
-	    // if(currentUser.role === 'admin'){
-	    //     currentStateLegislators = allStateLegislators
-	    // }
-	
-	    return _react2.default.createElement(
-	        "div",
-	        { className: "clearfix" },
-	        currentStateLegislators.map(function (stateLegislator) {
-	            return _react2.default.createElement(
-	                "div",
-	                { className: "stateLegislators clearfix", key: stateLegislator.id },
-	                _react2.default.createElement("img", { src: stateLegislator.photo_url, className: "img-thumbnail" }),
-	                _react2.default.createElement(
-	                    "h4",
-	                    null,
-	                    stateLegislator.full_name
-	                ),
-	                _react2.default.createElement(
-	                    "p",
-	                    null,
-	                    stateLegislator.party
-	                ),
-	                _react2.default.createElement(
-	                    "p",
-	                    null,
-	                    stateLegislator.offices[0].phone
-	                ),
-	                _react2.default.createElement(
-	                    "p",
-	                    null,
-	                    stateLegislator.offices[0].email
-	                )
-	            );
-	        })
-	    );
-	}
 
 /***/ }
 /******/ ]);

@@ -15,6 +15,7 @@ export default function StateLegislator(props){
 
     return(
         <div className="clearfix">
+            <h3>My State Legislators</h3>
             { currentStateLegislators.map((stateLegislator) => {
                     return(
                         <div className="stateLegislators clearfix" key={stateLegislator.id}>

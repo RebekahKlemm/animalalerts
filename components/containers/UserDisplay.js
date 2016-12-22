@@ -12,7 +12,7 @@ class UserDisplay extends Component{
     render(){
         // if (this.props.currentAlerts) {
             return (
-                <div>
+                <div className="container">
                 <LegislatorsContainer/>
                 <Inbox allAlerts={this.props.allAlerts} currentAlerts={this.props.currentAlerts}
                        currentUser={this.props.currentUser}/>

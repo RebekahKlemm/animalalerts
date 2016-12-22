@@ -4,6 +4,9 @@ import InterestOptions from './InterestOptions';
 
 export default function(props) {
     return (
+        <div>
+            <h3>Welcome to Animal Alerts! </h3>
+            <h4>Sign up below to receive alerts from authorized admins on current issues that affect animals.</h4>
         <form id="new-signup-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.signUpUser(e)}>
             <input
                 id="first-name-input"
@@ -33,7 +36,7 @@ export default function(props) {
                 id="phone-input"
                 name="phone"
                 className="form-control"
-                placeholder="Enter phone number"
+                placeholder="Enter phone number - this is used as your login id, so make sure it's unique (but it doesn't have to be real)"
                 onChange={e => props.handleInputChange(e)}
                 value={props.phone}
 
@@ -46,13 +49,17 @@ export default function(props) {
                 onChange={e => props.handleInputChange(e)}
                 value={props.password}
             />
+            <br></br>
+            <h4>Subscribe to alerts on the following topics:</h4>
             <InterestOptions allInterests={props.allInterests} interests={props.interests} handleInputChange={props.handleInputChange}/>
+            <br></br>
             <button id="signup-submit" type="submit" form="new-signup-form" value="Submit"
                     className="btn btn-primary btn-block">
-                <span className="glyphicon glyphicon-plus"></span> SUBMIT
+                <span className="glyphicon glyphicon-plus"></span> Sign me up
             </button>
             <div id="alert-warning" hidden="true" className="alert alert-warning">Please enter a valid name</div>
         </form>
+            </div>
     )
 }
 

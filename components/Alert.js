@@ -3,18 +3,19 @@ import React, {Component} from 'react';
 
 
 export default function Alert(props){
-    // console.log("Alert props --------------->", props);
-        const allAlerts = props.allAlerts;
         let currentAlerts = [...props.currentAlerts];
             currentAlerts.reverse();
         const currentUser = props.currentUser;
 
-    // if(currentUser.role === 'admin'){
-    //     currentAlerts = allAlerts
-    // }
+    let header;
+        if (currentUser.role === 'admin'){
+            header = <h3>Admin Outbox</h3>
+        }
+            else header = <h3>Alert Inbox</h3>
 
         return(
             <div>
+                {header}
                 { currentAlerts.map((alert) => {
                         return(
                             <div className="alert" key={alert.id}>

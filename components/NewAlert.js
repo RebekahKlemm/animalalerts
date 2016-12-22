@@ -7,17 +7,19 @@ export default function(props) {
     console.log('**************props', props)
     return (
         <form id="new-alert-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.addAlert(e)}>
-            <p>Select Interest Category to receive this alert:</p>
+
+            <h3>Send a New Alert</h3>
+            <h5>Select Interest Category (all users subscribed to this interest category will receive this alert)</h5>
                 <InterestOptions allInterests={props.allInterests} handleInputChange={props.handleInputChange}/>
-                <p/>
-            <input
-                id="to-input"
-                name="to"
-                className="form-control"
-                placeholder="Enter recipient phone number without spaces or dashes"
-                onChange={e => props.handleInputChange(e)}
-                value={props.to}
-            />
+              <br></br>
+            {/*<input*/}
+                {/*id="to-input"*/}
+                {/*name="to"*/}
+                {/*className="form-control"*/}
+                {/*placeholder="Enter recipient phone number without spaces or dashes"*/}
+                {/*onChange={e => props.handleInputChange(e)}*/}
+                {/*value={props.to}*/}
+            {/*/>*/}
 
             {/*<input*/}
                 {/*id="from-input"*/}
@@ -39,6 +41,7 @@ export default function(props) {
                     className="btn btn-primary btn-block">
                 <span className="glyphicon glyphicon-plus"></span> SUBMIT
             </button>
+            <hr/>
             <div id="alert-warning" hidden="true" className="alert alert-warning">Please enter a valid name</div>
         </form>
     )
