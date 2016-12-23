@@ -77,7 +77,7 @@ class NewAlertContainer extends Component{
 
 
 const mapStateToProps = (state, ownProps) => {
-    console.log('*************state', state)
+    // console.log('*************state', state)
     return {
         currentUser: state.users.currentUser,
         allInterests: state.interests.allInterests

@@ -138,13 +138,14 @@ router.get('/:id/legislators', function(req, res, next){
 // };
 
 
+//this takes an array, where the first object is the user, and the second is a string that identifies the new role
 router.post('/changeUserRole', function (req, res, next){
     User.findOne({
-        where: {phone: req.body.user.phone}
+        where: {phone: req.body[0].phone}
     })
         .then(function(user) {
             user.update({
-                role: req.body.role
+                role: req.body[1]
             })
         }).then(user => res.send(user));
 });

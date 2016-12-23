@@ -4,7 +4,7 @@ import InterestOptions from './InterestOptions';
 
 
 export default function(props) {
-    console.log('**************props', props)
+    // console.log('**************props', props)
     return (
         <form id="new-alert-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.addAlert(e)}>
 
