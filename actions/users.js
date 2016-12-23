@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER} from './constants';
+import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER , EDIT_USER, REFRESH_USERS} from './constants';
 
 export const addUser = function (user) {
     return {
@@ -37,7 +37,6 @@ export const updateCurrentUser = function (user) {
 
 
 export const updateUser = function (oldUser, updatedUser) {
-    console.log('got into UpdateUser action')
     return {
         type: UPDATE_USER,
         oldUser: oldUser,
@@ -62,22 +61,37 @@ export function addUserRoleToDb(user){
     }
 }
 
+//coming in, user is an array of two objects, the first is the original user data, the second is the updated data
+export function editUinDb(user){
+    return function (dispatch){
+        return axios.post('/api/users/edit', user)
+            .then(function(latLong){
+                console.log('axios users lat long', latLong)
+                axios.post('/api/users/' + user[0].phone + '/latLong', latLong.data)
+                    .then(function(){
+                        return axios.get('/api/users/')
+                    })
+                    .then(response => response.data)
+                    .then(function(users){
+                        console.log('editUinDB', users)
+                        dispatch(refreshUsers(users));
+                    })
+            })
 
-// //asynch action creator (thunk)
-// export function addAToDb(alert){
-//     // console.log('AAAAAAAACtion alert', alert);
-//     return function (dispatch){
-//         return axios.post('/api/alerts/newAlert', alert)
-//             .then(function(response){
-//                 // console.log('RRRRRRRResponse', response)
-//                 return response
-//             })
-//             .then(response => response.data)
-//             .then(function(newAlert){
-//                 dispatch(addAlert(newAlert))
-//             })
-//     }
-// }
+    }
+}
+
+export const refreshUsers = function (users) {
+    return {
+        type: REFRESH_USERS,
+        users: users
+    };
+};
+
+
+
+
+
 
 
 

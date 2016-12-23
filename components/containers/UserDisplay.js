@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Inbox from '../Inbox';
 import LegislatorsContainer from './LegislatorsContainer';
+import EditUserContainer from './EditUserContainer';
 import { connect } from 'react-redux';
 
 class UserDisplay extends Component{
@@ -22,6 +23,7 @@ class UserDisplay extends Component{
                                    currentUser={this.props.currentUser}/>
                         </div>
                     </div>
+                    <EditUserContainer currentUser={this.props.currentUser}/>
                 </div>
             )
         // }

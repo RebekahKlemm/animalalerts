@@ -77,7 +77,11 @@ router.post('/:id/latLong', function (req, res, next){
                 long: req.body.lng
             })
                 .then(function(latLong){
+                    console.log('~~~~~~~~~~~~~user', user)
+                    console.log('~~~~~~~~~~~~~latLong', latLong)
                     user.setLatLong(latLong);
+                    console.log('~~~~~~~~~~~~~user AFTER LATLONG', user)
+
                     return latLong;
                 })
                 .then(latLong => res.send(latLong))
@@ -126,6 +130,30 @@ router.post('/changeUserRole', function (req, res, next){
 });
 
 
+//this takes an array, where the first object is the oldUser, and the second is the newUser
+router.post('/edit', function (req, res, next){
+    User.findOne({
+        where: {phone: req.body[0].phone}
+    })
+        .then(function(user){
+            return user.update({
+                firstName: req.body[1].first,
+                lastName: req.body[1].last,
+                address: req.body[1].address,
+                password: req.body[1].password
+            })
+        }).then(function(user) {
+            //geocode the new address
+             googleMapsClient.geocode({
+                address: user.address
+            }, function(err, response) {
+                if (!err) {
+                    res.send(response.json.results[0].geometry.location);
+                }
+            })
+        })
+    // res.send(user)
+});
 
 
 module.exports = router;

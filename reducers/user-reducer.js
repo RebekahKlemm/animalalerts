@@ -1,5 +1,5 @@
 import React from 'react'
-import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER} from '../actions/constants';
+import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER, EDIT_USER, REFRESH_USERS} from '../actions/constants';
 
 const initialState = {
     allUsers: [],
@@ -24,10 +24,27 @@ export default function (state = initialState, action) {
             console.log('got into UpdateUser reducer, updatedUser', action.updatedUser)
             const index = newState.allUsers.indexOf(action.oldUser);
             newState.allUsers = newState.allUsers.slice(0, index).concat(newState.allUsers.slice(index+1).concat([action.updatedUser]))
-            // newState.allUsers = [...newState.allUsers, ...action.user, {role: action.user.role}]
+            break;
+        case EDIT_USER:
+            // const completeUser = Object.assign({}, action.oldUser, action.updatedUser);
+            // console.log('complete user ----------->', completeUser);
+            console.log('newState.allUsers', newState.allUsers)
+            const index2 = newState.allUsers.indexOf(action.oldUser);
+            console.log('action.oldUser', action.oldUser);
+            console.log('IIIIIIIIIIIIINNNNDEX 2', index2)
+            newState.allUsers = newState.allUsers.slice(0, index2).concat(newState.allUsers.slice(index2+1).concat([action.updatedUser]))
+            // console.log('allusers index 2 ------->', newState.allUsers[index2]);
+            // newState.allUsers[index2].firstName = action.updatedUser.first;
+            // newState.allUsers[index2].lastName = action.updatedUser.last;
+            // newState.allUsers[index2].address = action.updatedUser.address;
+            // newState.allUsers[index2].password = action.updatedUser.password;
+            break;
+        case REFRESH_USERS:
+            newState.allUsers = action.users;
             break;
         default:
             return state;
     }
+
     return newState;
 }
