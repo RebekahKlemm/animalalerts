@@ -16,7 +16,8 @@ export default function Alert(props){
     let emptyInbox;
 
     if(currentAlerts.length === 0){
-       emptyInbox = <img className='inboxImage' src='/inbox.jpg'/>
+       // emptyInbox = <img className='inboxImage' src='/inbox.jpg'/>
+        emptyInbox = <p>Your Inbox is currently empty</p>
     }
 
         return(

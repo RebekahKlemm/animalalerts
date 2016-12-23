@@ -91,6 +91,11 @@
 .userList {
     text-align: center
 }
+
+.inboxImage {
+    height: 200px;
+}
+
 /*#stateLegHeader{*/
     /*text-align: center*/
 /*}*/

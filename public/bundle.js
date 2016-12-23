@@ -78,13 +78,13 @@
 	
 	var _AdminContainer2 = _interopRequireDefault(_AdminContainer);
 	
-	var _Welcome = __webpack_require__(560);
+	var _Welcome = __webpack_require__(561);
 	
 	var _Welcome2 = _interopRequireDefault(_Welcome);
 	
 	var _reactRedux = __webpack_require__(234);
 	
-	var _store = __webpack_require__(561);
+	var _store = __webpack_require__(562);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -96,7 +96,7 @@
 	
 	var _alerts = __webpack_require__(307);
 	
-	var _interests = __webpack_require__(575);
+	var _interests = __webpack_require__(576);
 	
 	var _addressDetails = __webpack_require__(294);
 	
@@ -31011,7 +31011,12 @@
 	    var emptyInbox = void 0;
 	
 	    if (currentAlerts.length === 0) {
-	        emptyInbox = _react2.default.createElement('img', { className: 'inboxImage', src: '/inbox.jpg' });
+	        // emptyInbox = <img className='inboxImage' src='/inbox.jpg'/>
+	        emptyInbox = _react2.default.createElement(
+	            'p',
+	            null,
+	            'Your Inbox is currently empty'
+	        );
 	    }
 	
 	    return _react2.default.createElement(
@@ -31569,7 +31574,7 @@
 	
 	var _NewAdmin2 = _interopRequireDefault(_NewAdmin);
 	
-	var _RemoveAdmin = __webpack_require__(576);
+	var _RemoveAdmin = __webpack_require__(560);
 	
 	var _RemoveAdmin2 = _interopRequireDefault(_RemoveAdmin);
 	
@@ -50489,6 +50494,44 @@
 	    value: true
 	});
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(310);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var RemoveAdmin = function RemoveAdmin(props) {
+	    var allUsers = props.allUsers;
+	    var removeAdmin = props.removeAdmin;
+	    return _react2.default.createElement(
+	        _reactBootstrap.DropdownButton,
+	        { bsStyle: 'success', title: 'Choose', onSelect: removeAdmin, id: 'removeAdmin' },
+	        allUsers.map(function (user) {
+	            if (user.role === "admin") {
+	                return _react2.default.createElement(
+	                    _reactBootstrap.MenuItem,
+	                    { eventKey: user, key: user.phone },
+	                    user.fullName
+	                );
+	            }
+	        })
+	    );
+	};
+	
+	exports.default = RemoveAdmin;
+
+/***/ },
+/* 561 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _reactRouter = __webpack_require__(178);
@@ -50570,7 +50613,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Welcome);
 
 /***/ },
-/* 561 */
+/* 562 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50581,15 +50624,15 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _rootReducer = __webpack_require__(562);
+	var _rootReducer = __webpack_require__(563);
 	
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 	
-	var _reduxThunk = __webpack_require__(568);
+	var _reduxThunk = __webpack_require__(569);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(569);
+	var _reduxLogger = __webpack_require__(570);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
@@ -50604,7 +50647,7 @@
 	exports.default = store;
 
 /***/ },
-/* 562 */
+/* 563 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50619,23 +50662,23 @@
 	
 	var _redux = __webpack_require__(243);
 	
-	var _userReducer = __webpack_require__(563);
+	var _userReducer = __webpack_require__(564);
 	
 	var _userReducer2 = _interopRequireDefault(_userReducer);
 	
-	var _alertReducer = __webpack_require__(564);
+	var _alertReducer = __webpack_require__(565);
 	
 	var _alertReducer2 = _interopRequireDefault(_alertReducer);
 	
-	var _currentViewReducer = __webpack_require__(565);
+	var _currentViewReducer = __webpack_require__(566);
 	
 	var _currentViewReducer2 = _interopRequireDefault(_currentViewReducer);
 	
-	var _interestReducer = __webpack_require__(566);
+	var _interestReducer = __webpack_require__(567);
 	
 	var _interestReducer2 = _interopRequireDefault(_interestReducer);
 	
-	var _addressDetailsReducer = __webpack_require__(567);
+	var _addressDetailsReducer = __webpack_require__(568);
 	
 	var _addressDetailsReducer2 = _interopRequireDefault(_addressDetailsReducer);
 	
@@ -50644,7 +50687,7 @@
 	exports.default = (0, _redux.combineReducers)({ users: _userReducer2.default, alerts: _alertReducer2.default, currentView: _currentViewReducer2.default, interests: _interestReducer2.default, addressDetails: _addressDetailsReducer2.default });
 
 /***/ },
-/* 563 */
+/* 564 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50697,7 +50740,7 @@
 	};
 
 /***/ },
-/* 564 */
+/* 565 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50744,7 +50787,7 @@
 	};
 
 /***/ },
-/* 565 */
+/* 566 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50783,7 +50826,7 @@
 	};
 
 /***/ },
-/* 566 */
+/* 567 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50829,7 +50872,7 @@
 	};
 
 /***/ },
-/* 567 */
+/* 568 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50877,7 +50920,7 @@
 	};
 
 /***/ },
-/* 568 */
+/* 569 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -50905,7 +50948,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 569 */
+/* 570 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -50916,11 +50959,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(570);
+	var _core = __webpack_require__(571);
 	
-	var _helpers = __webpack_require__(571);
+	var _helpers = __webpack_require__(572);
 	
-	var _defaults = __webpack_require__(574);
+	var _defaults = __webpack_require__(575);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -51023,7 +51066,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 570 */
+/* 571 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51033,9 +51076,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(571);
+	var _helpers = __webpack_require__(572);
 	
-	var _diff = __webpack_require__(572);
+	var _diff = __webpack_require__(573);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -51164,7 +51207,7 @@
 	}
 
 /***/ },
-/* 571 */
+/* 572 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -51188,7 +51231,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 572 */
+/* 573 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51198,7 +51241,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(573);
+	var _deepDiff = __webpack_require__(574);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -51284,7 +51327,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 573 */
+/* 574 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -51713,7 +51756,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 574 */
+/* 575 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -51764,7 +51807,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 575 */
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51791,44 +51834,6 @@
 	        allInterests: allInterests
 	    };
 	};
-
-/***/ },
-/* 576 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(310);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var RemoveAdmin = function RemoveAdmin(props) {
-	    var allUsers = props.allUsers;
-	    var removeAdmin = props.removeAdmin;
-	    return _react2.default.createElement(
-	        _reactBootstrap.DropdownButton,
-	        { bsStyle: 'success', title: 'Choose', onSelect: removeAdmin, id: 'removeAdmin' },
-	        allUsers.map(function (user) {
-	            if (user.role === "admin") {
-	                return _react2.default.createElement(
-	                    _reactBootstrap.MenuItem,
-	                    { eventKey: user, key: user.phone },
-	                    user.fullName
-	                );
-	            }
-	        })
-	    );
-	};
-	
-	exports.default = RemoveAdmin;
 
 /***/ }
 /******/ ]);

@@ -90,21 +90,6 @@ const OpenStates = require('openstates');
 
 var openstates = new OpenStates('abc');
 
-
-// router.get('/:id/legislators', function(req, res, next){
-//     // User.findOne({
-//     //     where: {phone: req.params.id}
-//     // })
-//     //     .then(function(user){
-//             openstates.legDetail('NCL000173', function(err, json) {
-//                 if (err) throw err;
-//                 res.send(json);
-//             });
-//     // })
-//
-//
-// })
-
 router.get('/:id/legislators', function(req, res, next){
     User.findOne({
         where: {phone: req.params.id}
@@ -116,7 +101,6 @@ router.get('/:id/legislators', function(req, res, next){
                     return latLong;
                 })
                 .then(function(latLong){
-                    // openstates.geoLookup(44.5212, -89.5218, function(err, json) {
                     openstates.geoLookup(latLong.lat, latLong.long, function(err, json) {
                         if (err) throw err;
                         res.send(json);
@@ -127,15 +111,6 @@ router.get('/:id/legislators', function(req, res, next){
 
 
 })
-
-// Lookup all legislators that serve districts containing a given point
-// OpenStates.prototype.geoLookup = function(lat, long, callback) {
-//     var params = {
-//         lat: lat,
-//         long: long
-//     };
-//     this.makeRequest('legislators/geo', params, callback);
-// };
 
 
 //this takes an array, where the first object is the user, and the second is a string that identifies the new role
@@ -149,6 +124,8 @@ router.post('/changeUserRole', function (req, res, next){
             })
         }).then(user => res.send(user));
 });
+
+
 
 
 module.exports = router;
