@@ -29,15 +29,17 @@ class LoginContainer extends Component{
         e.preventDefault();
         const loginAttempt = {
             phone: e.target.phone.value,
-            password: e.target.password.value
+            password: e.target.password.value,
+            user:{}
         };
         this.props.allUsers.map(user => {
             if (loginAttempt.phone === user.phone && loginAttempt.password === user.password){
                 this.setState({
                     phone: '',
-                    password: ''
+                    password: '',
+                    user:user
                 });
-                this.props.router.push('user/'+loginAttempt.phone);
+                this.props.router.push(user.role + '/'+loginAttempt.phone);
             }
         });
     }

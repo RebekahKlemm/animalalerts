@@ -144,7 +144,7 @@ router.post('/changeUserRole', function (req, res, next){
         where: {phone: req.body[0].phone}
     })
         .then(function(user) {
-            user.update({
+            return user.update({
                 role: req.body[1]
             })
         }).then(user => res.send(user));

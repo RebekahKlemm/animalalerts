@@ -36,10 +36,12 @@ export const updateCurrentUser = function (user) {
 };
 
 
-export const updateUser = function (updatedUser) {
+export const updateUser = function (oldUser, updatedUser) {
+    console.log('got into UpdateUser action')
     return {
         type: UPDATE_USER,
-        user: updatedUser
+        oldUser: oldUser,
+        updatedUser: updatedUser
     };
 };
 
@@ -54,7 +56,8 @@ export function addUserRoleToDb(user){
             // })
             .then(response => response.data)
             .then(function(updatedUser){
-                dispatch(updateUser(updatedUser))
+                console.log('updatedUser ----------->', updatedUser)
+                dispatch(updateUser(user[0], updatedUser))
             })
     }
 }

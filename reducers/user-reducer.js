@@ -20,7 +20,11 @@ export default function (state = initialState, action) {
             newState.currentUser= Object.assign({}, action.user)
             break;
         case UPDATE_USER:
-            newState.allUsers[action.user.phone]= Object.assign({}, action.user)
+            console.log('got into UpdateUser reducer, oldUser', action.oldUser)
+            console.log('got into UpdateUser reducer, updatedUser', action.updatedUser)
+            const index = newState.allUsers.indexOf(action.oldUser);
+            newState.allUsers = newState.allUsers.slice(0, index).concat(newState.allUsers.slice(index+1).concat([action.updatedUser]))
+            // newState.allUsers = [...newState.allUsers, ...action.user, {role: action.user.role}]
             break;
         default:
             return state;

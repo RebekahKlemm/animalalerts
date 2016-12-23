@@ -28862,10 +28862,12 @@
 	    };
 	};
 	
-	var updateUser = exports.updateUser = function updateUser(updatedUser) {
+	var updateUser = exports.updateUser = function updateUser(oldUser, updatedUser) {
+	    console.log('got into UpdateUser action');
 	    return {
 	        type: _constants.UPDATE_USER,
-	        user: updatedUser
+	        oldUser: oldUser,
+	        updatedUser: updatedUser
 	    };
 	};
 	
@@ -28880,7 +28882,8 @@
 	        .then(function (response) {
 	            return response.data;
 	        }).then(function (updatedUser) {
-	            dispatch(updateUser(updatedUser));
+	            console.log('updatedUser ----------->', updatedUser);
+	            dispatch(updateUser(user[0], updatedUser));
 	        });
 	    };
 	}
@@ -30743,15 +30746,17 @@
 	            e.preventDefault();
 	            var loginAttempt = {
 	                phone: e.target.phone.value,
-	                password: e.target.password.value
+	                password: e.target.password.value,
+	                user: {}
 	            };
 	            this.props.allUsers.map(function (user) {
 	                if (loginAttempt.phone === user.phone && loginAttempt.password === user.password) {
 	                    _this2.setState({
 	                        phone: '',
-	                        password: ''
+	                        password: '',
+	                        user: user
 	                    });
-	                    _this2.props.router.push('user/' + loginAttempt.phone);
+	                    _this2.props.router.push(user.role + '/' + loginAttempt.phone);
 	                }
 	            });
 	        }
@@ -50577,7 +50582,7 @@
 	
 	var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || _redux.compose;
 	
-	var store = (0, _redux.createStore)(_rootReducer2.default, composeEnhancers((0, _redux.applyMiddleware)(_reduxThunk2.default)));
+	var store = (0, _redux.createStore)(_rootReducer2.default, composeEnhancers((0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware)));
 	
 	exports.default = store;
 
@@ -50647,7 +50652,11 @@
 	            newState.currentUser = Object.assign({}, action.user);
 	            break;
 	        case _constants.UPDATE_USER:
-	            newState.allUsers[action.user.phone] = Object.assign({}, action.user);
+	            console.log('got into UpdateUser reducer, oldUser', action.oldUser);
+	            console.log('got into UpdateUser reducer, updatedUser', action.updatedUser);
+	            var index = newState.allUsers.indexOf(action.oldUser);
+	            newState.allUsers = newState.allUsers.slice(0, index).concat(newState.allUsers.slice(index + 1).concat([action.updatedUser]));
+	            // newState.allUsers = [...newState.allUsers, ...action.user, {role: action.user.role}]
 	            break;
 	        default:
 	            return state;
