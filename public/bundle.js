@@ -31011,33 +31011,7 @@
 	    var emptyInbox = void 0;
 	
 	    if (currentAlerts.length === 0) {
-	        emptyInbox = _react2.default.createElement(
-	            'div',
-	            { className: 'container' },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-6' },
-	                    _react2.default.createElement('img', { className: 'inboxImage', src: '/inbox.jpg' })
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-sm-6' },
-	                    _react2.default.createElement(
-	                        'h3',
-	                        { className: 'helperText' },
-	                        'Hint: Click on the Admin Link in the Nav bar to send a message to the group you signed up for (wildlife, farm animals, domestic pets)'
-	                    ),
-	                    _react2.default.createElement(
-	                        'h4',
-	                        null,
-	                        'Clicking the admin link will log you in as an admin, so after you send the message, you will need to login as yourself to check your messages'
-	                    )
-	                )
-	            )
-	        );
+	        emptyInbox = _react2.default.createElement('img', { className: 'inboxImage', src: '/inbox.jpg' });
 	    }
 	
 	    return _react2.default.createElement(
@@ -31595,6 +31569,10 @@
 	
 	var _NewAdmin2 = _interopRequireDefault(_NewAdmin);
 	
+	var _RemoveAdmin = __webpack_require__(576);
+	
+	var _RemoveAdmin2 = _interopRequireDefault(_RemoveAdmin);
+	
 	var _users = __webpack_require__(266);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31615,10 +31593,12 @@
 	
 	        _this.state = {
 	            user: {},
-	            showConfirmation: false
+	            showAddConfirmation: false,
+	            showRemoveConfirmation: false
 	        };
 	
 	        _this.addAdmin = _this.addAdmin.bind(_this);
+	        _this.removeAdmin = _this.removeAdmin.bind(_this);
 	        return _this;
 	    }
 	
@@ -31629,25 +31609,62 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    'Add Admin'
+	                    'div',
+	                    { className: 'col-sm-6' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Add Admin'
+	                    ),
+	                    _react2.default.createElement(_NewAdmin2.default, _extends({ allUsers: this.props.allUsers, addAdmin: this.addAdmin }, this.state)),
+	                    this.state.showAddConfirmation ? _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        this.state.user.firstName,
+	                        ' is now an Admin'
+	                    ) : null
 	                ),
-	                _react2.default.createElement(_NewAdmin2.default, _extends({ allUsers: this.props.allUsers, handleInputChange: this.handleInputChange, addAdmin: this.addAdmin }, this.state)),
-	                this.state.showConfirmation ? _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    this.state.user.firstName,
-	                    ' is now an Admin'
-	                ) : null
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-sm-6' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Remove Admin'
+	                    ),
+	                    _react2.default.createElement(_RemoveAdmin2.default, _extends({ allUsers: this.props.allUsers, removeAdmin: this.removeAdmin }, this.state)),
+	                    this.state.showRemoveConfirmation ? _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        this.state.user.firstName,
+	                        ' is no longer an Admin'
+	                    ) : null
+	                )
 	            );
 	        }
 	    }, {
 	        key: 'addAdmin',
 	        value: function addAdmin(user) {
+	            var _this2 = this;
+	
 	            var newRole = 'admin';
 	            this.props.addUserRoleToDb([user, newRole]);
-	            this.setState({ user: user, showConfirmation: true });
+	            this.setState({ user: user, showAddConfirmation: true });
+	            setTimeout(function () {
+	                return _this2.setState({ user: user, showAddConfirmation: false });
+	            }, 1500);
+	        }
+	    }, {
+	        key: 'removeAdmin',
+	        value: function removeAdmin(user) {
+	            var _this3 = this;
+	
+	            var newRole = 'user';
+	            this.props.addUserRoleToDb([user, newRole]);
+	            this.setState({ user: user, showRemoveConfirmation: true });
+	            setTimeout(function () {
+	                return _this3.setState({ user: user, showRemoveConfirmation: false });
+	            }, 1500);
 	        }
 	    }]);
 	
@@ -51774,6 +51791,44 @@
 	        allInterests: allInterests
 	    };
 	};
+
+/***/ },
+/* 576 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(310);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var RemoveAdmin = function RemoveAdmin(props) {
+	    var allUsers = props.allUsers;
+	    var removeAdmin = props.removeAdmin;
+	    return _react2.default.createElement(
+	        _reactBootstrap.DropdownButton,
+	        { bsStyle: 'success', title: 'Choose', onSelect: removeAdmin, id: 'removeAdmin' },
+	        allUsers.map(function (user) {
+	            if (user.role === "admin") {
+	                return _react2.default.createElement(
+	                    _reactBootstrap.MenuItem,
+	                    { eventKey: user, key: user.phone },
+	                    user.fullName
+	                );
+	            }
+	        })
+	    );
+	};
+	
+	exports.default = RemoveAdmin;
 
 /***/ }
 /******/ ]);

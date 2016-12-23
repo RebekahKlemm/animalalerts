@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, ControlLabel, FormControl, Button, MenuItem, DropdownButton} from 'react-bootstrap';
+import {MenuItem, DropdownButton} from 'react-bootstrap';
 
 const NewAdmin = (props) => {
     const allUsers = props.allUsers;
