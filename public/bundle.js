@@ -28892,13 +28892,13 @@
 	function editUinDb(user) {
 	    return function (dispatch) {
 	        return _axios2.default.post('/api/users/edit', user).then(function (latLong) {
-	            console.log('axios users lat long', latLong);
+	            // console.log('axios users lat long', latLong)
 	            _axios2.default.post('/api/users/' + user[0].phone + '/latLong', latLong.data).then(function () {
 	                return _axios2.default.get('/api/users/');
 	            }).then(function (response) {
 	                return response.data;
 	            }).then(function (users) {
-	                console.log('editUinDB', users);
+	                // console.log('editUinDB', users)
 	                dispatch(refreshUsers(users));
 	            });
 	        });

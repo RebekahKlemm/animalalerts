@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../Database/_db');
 // const User = require('../Database/Models/userModel');
-const {Interest} = require('../Database/Models/index');
+const {Interest, User} = require('../Database/Models/index');
 
 // This router is mounted on /api/interests
 const router = express.Router();
@@ -28,6 +28,16 @@ router.get('/:category', function(req, res, next){
         })
         .catch(next);
 })
+
+// router.post('/:id/update', function(req, res, next){
+//     User.findOne({
+//         where: {phone: req.params.id}
+//     })
+//         .then(function(user){
+//             console.log('req.body', req.body)
+//             // user.setInterest
+//         })
+// })
 
 //
 // router.post('/:category', function (req, res, next){

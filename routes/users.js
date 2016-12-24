@@ -130,7 +130,7 @@ router.post('/changeUserRole', function (req, res, next){
 });
 
 
-//this takes an array, where the first object is the oldUser, and the second is the newUser
+//this takes an array, where the first object is the oldUser, and the second is the newUser; editUinDb relies on this to return latLong coordinates
 router.post('/edit', function (req, res, next){
     User.findOne({
         where: {phone: req.body[0].phone}
@@ -142,7 +142,12 @@ router.post('/edit', function (req, res, next){
                 address: req.body[1].address,
                 password: req.body[1].password
             })
-        }).then(function(user) {
+        })
+        .then(function(user){
+            user.setInterests(req.body[1].interests);
+            return user;
+        })
+        .then(function(user) {
             //geocode the new address
              googleMapsClient.geocode({
                 address: user.address

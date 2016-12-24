@@ -66,20 +66,22 @@ export function editUinDb(user){
     return function (dispatch){
         return axios.post('/api/users/edit', user)
             .then(function(latLong){
-                console.log('axios users lat long', latLong)
+                // console.log('axios users lat long', latLong)
                 axios.post('/api/users/' + user[0].phone + '/latLong', latLong.data)
                     .then(function(){
                         return axios.get('/api/users/')
                     })
                     .then(response => response.data)
                     .then(function(users){
-                        console.log('editUinDB', users)
+                        // console.log('editUinDB', users)
                         dispatch(refreshUsers(users));
                     })
             })
 
     }
 }
+
+
 
 export const refreshUsers = function (users) {
     return {
