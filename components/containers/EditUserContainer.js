@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import EditUser from '../EditUser';
 import DeleteUser from '../DeleteUser';
-import {addUser, editUinDb} from '../../actions/users'
+import {addUser, editUinDb, deleteUinDb} from '../../actions/users'
 import {addLatLongToDb} from '../../actions/addressDetails'
 
 class EditUserContainer extends Component{
@@ -103,7 +103,9 @@ class EditUserContainer extends Component{
 
 
     deleteUser(e){
-        console.log("yup, you got into deleteUser")
+        e.preventDefault();
+        this.props.deleteUinDb(this.props.currentUser);
+        console.log('congratulations, you deleted your account');
     }
 
 }
@@ -130,6 +132,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         // },
         addLatLongToDb: function(user, lat, long){
             dispatch(addLatLongToDb(user, lat, long))
+        },
+        deleteUinDb: function(user){
+            dispatch(deleteUinDb(user))
         }
     }
 }

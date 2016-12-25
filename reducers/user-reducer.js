@@ -1,5 +1,5 @@
 import React from 'react'
-import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER, EDIT_USER, REFRESH_USERS} from '../actions/constants';
+import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER, EDIT_USER, REFRESH_USERS, DELETE_USER} from '../actions/constants';
 
 const initialState = {
     allUsers: [],
@@ -41,6 +41,10 @@ export default function (state = initialState, action) {
             break;
         case REFRESH_USERS:
             newState.allUsers = action.users;
+            break;
+        case DELETE_USER:
+            const index3 = newState.allUsers.indexOf(action.user);
+            newState.allUsers = newState.allUsers.slice(0, index3).concat(newState.allUsers.slice(index3+1));
             break;
         default:
             return state;

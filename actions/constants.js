@@ -4,6 +4,8 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const RECEIVE_USERS = 'RECEIVE_USERS';
 export const EDIT_USER = 'EDIT_USER';
 export const REFRESH_USERS = 'REFRESH_USERS';
+export const DELETE_USER = 'DELETE_USER';
+
 
 
 

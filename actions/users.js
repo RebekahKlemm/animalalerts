@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER , EDIT_USER, REFRESH_USERS} from './constants';
+import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER , EDIT_USER, REFRESH_USERS, DELETE_USER} from './constants';
 
 export const addUser = function (user) {
     return {
@@ -16,6 +16,26 @@ export function addUToDb(user){
             .then(response => response.data)
             .then(function(newUser){
               dispatch(addUser(newUser))
+            })
+    }
+}
+
+export const deleteUser = function (user) {
+    console.log('inside deleteUser, here is user', user)
+    return {
+        type: DELETE_USER,
+        user: user
+    };
+};
+
+
+//asynch action creator (thunk)
+export function deleteUinDb(user){
+    return function (dispatch){
+        return axios.post('/api/users/delete', user)
+            .then(response => response.data)
+            .then(function(user){
+                dispatch(deleteUser(user))
             })
     }
 }

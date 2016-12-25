@@ -157,8 +157,19 @@ router.post('/edit', function (req, res, next){
                 }
             })
         })
-    // res.send(user)
+
 });
+
+router.post('/delete', function(req, res, next){
+    User.findOne({where: {phone: req.body.phone}})
+        .then(function(user){
+            user.destroy()
+                .then(function(user2){
+                    res.send(user2);
+                })
+        })
+
+})
 
 
 module.exports = router;
