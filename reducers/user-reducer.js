@@ -20,18 +20,18 @@ export default function (state = initialState, action) {
             newState.currentUser= Object.assign({}, action.user)
             break;
         case UPDATE_USER:
-            console.log('got into UpdateUser reducer, oldUser', action.oldUser)
-            console.log('got into UpdateUser reducer, updatedUser', action.updatedUser)
+            // console.log('got into UpdateUser reducer, oldUser', action.oldUser)
+            // console.log('got into UpdateUser reducer, updatedUser', action.updatedUser)
             const index = newState.allUsers.indexOf(action.oldUser);
             newState.allUsers = newState.allUsers.slice(0, index).concat(newState.allUsers.slice(index+1).concat([action.updatedUser]))
             break;
         case EDIT_USER:
             // const completeUser = Object.assign({}, action.oldUser, action.updatedUser);
             // console.log('complete user ----------->', completeUser);
-            console.log('newState.allUsers', newState.allUsers)
+            // console.log('newState.allUsers', newState.allUsers)
             const index2 = newState.allUsers.indexOf(action.oldUser);
-            console.log('action.oldUser', action.oldUser);
-            console.log('IIIIIIIIIIIIINNNNDEX 2', index2)
+            // console.log('action.oldUser', action.oldUser);
+            // console.log('IIIIIIIIIIIIINNNNDEX 2', index2)
             newState.allUsers = newState.allUsers.slice(0, index2).concat(newState.allUsers.slice(index2+1).concat([action.updatedUser]))
             // console.log('allusers index 2 ------->', newState.allUsers[index2]);
             // newState.allUsers[index2].firstName = action.updatedUser.first;

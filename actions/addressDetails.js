@@ -65,7 +65,7 @@ export const updateCurrentAddressDetails = function (latLong, stateLegislators) 
 // })
 
 export function addLatLongToDb(user){
-    console.log('inside addLatLongToDb, here is user', user)
+    // console.log('inside addLatLongToDb, here is user', user)
     return function (dispatch){
         return axios.get('/api/users/'+ user.phone +'/latLong')
             .then(response => response.data)

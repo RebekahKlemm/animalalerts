@@ -77,10 +77,10 @@ router.post('/:id/latLong', function (req, res, next){
                 long: req.body.lng
             })
                 .then(function(latLong){
-                    console.log('~~~~~~~~~~~~~user', user)
-                    console.log('~~~~~~~~~~~~~latLong', latLong)
+                    // console.log('~~~~~~~~~~~~~user', user)
+                    // console.log('~~~~~~~~~~~~~latLong', latLong)
                     user.setLatLong(latLong);
-                    console.log('~~~~~~~~~~~~~user AFTER LATLONG', user)
+                    // console.log('~~~~~~~~~~~~~user AFTER LATLONG', user)
 
                     return latLong;
                 })
@@ -101,7 +101,7 @@ router.get('/:id/legislators', function(req, res, next){
         .then(function(user){
             user.getLatLong()
                 .then(function (latLong){
-                    console.log('user.getLatLong', latLong)
+                    // console.log('user.getLatLong', latLong)
                     return latLong;
                 })
                 .then(function(latLong){

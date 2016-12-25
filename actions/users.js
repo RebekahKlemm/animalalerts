@@ -55,7 +55,7 @@ export function addUserRoleToDb(user){
             // })
             .then(response => response.data)
             .then(function(updatedUser){
-                console.log('updatedUser ----------->', updatedUser)
+                // console.log('updatedUser ----------->', updatedUser)
                 dispatch(updateUser(user[0], updatedUser))
             })
     }

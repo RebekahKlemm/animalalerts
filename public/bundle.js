@@ -28882,7 +28882,7 @@
 	        .then(function (response) {
 	            return response.data;
 	        }).then(function (updatedUser) {
-	            console.log('updatedUser ----------->', updatedUser);
+	            // console.log('updatedUser ----------->', updatedUser)
 	            dispatch(updateUser(user[0], updatedUser));
 	        });
 	    };
@@ -30531,7 +30531,7 @@
 	// })
 	
 	function addLatLongToDb(user) {
-	    console.log('inside addLatLongToDb, here is user', user);
+	    // console.log('inside addLatLongToDb, here is user', user)
 	    return function (dispatch) {
 	        return _axios2.default.get('/api/users/' + user.phone + '/latLong').then(function (response) {
 	            return response.data;
@@ -31225,6 +31225,10 @@
 	
 	var _EditUser2 = _interopRequireDefault(_EditUser);
 	
+	var _DeleteUser = __webpack_require__(579);
+	
+	var _DeleteUser2 = _interopRequireDefault(_DeleteUser);
+	
 	var _users = __webpack_require__(266);
 	
 	var _addressDetails = __webpack_require__(294);
@@ -31259,6 +31263,7 @@
 	
 	        _this.handleInputChange = _this.handleInputChange.bind(_this);
 	        _this.editUser = _this.editUser.bind(_this);
+	        _this.deleteUser = _this.deleteUser.bind(_this);
 	
 	        return _this;
 	    }
@@ -31302,11 +31307,17 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_EditUser2.default, _extends({ allInterests: this.props.allInterests, handleInputChange: this.handleInputChange, editUser: this.editUser }, this.state));
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_EditUser2.default, _extends({ allInterests: this.props.allInterests, handleInputChange: this.handleInputChange, editUser: this.editUser }, this.state)),
+	                _react2.default.createElement(_DeleteUser2.default, { deleteUser: this.deleteUser })
+	            );
 	        }
 	    }, {
 	        key: 'editUser',
 	        value: function editUser(e) {
+	            // console.log('------------> e in EditUserContainer.target', e.target)
 	            e.preventDefault();
 	            // console.log('...........this.state.interests', this.state.interests)
 	            var updatedUser = {
@@ -31324,7 +31335,7 @@
 	            // this.props.addLatLongToDb(updatedUser);
 	
 	
-	            console.log("congrats, you edited your details");
+	            // console.log("congrats, you edited your details")
 	            // this.props.router.push('welcome/'+user.phone);
 	            // this.props.router.push('user/'+user.phone);
 	
@@ -31335,6 +31346,11 @@
 	                password: '',
 	                interests: []
 	            });
+	        }
+	    }, {
+	        key: 'deleteUser',
+	        value: function deleteUser(e) {
+	            console.log("yup, you got into deleteUser");
 	        }
 	    }]);
 	
@@ -50990,18 +51006,18 @@
 	            newState.currentUser = Object.assign({}, action.user);
 	            break;
 	        case _constants.UPDATE_USER:
-	            console.log('got into UpdateUser reducer, oldUser', action.oldUser);
-	            console.log('got into UpdateUser reducer, updatedUser', action.updatedUser);
+	            // console.log('got into UpdateUser reducer, oldUser', action.oldUser)
+	            // console.log('got into UpdateUser reducer, updatedUser', action.updatedUser)
 	            var index = newState.allUsers.indexOf(action.oldUser);
 	            newState.allUsers = newState.allUsers.slice(0, index).concat(newState.allUsers.slice(index + 1).concat([action.updatedUser]));
 	            break;
 	        case _constants.EDIT_USER:
 	            // const completeUser = Object.assign({}, action.oldUser, action.updatedUser);
 	            // console.log('complete user ----------->', completeUser);
-	            console.log('newState.allUsers', newState.allUsers);
+	            // console.log('newState.allUsers', newState.allUsers)
 	            var index2 = newState.allUsers.indexOf(action.oldUser);
-	            console.log('action.oldUser', action.oldUser);
-	            console.log('IIIIIIIIIIIIINNNNDEX 2', index2);
+	            // console.log('action.oldUser', action.oldUser);
+	            // console.log('IIIIIIIIIIIIINNNNDEX 2', index2)
 	            newState.allUsers = newState.allUsers.slice(0, index2).concat(newState.allUsers.slice(index2 + 1).concat([action.updatedUser]));
 	            // console.log('allusers index 2 ------->', newState.allUsers[index2]);
 	            // newState.allUsers[index2].firstName = action.updatedUser.first;
@@ -52129,6 +52145,47 @@
 	        allInterests: allInterests
 	    };
 	};
+
+/***/ },
+/* 579 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function (props) {
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "form",
+	            { id: "delete-user-form", className: "form-group", style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
+	                    return props.deleteUser(e);
+	                } },
+	            _react2.default.createElement(
+	                "button",
+	                { id: "deleteUser-submit", type: "submit", form: "delete-user-form", value: "Submit",
+	                    className: "btn btn-primary btn-block" },
+	                _react2.default.createElement("span", { className: "glyphicon glyphicon-plus" }),
+	                " Delete Account"
+	            ),
+	            _react2.default.createElement(
+	                "div",
+	                { id: "alert-warning", hidden: "true", className: "alert alert-warning" },
+	                "Please enter a valid name"
+	            )
+	        )
+	    );
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }
 /******/ ]);

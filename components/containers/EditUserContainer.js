@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import EditUser from '../EditUser';
+import DeleteUser from '../DeleteUser';
 import {addUser, editUinDb} from '../../actions/users'
 import {addLatLongToDb} from '../../actions/addressDetails'
 
@@ -19,6 +20,7 @@ class EditUserContainer extends Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.editUser = this.editUser.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
 
     }
 
@@ -57,10 +59,16 @@ class EditUserContainer extends Component{
     }
 
     render(){
-        return (<EditUser allInterests={this.props.allInterests} handleInputChange={this.handleInputChange} editUser={this.editUser} {...this.state}/>)
+        return (
+            <div>
+                <EditUser allInterests={this.props.allInterests} handleInputChange={this.handleInputChange} editUser={this.editUser} {...this.state} />
+                 <DeleteUser deleteUser={this.deleteUser}/>
+            </div>
+        )
     }
 
     editUser(e){
+        // console.log('------------> e in EditUserContainer.target', e.target)
         e.preventDefault();
         // console.log('...........this.state.interests', this.state.interests)
         const updatedUser = {
@@ -79,7 +87,7 @@ class EditUserContainer extends Component{
         // this.props.addLatLongToDb(updatedUser);
 
 
-        console.log("congrats, you edited your details")
+        // console.log("congrats, you edited your details")
         // this.props.router.push('welcome/'+user.phone);
         // this.props.router.push('user/'+user.phone);
 
@@ -90,6 +98,12 @@ class EditUserContainer extends Component{
             password: '',
             interests: []
         })
+    }
+
+
+
+    deleteUser(e){
+        console.log("yup, you got into deleteUser")
     }
 
 }

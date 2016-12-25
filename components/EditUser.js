@@ -44,7 +44,7 @@ export default function(props) {
                 <InterestOptions allInterests={props.allInterests} interests={props.interests} handleInputChange={props.handleInputChange}/>
                 <br></br>
                 <button id="editUser-submit" type="submit" form="edit-profile-form" value="Submit"
-                        className="btn btn-primary btn-block">
+                        className="btn btn-primary btn-block" >
                     <span className="glyphicon glyphicon-plus"></span> Confirm Changes
                 </button>
                 <div id="alert-warning" hidden="true" className="alert alert-warning">Please enter a valid name</div>
