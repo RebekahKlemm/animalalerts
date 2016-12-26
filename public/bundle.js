@@ -28863,8 +28863,8 @@
 	    return function (dispatch) {
 	        return _axios2.default.post('/api/users/delete', user).then(function (response) {
 	            return response.data;
-	        }).then(function (user) {
-	            dispatch(deleteUser(user));
+	        }).then(function (users) {
+	            dispatch(refreshUsers(users));
 	        });
 	    };
 	}

@@ -34,8 +34,8 @@ export function deleteUinDb(user){
     return function (dispatch){
         return axios.post('/api/users/delete', user)
             .then(response => response.data)
-            .then(function(user){
-                dispatch(deleteUser(user))
+            .then(function(users){
+                dispatch(refreshUsers(users))
             })
     }
 }
