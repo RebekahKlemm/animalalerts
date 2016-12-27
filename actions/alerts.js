@@ -28,10 +28,10 @@ export const addAlert = function (alert) {
 
 
 //asynch action creator (thunk)
-export function addAToDb(alert){
+export function addAToDb(alert, interests){
     // console.log('AAAAAAAACtion alert', alert);
     return function (dispatch){
-        return axios.post('/api/alerts/newAlert', alert)
+        return axios.post('/api/alerts/newAlert', [alert, interests])
             .then(function(response){
                 // console.log('RRRRRRRResponse', response)
                 return response

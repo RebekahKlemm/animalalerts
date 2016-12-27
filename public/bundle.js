@@ -103,6 +103,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var onAppEnter = function onAppEnter() {
+	    console.log('inside AppEnter');
 	    Promise.all([_axios2.default.get('/api/users'), _axios2.default.get('/api/alerts'), _axios2.default.get('/api/interests')]).then(function (responses) {
 	        return responses.map(function (r) {
 	            return r.data;
@@ -31059,18 +31060,6 @@
 	                _react2.default.createElement(
 	                    'p',
 	                    null,
-	                    'To: ',
-	                    alert.to
-	                ),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'From: ',
-	                    alert.from
-	                ),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
 	                    'Body: ',
 	                    alert.body
 	                ),
@@ -31742,11 +31731,11 @@
 	            e.preventDefault();
 	            var alert = {
 	                // to: e.target.to.value,
-	                to: this.state.interests,
-	                from: this.props.currentUser.fullName,
+	                // to: this.state.interests,
+	                // from: this.props.currentUser.fullName,
 	                body: e.target.body.value
 	            };
-	            this.props.addAToDb(alert);
+	            this.props.addAToDb(alert, this.state.interests);
 	            this.setState({
 	                to: '',
 	                from: '',
@@ -31769,8 +31758,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	    return {
-	        addAToDb: function addAToDb(alert) {
-	            dispatch((0, _alerts.addAToDb)(alert));
+	        addAToDb: function addAToDb(alert, interests) {
+	            dispatch((0, _alerts.addAToDb)(alert, interests));
 	        },
 	        updateCurrentAlerts: function updateCurrentAlerts(alert) {
 	            dispatch((0, _alerts.updateCurrentAlerts)(alert));
@@ -31889,10 +31878,10 @@
 	};
 	
 	//asynch action creator (thunk)
-	function addAToDb(alert) {
+	function addAToDb(alert, interests) {
 	    // console.log('AAAAAAAACtion alert', alert);
 	    return function (dispatch) {
-	        return _axios2.default.post('/api/alerts/newAlert', alert).then(function (response) {
+	        return _axios2.default.post('/api/alerts/newAlert', [alert, interests]).then(function (response) {
 	            // console.log('RRRRRRRResponse', response)
 	            return response;
 	        }).then(function (response) {

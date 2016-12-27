@@ -18,6 +18,7 @@ import {receiveInterests} from '../actions/interests';
 import {updateCurrentAddressDetails} from '../actions/addressDetails';
 
 const onAppEnter = function () {
+    console.log('inside AppEnter');
     Promise.all([
         axios.get('/api/users'),
         axios.get('/api/alerts'),

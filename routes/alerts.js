@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../Database/_db');
 // const Alert = require('../Database/Models/alertModel');
-const {Alert, Interest} = require('../Database/Models/index');
+const {Alert, Interest, User} = require('../Database/Models/index');
 
 
 // This router is mounted on /api/alerts
@@ -15,47 +15,106 @@ router.get('/', function (req, res, next){
         })
 });
 
+
 router.get('/:id', function(req, res, next){
-    Alert.findAll({
-        where: {$or:[{to: req.params.id}, {from: req.params.id}]}
-    })
-        .then(function(alerts){
-            res.send(alerts);
+    const alertArray = [];
+    User.findOne({where: {phone: req.params.id}})
+        .then(function(user){
+            user.getInterests()
+                .then(function(interests){
+                    interests.map(function(interest){
+                        Alert.findAll({
+                            include: Interest
+                        })
+                            .then(function(alerts){
+                                // console.log('here is alerts:', alerts)
+                                return alerts.map(function(alert){
+                                    // var cat = alert.dataValues.interests;
+                                    // console.log('here is alert', alert.dataValues.interests[0].dataValues.category)
+                                    // console.log('here is interest.dataValues.category', interest.dataValues.category)
+                                    if(alert.dataValues.interests[0].dataValues.category === interest.dataValues.category){
+                                        // console.log('inside alertArray push')
+                                        return alertArray.push(alert.dataValues);
+                                    }
+                                })
+                            })
+                            .then(function(){
+                                // console.log("here is alertArray", alertArray);
+                                res.send(alertArray);
+                            })
+
+                    })
+
+                })
+
+
         })
+
+
+    // Alert.findAll({
+    //     where: {$or:[{to: req.params.id}, {from: req.params.id}]}
+    // })
+    //     .then(function(alerts){
+    //         res.send(alerts);
+    //     })
 })
+
+// router.get('/:id', function(req, res, next){
+//     Alert.findAll({
+//         where: {$or:[{to: req.params.id}, {from: req.params.id}]}
+//     })
+//         .then(function(alerts){
+//             res.send(alerts);
+//         })
+// })
 
 router.post('/newAlert', function (req, res, next){
-    console.log("got into newAlert route, req body interests", req.body.to)
-    var subscriberList = [];
-    var toSend = [];
-        Interest.findAll({where:{category: req.body.to}})
-            .then(function(interests) {
-                console.log('here is interests, expect all three as an array', interests)
-                 interests.map(function (interest) {
-                     interest.getUsers()
-                        .then(function(users){
-                            console.log('here is users, expect all three users, one at a time', users)
-                            users.map(function(user){
-                                Alert.create({
-                                    to: user.dataValues.phone,
-                                    //might have to be user.dataValues.phone
-                                    from: req.body.from,
-                                    body: req.body.body,
-                                })
-                                    .then(function(alert){
-                                        console.log('here is alert', alert)
-                                            interest.addAlert([alert])
-                                            return toSend.push(alert);
-                                    })
-                            })
-                        })
-                 })
+    // console.log("got into newAlert route, req body", req.body);
+    var alertBody = req.body[0].body;
+    var alertCategories = req.body[1];
 
-            })
-                res.send(toSend);
-
-
+    return Alert.create({
+        body: alertBody
+    })
+        .then(function(alert){
+            console.log('here is alert', alert)
+            alert.setInterests(alertCategories);
+            return alert
+        })
+        .then(function(alert){
+            res.send(alert)
+        })
 })
+        // .then(Interest.findAll({where: {category: alertCategories}}))
+        //
+        // Interest.findAll({where:{category: alertCategories}})
+        //     .then(function(interests) {
+        //         console.log('here is interests', interests)
+        //          interests.map(function (interest) {
+        //              interest.getUsers()
+        //                 .then(function(users){
+        //                     console.log('here is users, expect all three users, one at a time', users)
+        //                     users.map(function(user){
+        //                         Alert.create({
+        //                             // to: user.dataValues.phone,
+        //                             // //might have to be user.dataValues.phone
+        //                             // from: req.body.from,
+        //                             body: alertBody
+        //                         })
+        //                             .then(function(alert){
+        //                                 console.log('here is alert', alert)
+        //                                     interest.addAlert([alert])
+        //                                     return toSend.push(alert);
+        //                             })
+        //                     })
+        //                 })
+        //          })
+        //
+        //     })
+        //         res.send(toSend);
+
+
+
 
 
                     // .then(function(){

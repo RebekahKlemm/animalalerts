@@ -81,10 +81,20 @@ db.sync({force: true})
 
     })
     .then(function(){
-        Alert.bulkCreate([
-            {to: '123', from: '789', body: 'Here is an Alert to Joe from Susie'},
-            {to: '456', from: '789', body: 'Here is an Alert to Bill from Susie'}
-        ])
+        Alert.create({
+            body: 'Here is alert to wildlife'
+        })
+            .then(function(alert){
+                alert.setInterests(['wildlife'])
+            })
+    })
+    .then(function(){
+        Alert.create({
+            body: 'Here is alert to domestic pets'
+        })
+            .then(function(alert){
+                alert.setInterests(['domestic pets'])
+            })
     })
     .then(function(){
         Interest.bulkCreate([

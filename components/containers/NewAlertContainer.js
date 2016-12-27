@@ -60,11 +60,11 @@ class NewAlertContainer extends Component{
         e.preventDefault();
         const alert = {
             // to: e.target.to.value,
-            to: this.state.interests,
-            from: this.props.currentUser.fullName,
+            // to: this.state.interests,
+            // from: this.props.currentUser.fullName,
             body: e.target.body.value
         }
-        this.props.addAToDb(alert);
+        this.props.addAToDb(alert, this.state.interests);
         this.setState({
             to: '',
             from: '',
@@ -88,8 +88,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        addAToDb: function(alert){
-            dispatch(addAToDb(alert));
+        addAToDb: function(alert, interests){
+            dispatch(addAToDb(alert, interests));
         },
         updateCurrentAlerts: function(alert){
             dispatch(updateCurrentAlerts(alert));

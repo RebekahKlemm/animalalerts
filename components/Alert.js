@@ -28,8 +28,8 @@ export default function Alert(props){
                 { currentAlerts.map((alert) => {
                         return(
                             <div className="alert" key={alert.id}>
-                                <p>To: {alert.to}</p>
-                                <p>From: {alert.from}</p>
+                                {/*<p>To: {alert.to}</p>*/}
+                                {/*<p>From: {alert.from}</p>*/}
                                 <p>Body: {alert.body}</p>
                                 <hr/>
                             </div>
