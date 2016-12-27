@@ -11,6 +11,7 @@ export const receiveAlerts = function (allAlerts) {
 };
 
 export const updateCurrentAlerts = function (alerts) {
+    console.log('got into updateCurrentAlerts, here is alerts', alerts)
     return {
         type: UPDATE_CURRENT_ALERTS,
         currentAlerts: alerts

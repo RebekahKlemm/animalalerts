@@ -71,6 +71,8 @@ class NewAlertContainer extends Component{
             body: '',
             interests: []
         })
+        //clear checkboxes; holy fuck, this is impossible
+
     }
 
 }

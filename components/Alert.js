@@ -4,15 +4,17 @@ import React, {Component} from 'react';
 
 export default function Alert(props){
         let currentAlerts = [...props.currentAlerts];
-            currentAlerts.reverse();
+            // currentAlerts.reverse();
         const currentUser = props.currentUser;
 
     let header;
         if (currentUser.role === 'admin'){
             header = <h3>Admin Outbox</h3>
+            currentAlerts = [...props.allAlerts];
         }
             else header = <h3>Alert Inbox</h3>
 
+    currentAlerts.reverse();
     let emptyInbox;
 
     if(currentAlerts.length === 0){

@@ -31021,7 +31021,7 @@
 	
 	function Alert(props) {
 	    var currentAlerts = [].concat(_toConsumableArray(props.currentAlerts));
-	    currentAlerts.reverse();
+	    // currentAlerts.reverse();
 	    var currentUser = props.currentUser;
 	
 	    var header = void 0;
@@ -31031,12 +31031,14 @@
 	            null,
 	            'Admin Outbox'
 	        );
+	        currentAlerts = [].concat(_toConsumableArray(props.allAlerts));
 	    } else header = _react2.default.createElement(
 	        'h3',
 	        null,
 	        'Alert Inbox'
 	    );
 	
+	    currentAlerts.reverse();
 	    var emptyInbox = void 0;
 	
 	    if (currentAlerts.length === 0) {
@@ -31742,6 +31744,7 @@
 	                body: '',
 	                interests: []
 	            });
+	            //clear checkboxes; holy fuck, this is impossible
 	        }
 	    }]);
 	
@@ -31863,6 +31866,7 @@
 	};
 	
 	var updateCurrentAlerts = exports.updateCurrentAlerts = function updateCurrentAlerts(alerts) {
+	    console.log('got into updateCurrentAlerts, here is alerts', alerts);
 	    return {
 	        type: _constants.UPDATE_CURRENT_ALERTS,
 	        currentAlerts: alerts
@@ -51125,8 +51129,12 @@
 	            newState.currentAlerts = [].concat(_toConsumableArray(action.currentAlerts));
 	            break;
 	        case _constants.ADD_ALERT:
-	            newState.allAlerts = [].concat(_toConsumableArray(newState.allAlerts), _toConsumableArray(action.alert));
-	            newState.currentAlerts = [].concat(_toConsumableArray(newState.currentAlerts), _toConsumableArray(action.alert));
+	            // console.log('inside alert reducer, here is action.alert', action.alert);
+	            // console.log('inside alert reducer, here is newState.allAlerts - before', newState.allAlerts);
+	            newState.allAlerts = [].concat(_toConsumableArray(newState.allAlerts), [action.alert]);
+	            // console.log('inside alert reducer, here is newState.allAlerts - after', newState.allAlerts);
+	
+	            newState.currentAlerts = [].concat(_toConsumableArray(newState.currentAlerts), [action.alert]);
 	            break;
 	        default:
 	            return state;

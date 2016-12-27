@@ -17,8 +17,12 @@ export default function (state = initialState, action) {
             newState.currentAlerts = [...action.currentAlerts]
             break;
         case ADD_ALERT:
-            newState.allAlerts = [...newState.allAlerts, ...action.alert];
-            newState.currentAlerts = [...newState.currentAlerts, ...action.alert];
+            // console.log('inside alert reducer, here is action.alert', action.alert);
+            // console.log('inside alert reducer, here is newState.allAlerts - before', newState.allAlerts);
+            newState.allAlerts = [...newState.allAlerts, action.alert];
+            // console.log('inside alert reducer, here is newState.allAlerts - after', newState.allAlerts);
+
+            newState.currentAlerts = [...newState.currentAlerts, action.alert];
             break;
         default:
             return state;

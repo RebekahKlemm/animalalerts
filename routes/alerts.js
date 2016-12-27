@@ -34,7 +34,7 @@ router.get('/:id', function(req, res, next){
                                     // console.log('here is interest.dataValues.category', interest.dataValues.category)
                                     if(alert.dataValues.interests[0].dataValues.category === interest.dataValues.category){
                                         // console.log('inside alertArray push')
-                                        return alertArray.push(alert.dataValues);
+                                         alertArray.push(alert.dataValues);
                                     }
                                 })
                             })
@@ -77,7 +77,7 @@ router.post('/newAlert', function (req, res, next){
         body: alertBody
     })
         .then(function(alert){
-            console.log('here is alert', alert)
+            // console.log('here is alert', alert)
             alert.setInterests(alertCategories);
             return alert
         })
