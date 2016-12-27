@@ -61,7 +61,7 @@ class NewAlertContainer extends Component{
         const alert = {
             // to: e.target.to.value,
             to: this.state.interests,
-            from: this.props.currentUser.phone,
+            from: this.props.currentUser.fullName,
             body: e.target.body.value
         }
         this.props.addAToDb(alert);

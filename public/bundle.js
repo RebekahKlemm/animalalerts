@@ -28818,7 +28818,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.refreshUsers = exports.updateUser = exports.updateCurrentUser = exports.receiveUsers = exports.deleteUser = exports.addUser = undefined;
+	exports.refreshUsers = exports.updateUser = exports.updateCurrentUser = exports.receiveUsers = exports.addUser = undefined;
 	exports.addUToDb = addUToDb;
 	exports.deleteUinDb = deleteUinDb;
 	exports.addUserRoleToDb = addUserRoleToDb;
@@ -28849,14 +28849,6 @@
 	        });
 	    };
 	}
-	
-	var deleteUser = exports.deleteUser = function deleteUser(user) {
-	    console.log('inside deleteUser, here is user', user);
-	    return {
-	        type: _constants.DELETE_USER,
-	        user: user
-	    };
-	};
 	
 	//asynch action creator (thunk)
 	function deleteUinDb(user) {
@@ -31751,7 +31743,7 @@
 	            var alert = {
 	                // to: e.target.to.value,
 	                to: this.state.interests,
-	                from: this.props.currentUser.phone,
+	                from: this.props.currentUser.fullName,
 	                body: e.target.body.value
 	            };
 	            this.props.addAToDb(alert);

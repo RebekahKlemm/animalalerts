@@ -25,37 +25,46 @@ router.get('/:id', function(req, res, next){
 })
 
 router.post('/newAlert', function (req, res, next){
-    // console.log("got into newAlert route, req body interests", req.body.to)
+    console.log("got into newAlert route, req body interests", req.body.to)
+    var subscriberList = [];
     var toSend = [];
-        Interest.findOne({where:{category: req.body.to}})
-            .then(function(interest){
-                interest.getUsers()
-                    .then(function(users){
-                        return users.map(function(user){
-                            Alert.create({
-                                to: user.dataValues.phone,
-                                //might have to be user.dataValues.phone
-                                from: req.body.from,
-                                body: req.body.body,
-                            })
-                                .then(function(alert){
-                                    interest.addAlert([alert])
-                                    toSend.push(alert);
-                                    if(toSend.length === users.length){
-                                        // console.log('toSend----------->', toSend)
-                                        res.send(toSend);
-                                    }
-
+        Interest.findAll({where:{category: req.body.to}})
+            .then(function(interests) {
+                console.log('here is interests, expect all three as an array', interests)
+                 interests.map(function (interest) {
+                     interest.getUsers()
+                        .then(function(users){
+                            console.log('here is users, expect all three users, one at a time', users)
+                            users.map(function(user){
+                                Alert.create({
+                                    to: user.dataValues.phone,
+                                    //might have to be user.dataValues.phone
+                                    from: req.body.from,
+                                    body: req.body.body,
                                 })
+                                    .then(function(alert){
+                                        console.log('here is alert', alert)
+                                            interest.addAlert([alert])
+                                            return toSend.push(alert);
+                                    })
+                            })
                         })
-                    })
+                 })
+
+            })
+                res.send(toSend);
+
+
+})
+
+
                     // .then(function(){
                     //     // console.log('toSend----------->', toSend)
                     //     // res.send(toSend);
                     // })
-            })
 
-});
+
+
 
 
 // router.post('/newAlert', function (req, res, next){

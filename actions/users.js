@@ -20,14 +20,6 @@ export function addUToDb(user){
     }
 }
 
-export const deleteUser = function (user) {
-    console.log('inside deleteUser, here is user', user)
-    return {
-        type: DELETE_USER,
-        user: user
-    };
-};
-
 
 //asynch action creator (thunk)
 export function deleteUinDb(user){

@@ -18,7 +18,6 @@ Alert.belongsToMany(Interest, {through: 'interestAlert'});
 //One-to-one
 User.belongsTo(LatLong);
 
-// exported just in case, but can also be fetched via db.model
 
 module.exports = {
     User: User,
