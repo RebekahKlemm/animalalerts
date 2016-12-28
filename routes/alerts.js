@@ -54,13 +54,15 @@ router.get('/:id', function(req, res, next){
                                 })
                             })
                             .then(function(){
-                                console.log("here is alertArray that is sent", alertArray);
-                                res.send(alertArray);
+                            console.log("here is alertArray that is sent", alertArray);
+                            res.send(alertArray);
                             })
+
 
                     })
 
                 })
+
 
 
         })
