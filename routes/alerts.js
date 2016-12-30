@@ -33,6 +33,7 @@ router.get('/:id', function(req, res, next){
                                             //we've already seen this element, go to next element
                                             return;
                                         }
+<<<<<<< HEAD
                                     }
                                     alertArray.push(alerts[i]);
                                 }
@@ -43,6 +44,20 @@ router.get('/:id', function(req, res, next){
                                 }
                             })
 
+=======
+                                    })
+                                    //if the alert category matches the interest category, push it to the array
+
+                                })
+                            })
+                            .then(function(){
+                            console.log("here is alertArray that is sent", alertArray);
+                            res.send(alertArray);
+                            })
+
+
+                    })
+>>>>>>> ef19116d50b51451cea0f996b5c3b7b8fba754cb
 
                     })
                 })
@@ -50,6 +65,11 @@ router.get('/:id', function(req, res, next){
 
 
 
+<<<<<<< HEAD
+=======
+
+        })
+>>>>>>> ef19116d50b51451cea0f996b5c3b7b8fba754cb
 
 
 })
