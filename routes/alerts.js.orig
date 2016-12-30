@@ -53,6 +53,7 @@ router.get('/:id', function(req, res, next){
 
 
 })
+
 // router.get('/:id', function(req, res, next){
 //     const alertArray = [];
 //     User.findOne({where: {phone: req.params.id}})
