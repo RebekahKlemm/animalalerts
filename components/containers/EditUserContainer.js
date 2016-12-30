@@ -98,6 +98,9 @@ class EditUserContainer extends Component{
             password: '',
             interests: []
         })
+        alert('Congratulations, you edited your account');
+        window.location.reload();
+        // this.props.router.push('/'+ this.props.currentUser.role + '/'+ this.props.currentUser.phone);
     }
 
 
@@ -105,7 +108,10 @@ class EditUserContainer extends Component{
     deleteUser(e){
         e.preventDefault();
         this.props.deleteUinDb(this.props.currentUser);
-        console.log('congratulations, you deleted your account');
+        alert('Ooops! You deleted your account.  This was surely an accident, so we will redirect you to the signup page so you can fix this mistake.');
+        console.log('this.props', this.props.router);
+        this.props.router.push('/');
+
     }
 
 }

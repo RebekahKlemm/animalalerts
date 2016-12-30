@@ -82,7 +82,7 @@ db.sync({force: true})
     })
     .then(function(){
         Alert.create({
-            body: 'Here is alert to wildlife'
+            body: 'Call your Senator about wildlife'
         })
             .then(function(alert){
                 alert.setInterests(['wildlife'])
@@ -90,7 +90,7 @@ db.sync({force: true})
     })
     .then(function(){
         Alert.create({
-            body: 'Here is alert to domestic pets'
+            body: 'Call your Representative about domestic pets'
         })
             .then(function(alert){
                 alert.setInterests(['domestic pets'])

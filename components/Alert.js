@@ -32,7 +32,7 @@ export default function Alert(props){
                             <div className="alert" key={alert.id}>
                                 {/*<p>To: {alert.to}</p>*/}
                                 {/*<p>From: {alert.from}</p>*/}
-                                <p>Body: {alert.body}</p>
+                                <p>Alert: {alert.body}</p>
                                 <hr/>
                             </div>
                         )

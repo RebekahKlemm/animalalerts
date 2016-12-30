@@ -30938,7 +30938,7 @@
 	                            currentUser: this.props.currentUser })
 	                    )
 	                ),
-	                _react2.default.createElement(_EditUserContainer2.default, { currentUser: this.props.currentUser })
+	                _react2.default.createElement(_EditUserContainer2.default, { currentUser: this.props.currentUser, router: this.props.router })
 	            );
 	            // }
 	            // else return (
@@ -31062,7 +31062,7 @@
 	                _react2.default.createElement(
 	                    'p',
 	                    null,
-	                    'Body: ',
+	                    'Alert: ',
 	                    alert.body
 	                ),
 	                _react2.default.createElement('hr', null)
@@ -31350,13 +31350,18 @@
 	                password: '',
 	                interests: []
 	            });
+	            alert('Congratulations, you edited your account');
+	            window.location.reload();
+	            // this.props.router.push('/'+ this.props.currentUser.role + '/'+ this.props.currentUser.phone);
 	        }
 	    }, {
 	        key: 'deleteUser',
 	        value: function deleteUser(e) {
 	            e.preventDefault();
 	            this.props.deleteUinDb(this.props.currentUser);
-	            console.log('congratulations, you deleted your account');
+	            alert('Ooops! You deleted your account.  This was surely an accident, so we will redirect you to the signup page so you can fix this mistake.');
+	            console.log('this.props', this.props.router);
+	            this.props.router.push('/');
 	        }
 	    }]);
 	

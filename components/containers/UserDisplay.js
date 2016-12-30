@@ -23,7 +23,7 @@ class UserDisplay extends Component{
                                    currentUser={this.props.currentUser}/>
                         </div>
                     </div>
-                    <EditUserContainer currentUser={this.props.currentUser}/>
+                    <EditUserContainer currentUser={this.props.currentUser} router={this.props.router}/>
                 </div>
             )
         // }
