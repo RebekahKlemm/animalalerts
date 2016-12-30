@@ -17,62 +17,92 @@ router.get('/', function (req, res, next){
 
 
 router.get('/:id', function(req, res, next){
-    const alertArray = [];
+    var alertArray = [];
     User.findOne({where: {phone: req.params.id}})
         .then(function(user){
-            user.getInterests()
+             user.getInterests()
                 .then(function(interests){
-                    //for each interest
-                    interests.map(function(interest){
-                        //find ALL alerts (even unrelated ones)
-                        Alert.findAll({
-                            include: Interest
-                        })
+                    console.log('here is interests', interests);
+                    interests.map(function(interest, index){
+                        console.log('interests.length = ', interests.length);
+                        interest.getAlerts()
                             .then(function(alerts){
-                                console.log('here is alerts from api/alerts/:id:', alerts)
-                                //go through each of these alerts
-                                return alerts.map(function(alert, index){
-                                    // var cat = alert.dataValues.interests;
-                                    console.log('here is index', index);
-                                    //alert.dataValues.interests is an array!  I have to loop through THAT array.
-
-
-                                    alert.dataValues.interests.map(function(int, index){
-                                        console.log('here is alert categories', int.dataValues.category)
-                                        console.log('here is interest.dataValues.category', interest.dataValues.category)
-                                        if (int.dataValues.category === interest.dataValues.category){
-                                        // if(alert.dataValues.interests[index].dataValues.category === interest.dataValues.category){
-                                            // console.log('inside alertArray push')
-                                            console.log('here is alertArray before', alertArray)
-                                            alertArray.push(alert.dataValues);
-                                            console.log('here is alertArray after', alertArray)
-
+                                for(var i = 0; i < alerts.length; i++){
+                                    for(var j = 0; j < alertArray.length; j++){
+                                        if (alerts[i] === alertArray[j]){
+                                            //we've already seen this element, go to next element
+                                            return;
                                         }
-                                    })
-                                    //if the alert category matches the interest category, push it to the array
+                                    }
+                                    alertArray.push(alerts[i]);
+                                }
+                                // alertArray.push(alerts);
+                                if (index === interests.length -1){
+                                    console.log('here is alertArray', alertArray)
+                                    res.send(alertArray);
+                                }
+                            })
 
-                                })
-                            })
-                            .then(function(){
-                                console.log("here is alertArray that is sent", alertArray);
-                                res.send(alertArray);
-                            })
 
                     })
-
                 })
-
-
         })
 
 
-    // Alert.findAll({
-    //     where: {$or:[{to: req.params.id}, {from: req.params.id}]}
-    // })
-    //     .then(function(alerts){
-    //         res.send(alerts);
-    //     })
+
+
+
 })
+
+// router.get('/:id', function(req, res, next){
+//     const alertArray = [];
+//     User.findOne({where: {phone: req.params.id}})
+//         .then(function(user){
+//             user.getInterests()
+//                 .then(function(interests){
+//                     //for each interest
+//                     interests.map(function(interest){
+//                         //find ALL alerts (even unrelated ones)
+//                         Alert.findAll({
+//                             include: Interest
+//                         })
+//                             .then(function(alerts){
+//                                 console.log('here is alerts from api/alerts/:id:', alerts)
+//                                 //go through each of these alerts
+//                                 return alerts.map(function(alert, index){
+//                                     // var cat = alert.dataValues.interests;
+//                                     console.log('here is index', index);
+//                                     //alert.dataValues.interests is an array!  I have to loop through THAT array.
+//
+//
+//                                     alert.dataValues.interests.map(function(int, index){
+//                                         console.log('here is alert categories', int.dataValues.category)
+//                                         console.log('here is interest.dataValues.category', interest.dataValues.category)
+//                                         if (int.dataValues.category === interest.dataValues.category){
+//                                         // if(alert.dataValues.interests[index].dataValues.category === interest.dataValues.category){
+//                                             // console.log('inside alertArray push')
+//                                             console.log('here is alertArray before', alertArray)
+//                                             alertArray.push(alert.dataValues);
+//                                             console.log('here is alertArray after', alertArray)
+//
+//                                         }
+//                                     })
+//                                     //if the alert category matches the interest category, push it to the array
+//
+//                                 })
+//                             })
+//                             .then(function(){
+//                                 console.log("here is alertArray that is sent", alertArray);
+//                                 res.send(alertArray);
+//                             })
+//
+//                     })
+//
+//                 })
+//
+//
+//         })
+// })
 
 // router.get('/:id', function(req, res, next){
 //     Alert.findAll({

@@ -12,8 +12,8 @@ Interest.belongsToMany(User, {through: 'userInterest'});
 Interest.belongsToMany(Alert, {through: 'interestAlert'});
 Alert.belongsToMany(Interest, {through: 'interestAlert'});
 
-// User.belongsToMany(Alert, {through: 'userAlert'});
-// Alert.belongsToMany(User, {through: 'userAlert'});
+User.belongsToMany(Alert, {through: 'userAlert'});
+Alert.belongsToMany(User, {through: 'userAlert'});
 
 //One-to-one
 User.belongsTo(LatLong);
