@@ -6,7 +6,7 @@ export default function(props) {
     return (
         <div>
             <h3>Welcome to Animal Alerts! </h3>
-            <h4>Sign up below to receive alerts from authorized admins on current issues that affect animals.</h4>
+            <h4>Sign up below to receive alerts on current issues that affect animals.</h4>
         <form id="new-signup-form" className="form-group" style={{marginTop: '20px'}} onSubmit={e => props.signUpUser(e)}>
             <input
                 id="first-name-input"

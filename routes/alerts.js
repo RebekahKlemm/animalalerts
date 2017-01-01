@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../Database/_db');
 // const Alert = require('../Database/Models/alertModel');
-const {Alert, Interest, User} = require('../Database/Models/index');
+const {Alert, Interest, User, Deadline} = require('../Database/Models/index');
 
 
 // This router is mounted on /api/alerts
@@ -9,7 +9,9 @@ const router = express.Router();
 
 
 router.get('/', function (req, res, next){
-    Alert.findAll()
+    Alert.findAll({
+        include: [Deadline]
+    })
         .then(function(alerts){
             res.send(alerts);
         })
@@ -22,10 +24,10 @@ router.get('/:id', function(req, res, next){
         .then(function(user){
             user.getInterests()
                 .then(function(interests){
-                    console.log('here is interests', interests);
+                    // console.log('here is interests', interests);
                     interests.map(function(interest, index){
-                        console.log('interests.length = ', interests.length);
-                        interest.getAlerts()
+                        // console.log('interests.length = ', interests.length);
+                        interest.getAlerts({include: [Deadline]})
                             .then(function(alerts){
                                 for(var i = 0; i < alerts.length; i++){
                                     for(var j = 0; j < alertArray.length; j++){
@@ -38,7 +40,7 @@ router.get('/:id', function(req, res, next){
                                 }
                                 // alertArray.push(alerts);
                                 if (index === interests.length -1){
-                                    console.log('here is alertArray', alertArray)
+                                    // console.log('here is alertArray', alertArray)
                                     res.send(alertArray);
                                 }
                             })

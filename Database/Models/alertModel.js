@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize');
 var db = require('../_db');
+var Deadline = require('./deadlineModel');
 
 var alertSchema = {
     body: {
@@ -9,7 +10,18 @@ var alertSchema = {
 };
 
 
-var alertConfig = {};
+var alertConfig = {
+    instanceMethods: {
+        getDeadline: function(){
+            Deadline.findOne({where: {
+                id: this.deadlineId
+            }})
+                .then(function(deadline){
+                    return deadline
+                })
+        }
+    }
+};
 
 const Alert = db.define('alert', alertSchema, alertConfig);
 

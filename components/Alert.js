@@ -33,6 +33,7 @@ export default function Alert(props){
                                 {/*<p>To: {alert.to}</p>*/}
                                 {/*<p>From: {alert.from}</p>*/}
                                 <p>Alert: {alert.body}</p>
+                                <p>Deadline: {alert.deadline.due} </p>
                                 <hr/>
                             </div>
                         )

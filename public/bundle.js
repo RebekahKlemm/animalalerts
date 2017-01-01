@@ -28657,7 +28657,7 @@
 	        _react2.default.createElement(
 	            'h4',
 	            null,
-	            'Sign up below to receive alerts from authorized admins on current issues that affect animals.'
+	            'Sign up below to receive alerts on current issues that affect animals.'
 	        ),
 	        _react2.default.createElement(
 	            'form',
@@ -31065,6 +31065,13 @@
 	                    'Alert: ',
 	                    alert.body
 	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Deadline: ',
+	                    alert.deadline.due,
+	                    ' '
+	                ),
 	                _react2.default.createElement('hr', null)
 	            );
 	        })
@@ -31864,6 +31871,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var receiveAlerts = exports.receiveAlerts = function receiveAlerts(allAlerts) {
+	    console.log('here is allAlerts in the alerts Action', allAlerts);
 	    return {
 	        type: _constants.RECEIVE_ALERTS,
 	        allAlerts: allAlerts

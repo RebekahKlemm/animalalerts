@@ -8,7 +8,7 @@ const app = express();
 // const User = require('./Database/Models/userModel');
 // const Alert = require('./Database/Models/alertModel');
 // const Interest = require('./Database/Models/interestModel');
-const {User, Alert, Interest, LatLong} = require('./Database/Models/index');
+const {User, Alert, Interest, LatLong, Deadline} = require('./Database/Models/index');
 // const {Alert} = require('./Database/Models/index');
 // const {Interest} = require('./Database/Models/index');
 
@@ -81,20 +81,33 @@ db.sync({force: true})
 
     })
     .then(function(){
-        Alert.create({
-            body: 'Call your Senator about wildlife'
-        })
-            .then(function(alert){
-                alert.setInterests(['wildlife'])
+        Deadline.create({due: '2017-03-15'})
+            .then(function (deadline){
+                Alert.create({
+                    body: 'Call your Senator about wildlife'
+                })
+                    .then(function(alert){
+                        alert.setInterests(['wildlife']);
+                        alert.setDeadline(1);
+                        deadline.setAlerts([alert])
+                    })
+
             })
+
     })
     .then(function(){
-        Alert.create({
-            body: 'Call your Representative about domestic pets'
-        })
-            .then(function(alert){
-                alert.setInterests(['domestic pets'])
+        Deadline.create({due: '2017-02-13'})
+            .then(function(deadline){
+                Alert.create({
+                    body: 'Call your Representative about domestic pets'
+                })
+                    .then(function(alert){
+                        alert.setInterests(['domestic pets']);
+                        alert.setDeadline(2);
+                        deadline.setAlerts([alert])
+                    })
             })
+
     })
     .then(function(){
         Interest.bulkCreate([

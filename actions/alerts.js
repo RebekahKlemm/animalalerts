@@ -4,6 +4,7 @@ import axios from 'axios';
 
 
 export const receiveAlerts = function (allAlerts) {
+    console.log('here is allAlerts in the alerts Action', allAlerts)
     return {
         type: RECEIVE_ALERTS,
         allAlerts: allAlerts
