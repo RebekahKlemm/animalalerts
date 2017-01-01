@@ -1,4 +1,4 @@
-import {RECEIVE_ALERTS, UPDATE_CURRENT_ALERTS, ADD_ALERT} from './constants';
+import {RECEIVE_ALERTS, UPDATE_CURRENT_ALERTS, ADD_ALERT, REFRESH_ALL_ALERTS} from './constants';
 import axios from 'axios';
 
 
@@ -19,9 +19,16 @@ export const updateCurrentAlerts = function (alerts) {
     };
 };
 
+export const refreshAllAlerts = function (alerts) {
+    return {
+        type: REFRESH_ALL_ALERTS,
+        allAlerts: alerts
+    };
+};
+
 
 export const addAlert = function (alert) {
-    // console.log("inside addAlert action, here is alert", alert)
+    console.log("inside addAlert action, here is alert", alert)
     return {
         type: ADD_ALERT,
         alert: alert
@@ -30,17 +37,28 @@ export const addAlert = function (alert) {
 
 
 //asynch action creator (thunk)
-export function addAToDb(alert, interests){
+export function addAToDb(alert, interests, due){
     // console.log('AAAAAAAACtion alert', alert);
+    // console.log('inside addAToDb, here is due', due)
     return function (dispatch){
-        return axios.post('/api/alerts/newAlert', [alert, interests])
-            .then(function(response){
-                // console.log('RRRRRRRResponse', response)
-                return response
-            })
-            .then(response => response.data)
-            .then(function(newAlert){
-                dispatch(addAlert(newAlert))
+        return axios.post('/api/alerts/newAlert', [alert, interests, due])
+            // .then(function(response){
+            //     // console.log('RRRRRRRResponse', response)
+            //     return response
+            // })
+            // .then(response => response.data)
+            // .then(function(newAlert){
+            //     console.log('inside actions alert, here is newAlert', newAlert)
+            //     dispatch(addAlert(newAlert))
+            // })
+            .then(function(){
+                axios.get('/api/alerts/')
+                    .then(response => response.data)
+                    .then(function(alerts){
+                        dispatch(updateCurrentAlerts(alerts))
+                        dispatch(refreshAllAlerts(alerts))
+                    })
+
             })
     }
 }

@@ -22,6 +22,7 @@ export default function Alert(props){
         emptyInbox = <p>Your Inbox is currently empty</p>
     }
 
+
         return(
             <div>
                 {header}

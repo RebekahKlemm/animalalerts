@@ -37,6 +37,18 @@ export default function(props) {
                 onChange={e => props.handleInputChange(e)}
                 value={props.body}
             />
+            <br></br>
+            Deadline for action:
+            <input
+                type="date"
+                name="deadline"
+                className="form-control"
+                onChange={e => props.handleInputChange(e)}
+                value={props.deadline}
+            />
+            <br></br>
+            <br></br>
+
             <button id="alert-submit" type="submit" form="new-alert-form" value="Submit"
                     className="btn btn-primary btn-block">
                 <span className="glyphicon glyphicon-plus"></span> SUBMIT

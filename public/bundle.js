@@ -30436,6 +30436,7 @@
 	var RECEIVE_ALERTS = exports.RECEIVE_ALERTS = 'RECEIVE_ALERTS';
 	var UPDATE_CURRENT_ALERTS = exports.UPDATE_CURRENT_ALERTS = 'UPDATE_CURRENT_ALERTS';
 	var ADD_ALERT = exports.ADD_ALERT = 'ADD_ALERT';
+	var REFRESH_ALL_ALERTS = exports.REFRESH_ALL_ALERTS = 'REFRESH_ALL_ALERTS';
 	
 	var RECEIVE_INTERESTS = exports.RECEIVE_INTERESTS = 'RECEIVE_INTERESTS';
 	
@@ -31690,7 +31691,8 @@
 	            to: '',
 	            interests: [],
 	            from: '',
-	            body: ''
+	            body: '',
+	            deadline: ''
 	        };
 	        _this.handleInputChange = _this.handleInputChange.bind(_this);
 	        _this.addAlert = _this.addAlert.bind(_this);
@@ -31749,14 +31751,15 @@
 	                // from: this.props.currentUser.fullName,
 	                body: e.target.body.value
 	            };
-	            this.props.addAToDb(alert, this.state.interests);
+	            console.log('inside addAlert in NewAlertContainer, here is this.state.deadline', this.state.deadline);
+	            this.props.addAToDb(alert, this.state.interests, this.state.deadline);
 	            this.setState({
 	                to: '',
 	                from: '',
 	                body: '',
-	                interests: []
+	                interests: [],
+	                deadline: ''
 	            });
-	            //clear checkboxes; holy fuck, this is impossible
 	        }
 	    }]);
 	
@@ -31773,8 +31776,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	    return {
-	        addAToDb: function addAToDb(alert, interests) {
-	            dispatch((0, _alerts.addAToDb)(alert, interests));
+	        addAToDb: function addAToDb(alert, interests, due) {
+	            dispatch((0, _alerts.addAToDb)(alert, interests, due));
 	        },
 	        updateCurrentAlerts: function updateCurrentAlerts(alert) {
 	            dispatch((0, _alerts.updateCurrentAlerts)(alert));
@@ -31822,6 +31825,19 @@
 	            },
 	            value: props.body
 	        }),
+	        _react2.default.createElement('br', null),
+	        'Deadline for action:',
+	        _react2.default.createElement('input', {
+	            type: 'date',
+	            name: 'deadline',
+	            className: 'form-control',
+	            onChange: function onChange(e) {
+	                return props.handleInputChange(e);
+	            },
+	            value: props.deadline
+	        }),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	            'button',
 	            { id: 'alert-submit', type: 'submit', form: 'new-alert-form', value: 'Submit',
@@ -31859,7 +31875,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.addAlert = exports.updateCurrentAlerts = exports.receiveAlerts = undefined;
+	exports.addAlert = exports.refreshAllAlerts = exports.updateCurrentAlerts = exports.receiveAlerts = undefined;
 	exports.addAToDb = addAToDb;
 	
 	var _constants = __webpack_require__(292);
@@ -31886,8 +31902,15 @@
 	    };
 	};
 	
+	var refreshAllAlerts = exports.refreshAllAlerts = function refreshAllAlerts(alerts) {
+	    return {
+	        type: _constants.REFRESH_ALL_ALERTS,
+	        allAlerts: alerts
+	    };
+	};
+	
 	var addAlert = exports.addAlert = function addAlert(alert) {
-	    // console.log("inside addAlert action, here is alert", alert)
+	    console.log("inside addAlert action, here is alert", alert);
 	    return {
 	        type: _constants.ADD_ALERT,
 	        alert: alert
@@ -31895,16 +31918,27 @@
 	};
 	
 	//asynch action creator (thunk)
-	function addAToDb(alert, interests) {
+	function addAToDb(alert, interests, due) {
 	    // console.log('AAAAAAAACtion alert', alert);
+	    // console.log('inside addAToDb, here is due', due)
 	    return function (dispatch) {
-	        return _axios2.default.post('/api/alerts/newAlert', [alert, interests]).then(function (response) {
-	            // console.log('RRRRRRRResponse', response)
-	            return response;
-	        }).then(function (response) {
-	            return response.data;
-	        }).then(function (newAlert) {
-	            dispatch(addAlert(newAlert));
+	        return _axios2.default.post('/api/alerts/newAlert', [alert, interests, due])
+	        // .then(function(response){
+	        //     // console.log('RRRRRRRResponse', response)
+	        //     return response
+	        // })
+	        // .then(response => response.data)
+	        // .then(function(newAlert){
+	        //     console.log('inside actions alert, here is newAlert', newAlert)
+	        //     dispatch(addAlert(newAlert))
+	        // })
+	        .then(function () {
+	            _axios2.default.get('/api/alerts/').then(function (response) {
+	                return response.data;
+	            }).then(function (alerts) {
+	                dispatch(updateCurrentAlerts(alerts));
+	                dispatch(refreshAllAlerts(alerts));
+	            });
 	        });
 	    };
 	}
@@ -51137,6 +51171,9 @@
 	    switch (action.type) {
 	        case _constants.RECEIVE_ALERTS:
 	            newState.allAlerts = [].concat(_toConsumableArray(newState.allAlerts), _toConsumableArray(action.allAlerts));
+	            break;
+	        case _constants.REFRESH_ALL_ALERTS:
+	            newState.allAlerts = [].concat(_toConsumableArray(action.allAlerts));
 	            break;
 	        case _constants.UPDATE_CURRENT_ALERTS:
 	            newState.currentAlerts = [].concat(_toConsumableArray(action.currentAlerts));

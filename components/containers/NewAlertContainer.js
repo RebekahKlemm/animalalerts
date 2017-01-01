@@ -12,6 +12,7 @@ class NewAlertContainer extends Component{
             interests: [],
             from: '',
             body: '',
+            deadline: ''
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.addAlert = this.addAlert.bind(this);
@@ -64,14 +65,15 @@ class NewAlertContainer extends Component{
             // from: this.props.currentUser.fullName,
             body: e.target.body.value
         }
-        this.props.addAToDb(alert, this.state.interests);
+        console.log('inside addAlert in NewAlertContainer, here is this.state.deadline', this.state.deadline)
+        this.props.addAToDb(alert, this.state.interests, this.state.deadline);
         this.setState({
             to: '',
             from: '',
             body: '',
-            interests: []
+            interests: [],
+            deadline: ''
         })
-        //clear checkboxes; holy fuck, this is impossible
 
     }
 
@@ -90,8 +92,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        addAToDb: function(alert, interests){
-            dispatch(addAToDb(alert, interests));
+        addAToDb: function(alert, interests, due){
+            dispatch(addAToDb(alert, interests, due));
         },
         updateCurrentAlerts: function(alert){
             dispatch(updateCurrentAlerts(alert));

@@ -40,7 +40,7 @@ router.get('/:id', function(req, res, next){
                                 }
                                 // alertArray.push(alerts);
                                 if (index === interests.length -1){
-                                    // console.log('here is alertArray', alertArray)
+                                    // console.log('here is alertArray.deadline', alertArray[0].dataValues.deadline.due)
                                     res.send(alertArray);
                                 }
                             })
@@ -114,23 +114,54 @@ router.get('/:id', function(req, res, next){
 //         })
 // })
 
-router.post('/newAlert', function (req, res, next){
+router.post('/newAlert', function (req, res, next) {
     // console.log("got into newAlert route, req body", req.body);
     var alertBody = req.body[0].body;
     var alertCategories = req.body[1];
+    var due = req.body[2];
 
-    return Alert.create({
-        body: alertBody
+    var deadline = Deadline.create({due: due});
+    var alert = Alert.create({body: alertBody});
+Promise.all([deadline, alert])
+    .then(function([deadline2, alert2]){
+            alert2.setInterests(alertCategories)
+            alert2.setDeadline(deadline2)
+            deadline2.setAlerts([alert2])
+            res.send(alert2)
     })
-        .then(function(alert){
-            // console.log('here is alert', alert)
-            alert.setInterests(alertCategories);
-            return alert
-        })
-        .then(function(alert){
-            res.send(alert)
-        })
+
+    // .then(function(){
+    //     Alert.findAll({
+    //         include: [Deadline]
+    //     })
+    //         .then(function(allAlerts){
+    //             allAlerts.map(function(alert3){
+    //                 if(alert3.body === alertBody){
+    //                     console.log('inside api routes alert, here is alert3', alert3);
+    //                     res.send(alert3)
+    //                 }
+    //             })
+    //
+    //         })
+    // })
+
 })
+
+//this worked before Deadline nonsense
+//     return Alert.create({
+//         body: alertBody
+//     })
+//         .then(function(alert){
+//             // console.log('here is alert', alert)
+//             alert.setInterests(alertCategories);
+//             return alert
+//         })
+//         .then(function(alert){
+//             res.send(alert)
+//         })
+// })
+
+
         // .then(Interest.findAll({where: {category: alertCategories}}))
         //
         // Interest.findAll({where:{category: alertCategories}})
