@@ -5,16 +5,16 @@ const bodyParser = require('body-parser');
 const db = require('./Database/_db');
 
 const app = express();
-// const User = require('./Database/Models/userModel');
-// const Alert = require('./Database/Models/alertModel');
-// const Interest = require('./Database/Models/interestModel');
+const session = require('express-session');
+
 const {User, Alert, Interest, LatLong, Deadline} = require('./Database/Models/index');
-// const {Alert} = require('./Database/Models/index');
-// const {Interest} = require('./Database/Models/index');
+
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({resave: true, saveUninitialized: true, secret: 'xheocinewoienIIIlweknos', cookie: { maxAge: 60000 }}));
+
 
 const apiRouter = require('./routes/apiRouter');
 
@@ -23,6 +23,7 @@ app.use('/api', apiRouter);
 
 //Here is where I serve up the first page
 app.get('/', function (req, res, next) {
+    // console.log('in app.js, here is req.session', req.session)
     res.sendFile(path.join(__dirname, './components/index.html'));
 });
 
