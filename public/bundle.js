@@ -31922,7 +31922,7 @@
 	    // console.log('AAAAAAAACtion alert', alert);
 	    // console.log('inside addAToDb, here is due', due)
 	    return function (dispatch) {
-	        return _axios2.default.post('/api/alerts/newAlert', [alert, interests, due])
+	        return Promise.all([_axios2.default.post('/api/alerts/newAlert', [alert, interests, due])])
 	        // .then(function(response){
 	        //     // console.log('RRRRRRRResponse', response)
 	        //     return response

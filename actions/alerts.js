@@ -41,7 +41,7 @@ export function addAToDb(alert, interests, due){
     // console.log('AAAAAAAACtion alert', alert);
     // console.log('inside addAToDb, here is due', due)
     return function (dispatch){
-        return axios.post('/api/alerts/newAlert', [alert, interests, due])
+        return Promise.all([axios.post('/api/alerts/newAlert', [alert, interests, due])])
             // .then(function(response){
             //     // console.log('RRRRRRRResponse', response)
             //     return response
