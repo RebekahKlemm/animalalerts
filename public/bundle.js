@@ -30868,7 +30868,10 @@
 	                        password: '',
 	                        user: user
 	                    });
-	                    _this2.props.router.push(user.role + '/' + loginAttempt.phone);
+	
+	                    window.setTimeout(function () {
+	                        return _this2.props.router.push(user.role + '/' + loginAttempt.phone);
+	                    }, 1000);
 	                }
 	            });
 	        }

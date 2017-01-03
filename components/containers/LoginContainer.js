@@ -35,14 +35,15 @@ class LoginContainer extends Component{
         this.props.allUsers.map(user => {
             if (loginAttempt.phone === user.phone && loginAttempt.password === user.password){
 
-                    this.props.setSession(user)
+                this.props.setSession(user)
 
                 this.setState({
                     phone: '',
                     password: '',
                     user:user
                 });
-                this.props.router.push(user.role + '/'+loginAttempt.phone)
+
+               window.setTimeout(() => this.props.router.push(user.role + '/'+loginAttempt.phone), 1000);
 
             }
         });

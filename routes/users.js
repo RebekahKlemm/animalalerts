@@ -48,9 +48,12 @@ router.post('/login', function(req, res, next){
     User.findOne({
         where: {phone: req.body.phone, password: req.body.password}
     })
-        .then((user) => sess.user = user)
-        .then(()=> console.log('routes, login, here is sess after', sess))
-    res.sendStatus(200);
+        .then((user) => {
+            sess.user = user;
+            console.log('routes, login, here is sess after', sess)
+            res.status(200).send(user);
+        })
+
 })
 
 
@@ -98,16 +101,23 @@ function checkSignIn(req, res, next){
 }
 
 
-// router.get('/:id', checkSignIn, function(req, res, next){
-router.get('/:id', function(req, res, next){
-    User.findOne({
-        where: {phone: req.params.id}
-    })
-        .then(function(user){
-            console.log('------------>inside user router /:id, here is req.session', req.session)
-            // console.log('------------>inside user router /:id, here is sess', sess)
-            res.send(user);
+router.get('/:id', checkSignIn, function(req, res, next){
+// router.get('/:id', function(req, res, next){
+    if(req.session.user.phone === req.params.id){
+        User.findOne({
+            where: {phone: req.params.id}
         })
+            .then(function(user){
+                console.log('------------>inside user router /:id, here is req.session', req.session)
+                // console.log('------------>inside user router /:id, here is sess', sess)
+                res.send(user);
+            })
+    } else {
+        var err = new Error('Unauthorized');
+        console.log(req.session.user);
+        next(err);  //Error, trying to access unauthorized page!
+    }
+
 })
 
 router.get('/logout', function(req, res){
