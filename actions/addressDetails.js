@@ -80,3 +80,23 @@ export function addLatLongToDb(user){
 
     }
 }
+
+
+export function validateAddress(address){
+    console.log('inside validateAddress in addressDetails action, here is address', address)
+    return function (dispatch){
+        return axios.get('/api/addressDetails/validate', address)
+            .then(response => response.data)
+            .then(function(data){
+                if (data === 'valid'){
+                    console.log('actions address Details, here is data, expect valid', data);
+                    return 'valid';
+                }
+                else {
+                    console.log('actions address Details, here is data', data);
+                    return 'invalid';
+                }
+            })
+
+    }
+}

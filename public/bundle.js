@@ -26552,12 +26552,53 @@
 	        };
 	
 	        _this.handleInputChange = _this.handleInputChange.bind(_this);
+	        _this.handleAddress = _this.handleAddress.bind(_this);
 	        _this.signUpUser = _this.signUpUser.bind(_this);
 	
 	        return _this;
 	    }
 	
 	    _createClass(SignupContainer, [{
+	        key: 'handleAddress',
+	        value: function handleAddress(e) {
+	            //Ugh, I could not figure out how to validate the address and alert the user if they enter an invalid address!!
+	
+	            // var latLong;
+	            // console.log('inside signup container, handleAddress, here is e', e.target.value)
+	            //
+	            // Promise.all([this.props.validateAddress(e.target.value)])
+	            //     .then(function(validation){
+	            //         console.log('inside handleAddress, here is validation', validation);
+	            //     })
+	            // if (this.props.validateAddress(e.target.value) !== 'valid'){
+	            //     console.log('here is this.props.validateAddress', )
+	            // alert('Please enter a valid U.S. address');
+	            // }
+	            // var googleMapsClient = require('@google/maps').createClient({
+	            //     key: 'AIzaSyBFetAhXRcymhUCT9_2_k-nEs8TEkDiOo8'
+	            // });
+	            // const OpenStates = require('openstates');
+	            // var openstates = new OpenStates('abc');
+	            //
+	            // googleMapsClient.geocode({
+	            //     address: e.target.value
+	            // }, function(err, response) {
+	            //     if (err) {
+	            //         alert('Please enter a valid U.S. address')
+	            //         // throw new Error('Please enter a valid U.S. address')
+	            //     }
+	            //     else{
+	            //         latLong = response.json.results[0].geometry.location
+	            //     }
+	            // });
+	            //
+	            // openstates.geoLookup(latLong.lat, latLong.lng, function(err, json) {
+	            //     alert('Please enter a valid U.S. address')
+	            //     // throw new Error('Please enter a valid U.S. address')
+	            // });
+	
+	        }
+	    }, {
 	        key: 'handleInputChange',
 	        value: function handleInputChange(e) {
 	            //handle interest check boxes
@@ -26596,11 +26637,13 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_Signup2.default, _extends({ allInterests: this.props.allInterests, handleInputChange: this.handleInputChange, signUpUser: this.signUpUser }, this.state));
+	            return _react2.default.createElement(_Signup2.default, _extends({ allInterests: this.props.allInterests, handleInputChange: this.handleInputChange, signUpUser: this.signUpUser }, this.state, { handleAddress: this.handleAddress }));
 	        }
 	    }, {
 	        key: 'signUpUser',
 	        value: function signUpUser(e) {
+	            var _this2 = this;
+	
 	            e.preventDefault();
 	            // console.log('...........this.state.interests', this.state.interests)
 	            var user = {
@@ -26611,12 +26654,13 @@
 	                password: e.target.password.value,
 	                interests: this.state.interests
 	            };
-	            this.props.addUToDb(user);
-	            // console.log("Signup Container between addUToDb and addLatLongToDb")
-	            this.props.addLatLongToDb(user);
 	
-	            this.props.router.push('welcome/' + user.phone);
-	            // this.props.router.push('user/'+user.phone);
+	            Promise.all([this.props.addUToDb(user), this.props.addLatLongToDb(user)]).then(function () {
+	                // this.props.router.push('user/'+ user.phone);
+	                // window.location.reload();
+	                //or you can sub this page if you're feeling in a silly mood
+	                _this2.props.router.push('welcome/' + user.phone);
+	            });
 	
 	            this.setState({
 	                first: '',
@@ -26650,6 +26694,9 @@
 	        },
 	        addLatLongToDb: function addLatLongToDb(user, lat, long) {
 	            dispatch((0, _addressDetails.addLatLongToDb)(user, lat, long));
+	        },
+	        validateAddress: function validateAddress(address) {
+	            dispatch((0, _addressDetails.validateAddress)(address));
 	        }
 	    };
 	};
@@ -28692,6 +28739,9 @@
 	                onChange: function onChange(e) {
 	                    return props.handleInputChange(e);
 	                },
+	                onBlur: function onBlur(e) {
+	                    return props.handleAddress(e);
+	                },
 	                value: props.address
 	            }),
 	            _react2.default.createElement('input', {
@@ -30473,6 +30523,7 @@
 	});
 	exports.updateCurrentAddressDetails = undefined;
 	exports.addLatLongToDb = addLatLongToDb;
+	exports.validateAddress = validateAddress;
 	
 	var _axios = __webpack_require__(267);
 	
@@ -30558,6 +30609,23 @@
 	        //     dispatch(updateCurrentAddressDetails(latLong.data))
 	        //     return latLong
 	        // })
+	    };
+	}
+	
+	function validateAddress(address) {
+	    console.log('inside validateAddress in addressDetails action, here is address', address);
+	    return function (dispatch) {
+	        return _axios2.default.get('/api/addressDetails/validate', address).then(function (response) {
+	            return response.data;
+	        }).then(function (data) {
+	            if (data === 'valid') {
+	                console.log('actions address Details, here is data, expect valid', data);
+	                return 'valid';
+	            } else {
+	                console.log('actions address Details, here is data', data);
+	                return 'invalid';
+	            }
+	        });
 	    };
 	}
 

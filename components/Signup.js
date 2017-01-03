@@ -30,6 +30,7 @@ export default function(props) {
                 className="form-control"
                 placeholder="Enter address"
                 onChange={e => props.handleInputChange(e)}
+                onBlur={e => props.handleAddress(e)}
                 value={props.address}
             />
             <input
