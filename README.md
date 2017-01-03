@@ -5,10 +5,11 @@ Advocates (users) can sign up and choose from a number of interest categories (e
 
 Admins are the only ones that are allowed to send alerts.  New alerts can be sent to a single interest category or multiple interest categories. Admins can also see a list of all the alerts that have been sent (an Outbox), and can add or remove Admins from the list of existing users.
 
-The database is currently seeded with one admin and two users.  Logins are based on phone numbers, so each login is 10 digits.
-  Susie is the admin.  Login is 0123456789, password is admin.
-  Joe is signed up to receive Wildlife alerts.  Login is 1111111111, password is wildlife.
-  Bill is signed up to receive Domestic Pets alerts.  Login is 2222222222, password is domestic.
+The database is currently seeded with two users and one admin.  Logins are based on phone numbers, but I decided not to force 10 digits simply to make the app easier to navigate for demo purposes.
+  Joe is a user, signed up to receive Wildlife alerts.  Login is 123, password is joe.
+  Bill is a user, signed up to receive Domestic Pets alerts.  Login is 456, password is bill.
+  Susie is the admin.  Login is 789, password is admin.
+
 
 **** Please note that users must provide a real address in order for the legislator lookup functionality to work properly. Future updates may include automatic validation.  For now, just play nice and use a real address. ****
 
