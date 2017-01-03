@@ -10,6 +10,7 @@ const interests = require('./interests');
 const addressDetails = require('./addressDetails');
 
 
+
 router.use('/users', users);
 router.use('/alerts', alerts);
 router.use('/interests', interests);

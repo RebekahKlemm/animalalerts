@@ -33,7 +33,7 @@ var userSchema = {
 var userConfig = {
     hooks: {
         beforeValidate: function(user) {
-            console.log('got into the beforeValidate hook in the user model, here is user', user)
+            // console.log('got into the beforeValidate hook in the user model, here is user', user)
             var googleMapsClient = require('@google/maps').createClient({
                 key: 'AIzaSyBFetAhXRcymhUCT9_2_k-nEs8TEkDiOo8'
             });
@@ -42,20 +42,20 @@ var userConfig = {
             googleMapsClient.geocode({
                 address: user.address
             }, function(err, response) {
-                console.log('here is the response.results', response.json.results[0].geometry.location);
-                if (err) {
-                    throw new Error('Please enter a valid U.S. address')
-                    // return Sequelize.Promise.reject("Please enter a valid U.S. address")
-
-                }
+                // console.log('here is the response.results', response.json.results[0].geometry.location);
+                // if (err) {
+                //     throw new Error('Please enter a valid U.S. address')
+                //     // return Sequelize.Promise.reject("Please enter a valid U.S. address")
+                //
+                // }
                 var latLong = response.json.results[0].geometry.location;
                 openstates.geoLookup(latLong.lat, latLong.lng, function(err2, json) {
                     // console.log('here is err2', err2)
                     // console.log('here is json', json)
-                    if (err2) {
-                        // return Sequelize.Promise.reject("Please enter a valid U.S. address")
-                        throw new Error('Please enter a valid U.S. address from err2');
-                    }
+                    // if (err2) {
+                    //     // return Sequelize.Promise.reject("Please enter a valid U.S. address")
+                    //     throw new Error('Please enter a valid U.S. address from err2');
+                    // }
 
                 });
                 // if (response.json.results.length === 0) {

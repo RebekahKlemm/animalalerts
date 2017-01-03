@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const db = require('./Database/_db');
 
 const app = express();
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const {User, Alert, Interest, LatLong, Deadline} = require('./Database/Models/index');
@@ -13,7 +14,8 @@ const {User, Alert, Interest, LatLong, Deadline} = require('./Database/Models/in
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({resave: true, saveUninitialized: true, secret: 'xheocinewoienIIIlweknos', cookie: { maxAge: 60000 }}));
+app.use(cookieParser());
+app.use(session({resave: true, saveUninitialized: false, secret: 'veryhushhush', cookie: { maxAge: 60000 }}));
 
 
 const apiRouter = require('./routes/apiRouter');
