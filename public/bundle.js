@@ -28874,6 +28874,7 @@
 	exports.deleteUinDb = deleteUinDb;
 	exports.addUserRoleToDb = addUserRoleToDb;
 	exports.editUinDb = editUinDb;
+	exports.setSession = setSession;
 	
 	var _axios = __webpack_require__(267);
 	
@@ -28974,6 +28975,21 @@
 	        users: users
 	    };
 	};
+	
+	function setSession(user) {
+	    return function (dispatch) {
+	        return _axios2.default.post('/api/users/login', user);
+	        // .then(function(response){
+	        //     // console.log('RRRRRRRResponse', response)
+	        //     return response
+	        // })
+	        //     .then(response => response.data)
+	        //     .then(function(updatedUser){
+	        //         // console.log('updatedUser ----------->', updatedUser)
+	        //         dispatch(updateUser(user[0], updatedUser))
+	        //     })
+	    };
+	}
 
 /***/ },
 /* 267 */
@@ -30844,6 +30860,9 @@
 	            };
 	            this.props.allUsers.map(function (user) {
 	                if (loginAttempt.phone === user.phone && loginAttempt.password === user.password) {
+	
+	                    _this2.props.setSession(user);
+	
 	                    _this2.setState({
 	                        phone: '',
 	                        password: '',
@@ -30874,6 +30893,9 @@
 	        },
 	        changeView: function changeView(view) {
 	            dispatch((0, _view.changeView)(view));
+	        },
+	        setSession: function setSession(user) {
+	            dispatch((0, _users.setSession)(user));
 	        }
 	    };
 	};

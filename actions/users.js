@@ -103,7 +103,20 @@ export const refreshUsers = function (users) {
 };
 
 
-
+export function setSession(user){
+    return function (dispatch){
+        return axios.post('/api/users/login', user)
+        // .then(function(response){
+        //     // console.log('RRRRRRRResponse', response)
+        //     return response
+        // })
+        //     .then(response => response.data)
+        //     .then(function(updatedUser){
+        //         // console.log('updatedUser ----------->', updatedUser)
+        //         dispatch(updateUser(user[0], updatedUser))
+        //     })
+    }
+}
 
 
 

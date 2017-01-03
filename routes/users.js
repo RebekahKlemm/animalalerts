@@ -41,6 +41,18 @@ router.post('/signup', function (req, res, next){
         .catch(next);
 });
 
+router.post('/login', function(req, res, next){
+    const sess = req.session;
+    console.log('routes, login, here is req.body', req.body)
+    console.log('routes, login, here is sess before', sess)
+    User.findOne({
+        where: {phone: req.body.phone, password: req.body.password}
+    })
+        .then((user) => sess.user = user)
+        .then(()=> console.log('routes, login, here is sess after', sess))
+    res.sendStatus(200);
+})
+
 
 // router.post('/signup', (req, res, next) => {
 //     return User.find({where: {email: req.body.email}})
@@ -86,7 +98,8 @@ function checkSignIn(req, res, next){
 }
 
 
-router.get('/:id', checkSignIn, function(req, res, next){
+// router.get('/:id', checkSignIn, function(req, res, next){
+router.get('/:id', function(req, res, next){
     User.findOne({
         where: {phone: req.params.id}
     })

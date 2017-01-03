@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import Login from '../Login';
-import {updateCurrentUser} from '../../actions/users'
+import {updateCurrentUser, setSession} from '../../actions/users'
 import {changeView} from '../../actions/view';
 
 class LoginContainer extends Component{
@@ -34,14 +34,19 @@ class LoginContainer extends Component{
         };
         this.props.allUsers.map(user => {
             if (loginAttempt.phone === user.phone && loginAttempt.password === user.password){
+
+                    this.props.setSession(user)
+
                 this.setState({
                     phone: '',
                     password: '',
                     user:user
                 });
-                this.props.router.push(user.role + '/'+loginAttempt.phone);
+                this.props.router.push(user.role + '/'+loginAttempt.phone)
+
             }
         });
+
     }
 }
 
@@ -63,6 +68,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         changeView: function(view){
             dispatch(changeView(view));
+        },
+        setSession: function(user){
+            dispatch(setSession(user));
         }
     }
 }
