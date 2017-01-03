@@ -30752,26 +30752,8 @@
 	                        null,
 	                        _react2.default.createElement(
 	                            'a',
-	                            { href: '#/user/123' },
-	                            'User123(Joe)'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#/user/456' },
-	                            'User456(Bill)'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#/admin/789' },
-	                            'Admin789(Susie)'
+	                            { href: '/api/users/logout' },
+	                            'Logout'
 	                        )
 	                    )
 	                ),

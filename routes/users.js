@@ -56,6 +56,13 @@ router.post('/login', function(req, res, next){
 
 })
 
+router.get('/logout', function(req, res){
+    req.session.destroy(function(){
+        console.log("user logged out.")
+    });
+    res.redirect('/#/login');
+});
+
 
 // router.post('/signup', (req, res, next) => {
 //     return User.find({where: {email: req.body.email}})
@@ -119,12 +126,7 @@ router.get('/:id', checkSignIn, function(req, res, next){
 
 })
 
-router.get('/logout', function(req, res){
-    req.session.destroy(function(){
-        console.log("user logged out.")
-    });
-    res.redirect('/');
-});
+
 
 
 

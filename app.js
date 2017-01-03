@@ -42,9 +42,9 @@ app.use(function (err, req, res, next) {
 db.sync({force: true})
     .then(function(){
         return User.bulkCreate([
-            {firstName: 'Joe', lastName: 'Smith', address: '1503 Nicks Dr, Stevens Point, WI 54482', phone: '123', password: '123'},
-            {firstName: 'Bill', lastName: 'Johnson', address: '1542 E Military Rd, Superior, WI 54880', phone: '456', password: '456'},
-            {firstName: 'Susie', lastName: 'Williams', address: '12700 12th St, Kenosha, WI 53144', phone: '789', password: '789', role: 'admin'}
+            {firstName: 'Joe', lastName: 'Smith', address: '1503 Nicks Dr, Stevens Point, WI 54482', phone: '1111111111', password: 'wildlife'},
+            {firstName: 'Bill', lastName: 'Johnson', address: '1542 E Military Rd, Superior, WI 54880', phone: '2222222222', password: 'domestic'},
+            {firstName: 'Susie', lastName: 'Williams', address: '12700 12th St, Kenosha, WI 53144', phone: '0123456789', password: 'admin', role: 'admin'}
         ])
     })
     .spread(function(joe, bill, susie){
