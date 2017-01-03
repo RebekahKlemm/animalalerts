@@ -109,13 +109,12 @@ router.get('/:id', checkSignIn, function(req, res, next){
         })
             .then(function(user){
                 console.log('------------>inside user router /:id, here is req.session', req.session)
-                // console.log('------------>inside user router /:id, here is sess', sess)
                 res.send(user);
             })
     } else {
         var err = new Error('Unauthorized');
-        console.log(req.session.user);
-        next(err);  //Error, trying to access unauthorized page!
+        // console.log(req.session.user);
+        next(err);
     }
 
 })
